@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A360 — Agent Pipeline</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#f5f6f8;--white:#fff;
+  --slate-900:#1a1f2e;--slate-700:#374151;--slate-600:#4b5563;--slate-500:#6b7280;--slate-400:#9ca3af;--slate-200:#e5e7eb;--slate-100:#f3f4f6;
+  --teal:#1b4f6b;--teal-light:#2c6f8f;
+  --blue:#2563eb;--blue-bg:#eff6ff;--blue-border:#bfdbfe;
+  --green:#059669;--green-bg:#ecfdf5;--green-border:#a7f3d0;
+  --amber:#d97706;--amber-bg:#fffbeb;--amber-border:#fcd34d;
+  --rose:#dc2626;--rose-bg:#fef2f2;
+  --purple:#7c3aed;--purple-bg:#f5f3ff;--purple-border:#c4b5fd;
+  --cyan:#0891b2;--cyan-bg:#ecfeff;
+  --shadow:0 1px 3px rgba(0,0,0,.06);--shadow-md:0 2px 8px rgba(0,0,0,.08);
+  --r:8px;--r-sm:6px;
+  --font:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+  --mono:'JetBrains Mono',monospace;
+}
+body{background:var(--bg);color:var(--slate-900);font-family:var(--font);-webkit-font-smoothing:antialiased;font-size:13px;line-height:1.5}
+nav{background:var(--teal);padding:0 24px}
+.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;height:48px;gap:24px}
+.logo{font-weight:800;font-size:15px;color:#fff;letter-spacing:-.02em;margin-right:auto}
+.logo span{color:rgba(255,255,255,.5)}
+.nav-links{display:flex;gap:2px}
+.nav-links a{color:rgba(255,255,255,.65);text-decoration:none;font-size:12px;font-weight:500;padding:6px 12px;border-radius:var(--r-sm);transition:all .12s}
+.nav-links a:hover{color:#fff;background:rgba(255,255,255,.1)}
+.nav-links a.active{color:#fff;background:rgba(255,255,255,.15)}
+.page{max-width:1100px;margin:0 auto;padding:20px 24px 48px}
+.page-header{margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--slate-200)}
+.page-header h1{font-size:18px;font-weight:700;letter-spacing:-.02em;margin-bottom:2px}
+.page-header .sub{font-size:12px;color:var(--slate-500)}
+
+/* Pipeline visualization */
+.pipeline-flow{display:flex;align-items:center;gap:0;margin-bottom:20px;background:var(--white);border:1px solid var(--slate-200);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden}
+.pf-step{flex:1;padding:12px 10px;text-align:center;border-right:1px solid var(--slate-100);cursor:pointer;transition:all .12s;position:relative}
+.pf-step:last-child{border-right:none}
+.pf-step:hover,.pf-step.active{background:var(--blue-bg)}
+.pf-step.active::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--teal)}
+.pf-step .num{font-size:9px;font-weight:700;color:var(--teal);letter-spacing:.06em;text-transform:uppercase}
+.pf-step .name{font-size:11px;font-weight:700;color:var(--slate-900)}
+.pf-step .status{font-size:9px;font-weight:600;margin-top:2px}
+.status-live{color:var(--green)}
+.status-ready{color:var(--blue)}
+
+/* Agent detail cards */
+.agent-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.agent-full{grid-column:1/-1}
+.agent-card{background:var(--white);border:1px solid var(--slate-200);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden}
+.agent-card:hover{box-shadow:var(--shadow-md)}
+.ac-header{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:1px solid var(--slate-100)}
+.ac-title{font-size:13px;font-weight:700;display:flex;align-items:center;gap:8px}
+.ac-badge{font-size:9px;font-weight:700;padding:2px 8px;border-radius:4px;text-transform:uppercase;letter-spacing:.03em}
+.ac-body{padding:14px}
+.ac-desc{font-size:12px;color:var(--slate-600);margin-bottom:10px;line-height:1.5}
+
+/* Output sections */
+.out-section{margin-bottom:10px}
+.out-section:last-child{margin-bottom:0}
+.out-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--slate-400);margin-bottom:6px}
+.out-item{display:flex;align-items:flex-start;gap:8px;padding:5px 0;font-size:12px;color:var(--slate-700);border-bottom:1px solid var(--slate-100)}
+.out-item:last-child{border-bottom:none}
+.out-dot{width:5px;height:5px;border-radius:50%;margin-top:5px;flex-shrink:0}
+.out-quote{font-size:11px;color:var(--slate-500);font-style:italic;padding:6px 10px;background:var(--slate-100);border-radius:var(--r-sm);margin-top:4px;line-height:1.5}
+
+/* Score bar */
+.score-row{display:flex;align-items:center;gap:8px;padding:4px 0}
+.score-label{font-size:11px;font-weight:500;color:var(--slate-600);width:100px;flex-shrink:0}
+.score-bar{flex:1;height:6px;background:var(--slate-100);border-radius:3px;overflow:hidden}
+.score-fill{height:100%;border-radius:3px;transition:width .3s}
+.score-val{font-family:var(--mono);font-size:11px;font-weight:600;width:36px;text-align:right}
+
+/* Email preview */
+.email-preview{background:var(--slate-100);border-radius:var(--r-sm);padding:12px 14px;font-size:12px;line-height:1.6;color:var(--slate-700);max-height:180px;overflow-y:auto}
+
+/* Rec card */
+.rec{background:var(--bg);border:1px solid var(--slate-200);border-radius:var(--r-sm);padding:10px 12px;margin-bottom:6px}
+.rec:last-child{margin-bottom:0}
+.rec-name{font-size:13px;font-weight:700;margin-bottom:2px}
+.rec-type{font-size:10px;font-weight:600;color:var(--teal)}
+.rec-rationale{font-size:11px;color:var(--slate-500);margin-top:4px;line-height:1.4}
+.rec-scores{display:flex;gap:8px;margin-top:6px}
+.rec-score{font-family:var(--mono);font-size:10px;font-weight:600;padding:2px 6px;border-radius:4px}
+
+footer{max-width:1100px;margin:0 auto;padding:14px 24px;border-top:1px solid var(--slate-200);display:flex;justify-content:space-between;align-items:center}
+footer .meta{font-size:11px;color:var(--slate-400);font-family:var(--mono)}
+.next-link{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:var(--r-sm);background:var(--teal);color:#fff;text-decoration:none;font-size:12px;font-weight:600;transition:all .12s}
+.next-link:hover{background:var(--teal-light)}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="logo">AESTHETICS<span>360</span></div>
+    <div class="nav-links">
+      <a href="demo-hero.html">Overview</a>
+      <a href="demo-extraction.html">Extraction</a>
+      <a href="demo-agents.html" class="active">Agents</a>
+      <a href="demo-intelligence.html">Intelligence</a>
+      <a href="demo-products.html">Product Library</a>
+    </div>
+  </div>
+</nav>
+
+<div class="page">
+  <div class="page-header">
+    <h1>Agent Pipeline</h1>
+    <div class="sub">7 production agents process every extraction — each output shown below is from the same real consultation</div>
+  </div>
+
+  <!-- Pipeline flow -->
+  <div class="pipeline-flow">
+    <div class="pf-step active"><div class="num">Step 1</div><div class="name">Extraction</div><div class="status status-live">2-pass v3.2</div></div>
+    <div class="pf-step"><div class="num">Step 2</div><div class="name">Cross-Sell</div><div class="status status-live">3 recs</div></div>
+    <div class="pf-step"><div class="num">Step 3</div><div class="name">Opportunities</div><div class="status status-live">6 sections</div></div>
+    <div class="pf-step"><div class="num">Step 4</div><div class="name">Coaching</div><div class="status status-live">3-stage pipeline</div></div>
+    <div class="pf-step"><div class="num">Step 5</div><div class="name">Email</div><div class="status status-live">Personalized</div></div>
+    <div class="pf-step"><div class="num">Step 6</div><div class="name">TCP</div><div class="status status-ready">Ready</div></div>
+  </div>
+
+  <div class="agent-grid">
+
+    <!-- Cross-Sell Agent -->
+    <div class="agent-card">
+      <div class="ac-header">
+        <div class="ac-title">Cross-Sell Guidance <span class="ac-badge" style="background:var(--green-bg);color:var(--green);border:1px solid var(--green-border)">v3</span></div>
+      </div>
+      <div class="ac-body">
+        <div class="ac-desc">Analyzes extraction output against the practice catalog and recommends complementary treatments the provider didn't mention.</div>
+        <div class="out-label">Recommendations</div>
+        <div class="rec">
+          <div class="rec-name">DiamondGlow Facial</div>
+          <div class="rec-type">Complementary Service</div>
+          <div class="rec-rationale">Complements microneedling for texture improvement — addresses the patient's skin texture concerns with a gentler maintenance option between sessions.</div>
+          <div class="rec-scores">
+            <span class="rec-score" style="background:var(--green-bg);color:var(--green)">Patient Benefit: 90</span>
+            <span class="rec-score" style="background:var(--blue-bg);color:var(--blue)">Clinical: 80</span>
+            <span class="rec-score" style="background:var(--amber-bg);color:var(--amber)">Practice: 75</span>
+          </div>
+        </div>
+        <div class="rec">
+          <div class="rec-name">Chemical Peel (Light)</div>
+          <div class="rec-type">Complementary Service</div>
+          <div class="rec-rationale">Targets melasma and texture — patient mentioned melasma and acne concerns as secondary goals.</div>
+        </div>
+        <div class="rec">
+          <div class="rec-name">Medical-Grade Sunscreen</div>
+          <div class="rec-type">Complementary Product</div>
+          <div class="rec-rationale">Essential for post-microneedling care and melasma management — patient has upcoming vacation with sun exposure.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Opportunities Agent -->
+    <div class="agent-card">
+      <div class="ac-header">
+        <div class="ac-title">Opportunities Agent</div>
+      </div>
+      <div class="ac-body">
+        <div class="ac-desc">Produces a 6-section follow-up artifact: sell plan, patient interests, CRM personalization, marketing hooks, next-visit reference, and follow-up timeline.</div>
+
+        <div class="out-section">
+          <div class="out-label">Follow-Up Plan</div>
+          <div class="out-item"><div class="out-dot" style="background:var(--teal)"></div><strong>1 week:</strong>&nbsp;Send education about PDGRN and its benefits</div>
+          <div class="out-item"><div class="out-dot" style="background:var(--teal)"></div><strong>2 weeks:</strong>&nbsp;Follow up on Botox for crow's feet interest</div>
+        </div>
+
+        <div class="out-section">
+          <div class="out-label">Patient Interests (Unbooked)</div>
+          <div class="out-item"><div class="out-dot" style="background:var(--amber)"></div>PDGRN (Salmon Sperm Topical) — curious, wants to try with microneedling</div>
+          <div class="out-item"><div class="out-dot" style="background:var(--amber)"></div>Botox (crow's feet) — hesitant but interested</div>
+          <div class="out-item"><div class="out-dot" style="background:var(--amber)"></div>Dermal Filler — discussed for future visit</div>
+        </div>
+
+        <div class="out-section">
+          <div class="out-label">Sell Plan Script</div>
+          <div class="out-quote">"PDGRN can enhance your microneedling results without the risks of injections. Since you're already committed to improving your skin texture, adding PDGRN topical during your next session could amplify results."</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Coaching Pipeline (full width) -->
+    <div class="agent-card agent-full">
+      <div class="ac-header">
+        <div class="ac-title">Coaching Pipeline <span class="ac-badge" style="background:var(--purple-bg);color:var(--purple);border:1px solid var(--purple-border)">3-stage</span></div>
+        <div style="font-size:10px;color:var(--slate-400)">Evidence Extraction → Coaching Generation → Language Validation</div>
+      </div>
+      <div class="ac-body">
+        <div class="ac-desc">Evaluates provider performance across 8 dimensions using the Sales Excellence Framework. Evidence-based — every score backed by transcript quotes.</div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+          <!-- Scores -->
+          <div>
+            <div class="out-label">KPI Scores</div>
+            <div class="score-row">
+              <div class="score-label">Closing</div>
+              <div class="score-bar"><div class="score-fill" style="width:95%;background:var(--green)"></div></div>
+              <div class="score-val" style="color:var(--green)">95%</div>
+            </div>
+            <div class="score-row">
+              <div class="score-label">Rapport</div>
+              <div class="score-bar"><div class="score-fill" style="width:90%;background:var(--green)"></div></div>
+              <div class="score-val" style="color:var(--green)">90%</div>
+            </div>
+            <div class="score-row">
+              <div class="score-label">Objections</div>
+              <div class="score-bar"><div class="score-fill" style="width:90%;background:var(--green)"></div></div>
+              <div class="score-val" style="color:var(--green)">90%</div>
+            </div>
+            <div class="score-row">
+              <div class="score-label">Education</div>
+              <div class="score-bar"><div class="score-fill" style="width:85%;background:var(--green)"></div></div>
+              <div class="score-val" style="color:var(--green)">85%</div>
+            </div>
+            <div class="score-row">
+              <div class="score-label">Overall</div>
+              <div class="score-bar"><div class="score-fill" style="width:85%;background:var(--teal)"></div></div>
+              <div class="score-val" style="color:var(--teal)">85%</div>
+            </div>
+            <div class="score-row">
+              <div class="score-label">Discovery</div>
+              <div class="score-bar"><div class="score-fill" style="width:80%;background:var(--blue)"></div></div>
+              <div class="score-val" style="color:var(--blue)">80%</div>
+            </div>
+            <div class="score-row">
+              <div class="score-label">Cross-Sell</div>
+              <div class="score-bar"><div class="score-fill" style="width:75%;background:var(--amber)"></div></div>
+              <div class="score-val" style="color:var(--amber)">75%</div>
+            </div>
+          </div>
+
+          <!-- Strengths & Opportunities -->
+          <div>
+            <div class="out-section">
+              <div class="out-label">Strengths</div>
+              <div class="out-item"><div class="out-dot" style="background:var(--green)"></div>Strong rapport — shares personal anecdotes and engages warmly with patient</div>
+              <div class="out-item"><div class="out-dot" style="background:var(--green)"></div>Effective close — used assumptive close to schedule full retreatment</div>
+              <div class="out-quote">"I'll get you on the books, like, in a month for everything else if you've got time."</div>
+            </div>
+            <div class="out-section">
+              <div class="out-label">Coaching Opportunity</div>
+              <div class="out-item"><div class="out-dot" style="background:var(--amber)"></div><strong>Value Communication:</strong> Missed discussing membership benefits for a recurring Botox patient on a 3-4 month schedule</div>
+              <div class="out-quote">"Patient is a regular who came in early for a touch-up before vacation — ideal membership candidate with predictable treatment pattern."</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Email Campaign -->
+    <div class="agent-card">
+      <div class="ac-header">
+        <div class="ac-title">Email Campaign</div>
+        <div class="ac-badge" style="background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-border)">1 message</div>
+      </div>
+      <div class="ac-body">
+        <div class="ac-desc">Generates personalized patient follow-up email using extraction data — not templates, built from the patient's actual words and concerns.</div>
+        <div class="out-label">Campaign: Revitalize Your Skin and Enhance Your Beauty</div>
+        <div class="email-preview">
+          Hi there! We hope you're enjoying the results from your recent Botox touch-up and microneedling treatment.<br><br>
+          As you mentioned, you're looking to tackle concerns like melasma and texture issues. We wanted to share some information about <strong>PDGRN topical</strong> — the salmon sperm treatment we discussed during your visit. It pairs beautifully with microneedling and can enhance your results without the risks of injectable delivery.<br><br>
+          We also wanted to remind you about the <strong>Botox for crow's feet</strong> option we talked about. Many patients find that treating the lateral canthus area completes their refreshed look, especially for photos.<br><br>
+          Your full Botox retreatment is scheduled for next month. If you'd like to add any of these treatments to that visit, just let us know!
+        </div>
+      </div>
+    </div>
+
+    <!-- Architecture Card -->
+    <div class="agent-card">
+      <div class="ac-header">
+        <div class="ac-title">Agent Architecture</div>
+      </div>
+      <div class="ac-body">
+        <div class="out-section">
+          <div class="out-label">Production Agents</div>
+          <div style="font-size:12px;color:var(--slate-600)">
+            <div style="padding:4px 0;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between"><span><strong>2-Pass Extraction</strong> (P1 + P2)</span><span style="font-family:var(--mono);font-size:10px;color:var(--slate-400)">gpt-4o-mini</span></div>
+            <div style="padding:4px 0;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between"><span><strong>Cross-Sell Guidance</strong> v3</span><span style="font-family:var(--mono);font-size:10px;color:var(--slate-400)">gpt-4o-mini</span></div>
+            <div style="padding:4px 0;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between"><span><strong>Opportunities Agent</strong></span><span style="font-family:var(--mono);font-size:10px;color:var(--slate-400)">gpt-4o-mini</span></div>
+            <div style="padding:4px 0;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between"><span><strong>Email Campaign</strong></span><span style="font-family:var(--mono);font-size:10px;color:var(--slate-400)">gpt-4o-mini</span></div>
+            <div style="padding:4px 0;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between"><span><strong>Coaching Evidence Extractor</strong></span><span style="font-family:var(--mono);font-size:10px;color:var(--slate-400)">gpt-4o-mini</span></div>
+            <div style="padding:4px 0;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between"><span><strong>Coaching Generator</strong></span><span style="font-family:var(--mono);font-size:10px;color:var(--slate-400)">gpt-4o-mini</span></div>
+            <div style="padding:4px 0;display:flex;justify-content:space-between"><span><strong>Coaching Language Validator</strong></span><span style="font-family:var(--mono);font-size:10px;color:var(--slate-400)">gpt-4o-mini</span></div>
+          </div>
+        </div>
+        <div class="out-section" style="margin-top:10px">
+          <div class="out-label">Platform Agents (AWS Step Functions)</div>
+          <div style="font-size:12px;color:var(--slate-600)">
+            <div style="padding:4px 0;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between"><span>Clinical Notes (SOAP)</span><span style="font-family:var(--mono);font-size:10px;color:var(--slate-400)">Claude Sonnet</span></div>
+            <div style="padding:4px 0;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between"><span>Treatment Care Plan</span><span style="font-family:var(--mono);font-size:10px;color:var(--slate-400)">Claude Sonnet</span></div>
+            <div style="padding:4px 0;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between"><span>Follow-Up Email</span><span style="font-family:var(--mono);font-size:10px;color:var(--slate-400)">Claude Sonnet</span></div>
+            <div style="padding:4px 0;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between"><span>Consultation Summary</span><span style="font-family:var(--mono);font-size:10px;color:var(--slate-400)">Claude Sonnet</span></div>
+            <div style="padding:4px 0;display:flex;justify-content:space-between"><span>Medical Relevance Gate</span><span style="font-family:var(--mono);font-size:10px;color:var(--slate-400)">Claude Haiku</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <div class="meta">golden-run:e76b2648 &middot; all outputs from same consultation</div>
+  <a href="demo-intelligence.html" class="next-link">Practice Intelligence &rarr;</a>
+</footer>
+
+</body>
+</html>
