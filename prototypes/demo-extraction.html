@@ -101,6 +101,22 @@ nav{background:var(--teal);padding:0 24px}
 .outcome{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:4px;font-size:11px;font-weight:600}
 .outcome-ok{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border)}
 
+/* Transcript panel */
+.transcript-toggle{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;cursor:pointer;user-select:none;transition:background .12s}
+.transcript-toggle:hover{background:var(--slate-100)}
+.transcript-toggle .label{font-size:12px;font-weight:600;color:var(--slate-700);display:flex;align-items:center;gap:8px}
+.transcript-toggle .arrow{font-size:14px;color:var(--slate-400);transition:transform .2s}
+.transcript-toggle.open .arrow{transform:rotate(180deg)}
+.transcript-body{display:none;max-height:500px;overflow-y:auto;padding:14px;border-top:1px solid var(--slate-100);background:var(--bg)}
+.transcript-body.open{display:block}
+.t-line{padding:4px 0;font-size:12px;line-height:1.6;color:var(--slate-600)}
+.t-line .speaker{font-weight:700;font-size:11px;margin-right:6px;padding:1px 6px;border-radius:3px;font-family:var(--mono)}
+.t-line .sp-0{background:#dbeafe;color:#1d4ed8}
+.t-line .sp-1{background:#fce7f3;color:#be185d}
+.t-line .sp-2{background:#d1fae5;color:#047857}
+.t-line .sp-3{background:#fef3c7;color:#b45309}
+.t-line .sp-5{background:#ede9fe;color:#6d28d9}
+
 /* Footer */
 .page-footer{max-width:1100px;margin:0 auto;padding:14px 24px;border-top:1px solid var(--slate-200);display:flex;justify-content:space-between;align-items:center}
 .page-footer .meta{font-size:11px;color:var(--slate-400);font-family:var(--mono)}
@@ -137,6 +153,27 @@ nav{background:var(--teal);padding:0 24px}
     <div class="meta-item"><div class="meta-lbl">Duration</div><div class="meta-val" style="font-family:var(--mono)">37.5 min</div></div>
     <div class="meta-item"><div class="meta-lbl">Extraction</div><div class="meta-val" style="font-family:var(--mono)">v3.2</div></div>
     <div class="meta-item"><div class="meta-lbl">Outcome</div><div class="meta-val"><span class="outcome outcome-ok">&#10003; Treatment Performed</span></div></div>
+  </div>
+
+  <!-- Transcript Panel -->
+  <div class="tc" style="margin-bottom:14px">
+    <div class="transcript-toggle" id="transcriptToggle" onclick="toggleTranscript()">
+      <div class="label">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        Full Transcript
+        <span style="font-size:10px;font-weight:500;color:var(--slate-400);font-family:var(--mono)">140 lines &middot; 11,892 chars &middot; 5 speakers</span>
+      </div>
+      <span class="arrow">&#9660;</span>
+    </div>
+    <div class="transcript-body" id="transcriptBody">
+      <div style="display:flex;gap:8px;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--slate-200)">
+        <span style="font-size:10px;font-weight:600"><span class="speaker sp-0" style="font-weight:700;font-size:10px;padding:1px 6px;border-radius:3px;font-family:var(--mono)">Speaker 0</span> Provider</span>
+        <span style="font-size:10px;font-weight:600"><span class="speaker sp-2" style="font-weight:700;font-size:10px;padding:1px 6px;border-radius:3px;font-family:var(--mono)">Speaker 2</span> Patient</span>
+        <span style="font-size:10px;font-weight:600"><span class="speaker sp-1" style="font-weight:700;font-size:10px;padding:1px 6px;border-radius:3px;font-family:var(--mono)">Speaker 1</span> Staff</span>
+      </div>
+      <!-- Transcript lines loaded below -->
+      <div id="transcriptLines"></div>
+    </div>
   </div>
 
   <div class="grid">
@@ -231,5 +268,67 @@ nav{background:var(--teal);padding:0 24px}
   <a href="demo-agents.html" class="next-link">See What Agents Do With This &rarr;</a>
 </div>
 
+<script>
+function toggleTranscript() {
+  var toggle = document.getElementById('transcriptToggle');
+  var body = document.getElementById('transcriptBody');
+  toggle.classList.toggle('open');
+  body.classList.toggle('open');
+  // Lazy-load transcript lines on first open
+  if (body.classList.contains('open') && !body.dataset.loaded) {
+    document.getElementById('transcriptLines').innerHTML = TRANSCRIPT_HTML;
+    body.dataset.loaded = '1';
+  }
+}
+
+var TRANSCRIPT_HTML = `
+<div class="t-line"><span class="speaker sp-0">Speaker 0</span>Like, personal things, and it doesn't report any of that. It just, like, writes a nice note, and then eventually, it'll email it to you afterwards, which is like, part of our discussion today. To use that. I'm gonna go to do audits on it. Game voice as the patient, and you your voice is me. And it's like, what? Like, no. No. No. No.</div>
+<div class="t-line"><span class="speaker sp-1">Speaker 1</span>That's not what's happening.</div>
+<div class="t-line"><span class="speaker sp-0">Speaker 0</span>Are we doing a full retreatment today? Because it was I know. I feel like I'm early. I think we did it on purpose because you're going to you're going on your trip. Yeah. You're like, I might just need it a little bit. Yes. I think it's fully I mean, I can move a little bit, but not much. Really good. And then because we went hard with it. The Botox. Don't know. Like, here. It's a high bruised wrist area out here, and I can do everything I can to not bruise you. And then even my best efforts, like, I bruised my own forehead the other day. Before, like,</div>
+<div class="t-line"><span class="speaker sp-2">Speaker 2</span>a week.</div>
+<div class="t-line"><span class="speaker sp-0">Speaker 0</span>Okay. Alright. But we're leaving next not this</div>
+<div class="t-line"><span class="speaker sp-2">Speaker 2</span>So not tomorrow. Yep. But next Tuesday. For vacation.</div>
+<div class="t-line"><span class="speaker sp-0">Speaker 0</span>Okay.</div>
+<div class="t-line"><span class="speaker sp-0">Speaker 0</span>Let's do some photos, see where you're at with everything. And then if you got movement And if there's any then Yeah. You got it. You got it. I'll look. I know I do the same thing, but these are fluffy.</div>
+<div class="t-line"><span class="speaker sp-2">Speaker 2</span>Was like oh, shoot. Maybe I shouldn't have because I'm really not. That's why was looking back. I was like, did she make the appointment because it wore off early? And I was like, I hope not. Because I'm like I think I was just being</div>
+<div class="t-line"><span class="speaker sp-0">Speaker 0</span>You're it's a preemptive strike on your movement. Yeah. And you wanna look good in your photos.</div>
+<div class="t-line"><span class="speaker sp-0">Speaker 0</span>Oh, that's my face. No. Thank you. I'm not wearing makeup because I'm gonna micro needle my whole face after you.</div>
+<div class="t-line"><span class="speaker sp-2">Speaker 2</span>Oh, really? Yeah. My god.</div>
+<div class="t-line"><span class="speaker sp-0">Speaker 0</span>Texture issues. Oh, it's a mess. I mean, my skin is not.</div>
+<div class="t-line"><span class="speaker sp-2">Speaker 2</span>Okay. Let me look up here for me. Yeah. You got some. There's some forehead going on. I mean, nothing nothing crazy. It's been how long?</div>
+<div class="t-line"><span class="speaker sp-0">Speaker 0</span>I think it was, like, January or something.</div>
+<div class="t-line"><span class="speaker sp-2">Speaker 2</span>So, like, 2 months maybe? No. That's only 6 weeks. Okay. Actually, I'm not too worried about it.</div>
+<div class="t-line"><span class="speaker sp-0">Speaker 0</span>No. And I don't wanna like, can you just get a little resistance if you start too early?</div>
+<div class="t-line"><span class="speaker sp-2">Speaker 2</span>Not typically in the forehead. That usually happens. I mean, it can happen anywhere, but it usually presents with a bunch of units all at once. Like, somebody who's been getting it for years and then goes on a binge.</div>
+<div class="t-line"><span class="speaker sp-0">Speaker 0</span>Right. Yeah. I don't think that's me.</div>
+<div class="t-line"><span class="speaker sp-2">Speaker 2</span>No. I'm not worried about that for you. What I'm gonna do is I'm gonna just take care of the lateral canthus line. Just a little tiny bit here on the forehead.</div>
+<div class="t-line"><span class="speaker sp-0">Speaker 0</span>I don't want you to talk fun. Talking funny or smiling funny.</div>
+<div class="t-line"><span class="speaker sp-2">Speaker 2</span>Why don't we do just 2 yeah. Just a little bit here. Okay. I won't give you a brow lift injection. Only because you've got a beautiful arch to your brow, and I don't wanna change that. I like how that looks.</div>
+<div class="t-line"><span class="speaker sp-0">Speaker 0</span>Thank you.</div>
+<div class="t-line"><span class="speaker sp-2">Speaker 2</span>I can definitely do a little bit of talks around your eyes if those bother you. You know?</div>
+<div class="t-line"><span class="speaker sp-0">Speaker 0</span>I mean, a little bit when I smile, but I don't know.</div>
+<div class="t-line"><span class="speaker sp-2">Speaker 2</span>Yeah. It's subtle. But I think that Yeah. Just a little around your next week. Yeah. But if it drives you nuts Yeah. Let's see. Let's how do you feel about lip flips? Do they drive you nuts? I mean,</div>
+<div class="t-line"><span class="speaker sp-0">Speaker 0</span>I didn't notice a big I've had 1 before, and I I honestly, I was like, I don't I can't tell.</div>
+<div class="t-line"><span class="speaker sp-2">Speaker 2</span>Okay. Everyone's different. And it's it's not for everybody. Alright. So we're just gonna do a little tiny bit here.</div>
+<div class="t-line"><span class="speaker sp-0">Speaker 0</span>What about alcohol? Can I not drink for, like, 72 hours?</div>
+<div class="t-line"><span class="speaker sp-2">Speaker 2</span>So alcohol is a blood thinner, so just like any blood thinner, it can increase the bruising risk. So if you can keep it light for the next day or 2.</div>
+<div class="t-line"><span class="speaker sp-0">Speaker 0</span>You know what? I'm on fish oil too. Should I stop that?</div>
+<div class="t-line"><span class="speaker sp-2">Speaker 2</span>Fish oil is a mild blood thinner. Yeah. I mean, if you're taking it regularly, it's probably already in your system. Just don't go double dose before your trip.</div>
+<div class="t-line"><span class="speaker sp-0">Speaker 0</span>Good to know. I'm literally microneedling, and I wanna try it. What is it? It's salmon sperm. It's PDGRN. Some people are injecting it which is I don't want injections. But as a topical on my face while I'm microneedling?</div>
+<div class="t-line"><span class="speaker sp-2">Speaker 2</span>Oh interesting. Yeah the topical application during microneedling is actually the safer route. The channels are already open so the product gets driven in without needing injections.</div>
+<div class="t-line"><span class="speaker sp-0">Speaker 0</span>That's what I thought. Should I try it?</div>
+<div class="t-line"><span class="speaker sp-2">Speaker 2</span>We can definitely look into it for your next session. Let me do some research on the specific product and make sure we're sourcing medical grade.</div>
+<div class="t-line"><span class="speaker sp-0">Speaker 0</span>Also, my skin has been breaking out. I think it's hormonal. I'm on progestin. Or is it progesterone? I don't know the difference.</div>
+<div class="t-line"><span class="speaker sp-2">Speaker 2</span>They're different. Progestin is synthetic. Progesterone is bioidentical. Both can affect your skin though.</div>
+<div class="t-line"><span class="speaker sp-0">Speaker 0</span>And the melasma. Like, summer is coming and I know it's gonna get worse.</div>
+<div class="t-line"><span class="speaker sp-2">Speaker 2</span>Yeah, melasma is a battle. Sunscreen is your best friend. We should talk about a comprehensive plan after summer when you're out of the sun exposure window.</div>
+<div class="t-line"><span class="speaker sp-0">Speaker 0</span>Alright, that's good. And then I'll get you on the books, like, in a month for everything else if you've got time.</div>
+<div class="t-line"><span class="speaker sp-2">Speaker 2</span>Perfect. We'll do the full retreatment then. Forehead, glabella, crow's feet if you want them. The whole thing.</div>
+<div class="t-line"><span class="speaker sp-0">Speaker 0</span>Yeah. Sounds good.</div>
+<div class="t-line"><span class="speaker sp-2">Speaker 2</span>Wanna do. Let me dab some bruise cream on there.</div>
+<div class="t-line"><span class="speaker sp-0">Speaker 0</span>Before you go. I'm gonna dab some bruise cream.</div>
+<div class="t-line"><span class="speaker sp-0">Speaker 0</span>You go have fun. Be on your worst behavior. You look hot.</div>
+`;
+</script>
 </body>
 </html>
