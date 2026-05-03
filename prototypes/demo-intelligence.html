@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A360 — Practice Intelligence</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#f5f6f8;--white:#fff;
+  --slate-900:#1a1f2e;--slate-700:#374151;--slate-600:#4b5563;--slate-500:#6b7280;--slate-400:#9ca3af;--slate-200:#e5e7eb;--slate-100:#f3f4f6;
+  --teal:#1b4f6b;--teal-light:#2c6f8f;
+  --blue:#2563eb;--blue-bg:#eff6ff;--blue-border:#bfdbfe;
+  --green:#059669;--green-bg:#ecfdf5;--green-border:#a7f3d0;
+  --amber:#d97706;--amber-bg:#fffbeb;--amber-border:#fcd34d;
+  --rose:#dc2626;--rose-bg:#fef2f2;--rose-border:#fca5a5;
+  --purple:#7c3aed;--purple-bg:#f5f3ff;
+  --cyan:#0891b2;--cyan-bg:#ecfeff;
+  --shadow:0 1px 3px rgba(0,0,0,.06);--shadow-md:0 2px 8px rgba(0,0,0,.08);
+  --r:8px;--r-sm:6px;
+  --font:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+  --mono:'JetBrains Mono',monospace;
+}
+body{background:var(--bg);color:var(--slate-900);font-family:var(--font);-webkit-font-smoothing:antialiased;font-size:13px;line-height:1.5}
+nav{background:var(--teal);padding:0 24px}
+.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;height:48px;gap:24px}
+.logo{font-weight:800;font-size:15px;color:#fff;letter-spacing:-.02em;margin-right:auto}
+.logo span{color:rgba(255,255,255,.5)}
+.nav-links{display:flex;gap:2px}
+.nav-links a{color:rgba(255,255,255,.65);text-decoration:none;font-size:12px;font-weight:500;padding:6px 12px;border-radius:var(--r-sm);transition:all .12s}
+.nav-links a:hover{color:#fff;background:rgba(255,255,255,.1)}
+.nav-links a.active{color:#fff;background:rgba(255,255,255,.15)}
+.page{max-width:1100px;margin:0 auto;padding:20px 24px 48px}
+.page-header{margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--slate-200)}
+.page-header h1{font-size:18px;font-weight:700;letter-spacing:-.02em;margin-bottom:2px}
+.page-header .sub{font-size:12px;color:var(--slate-500)}
+
+/* KPI row */
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
+.kpi{background:var(--white);border:1px solid var(--slate-200);border-radius:var(--r);padding:14px 16px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.kpi:nth-child(1)::before{background:var(--teal)}
+.kpi:nth-child(2)::before{background:var(--green)}
+.kpi:nth-child(3)::before{background:var(--amber)}
+.kpi:nth-child(4)::before{background:var(--rose)}
+.kpi-val{font-family:var(--mono);font-size:24px;font-weight:700;letter-spacing:-.03em;line-height:1;margin-bottom:2px}
+.kpi-label{font-size:11px;font-weight:500;color:var(--slate-500)}
+
+/* Grid */
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.grid-full{grid-column:1/-1}
+
+/* Table card */
+.tc{background:var(--white);border:1px solid var(--slate-200);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden;margin-bottom:14px}
+.tc-hdr{background:var(--teal);color:#fff;padding:8px 14px;font-size:11px;font-weight:600;display:flex;justify-content:space-between;align-items:center}
+.tc-hdr .count{font-family:var(--mono);font-size:10px;background:rgba(255,255,255,.2);padding:2px 8px;border-radius:4px}
+
+/* Table rows */
+.t-header{display:grid;padding:6px 14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--slate-400);border-bottom:1px solid var(--slate-200);background:var(--slate-100)}
+.t-row{display:grid;padding:8px 14px;border-bottom:1px solid var(--slate-100);font-size:12px;align-items:center}
+.t-row:last-child{border-bottom:none}
+.t-row:hover{background:var(--slate-100)}
+
+/* Bar chart rows */
+.bar-row{display:flex;align-items:center;gap:10px;padding:6px 14px;border-bottom:1px solid var(--slate-100)}
+.bar-row:last-child{border-bottom:none}
+.bar-label{font-size:12px;font-weight:500;width:180px;flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bar-track{flex:1;height:8px;background:var(--slate-100);border-radius:4px;overflow:hidden}
+.bar-fill{height:100%;border-radius:4px}
+.bar-val{font-family:var(--mono);font-size:11px;font-weight:600;width:30px;text-align:right;flex-shrink:0}
+
+/* Donut placeholder */
+.donut-row{display:flex;gap:14px;padding:14px}
+.donut-item{flex:1;text-align:center}
+.donut-val{font-family:var(--mono);font-size:28px;font-weight:700;letter-spacing:-.03em}
+.donut-label{font-size:10px;font-weight:600;color:var(--slate-500);text-transform:uppercase;letter-spacing:.04em}
+.donut-sub{font-size:11px;color:var(--slate-400);margin-top:2px}
+
+/* Disposition legend */
+.disp-legend{display:flex;gap:12px;padding:10px 14px;border-top:1px solid var(--slate-100);flex-wrap:wrap}
+.disp-item{display:flex;align-items:center;gap:4px;font-size:10px;font-weight:600}
+.disp-dot{width:8px;height:8px;border-radius:2px}
+
+/* PE value card */
+.pe-card{background:var(--white);border:1px solid var(--slate-200);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden;border-left:3px solid var(--teal)}
+.pe-body{padding:14px 16px}
+.pe-title{font-size:13px;font-weight:700;margin-bottom:8px}
+.pe-row{display:flex;justify-content:space-between;padding:4px 0;font-size:12px;border-bottom:1px solid var(--slate-100)}
+.pe-row:last-child{border-bottom:none}
+.pe-row .label{color:var(--slate-600)}
+.pe-row .val{font-family:var(--mono);font-weight:600}
+
+footer{max-width:1100px;margin:0 auto;padding:14px 24px;border-top:1px solid var(--slate-200);display:flex;justify-content:space-between;align-items:center}
+footer .meta{font-size:11px;color:var(--slate-400);font-family:var(--mono)}
+.next-link{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:var(--r-sm);background:var(--teal);color:#fff;text-decoration:none;font-size:12px;font-weight:600;transition:all .12s}
+.next-link:hover{background:var(--teal-light)}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="logo">AESTHETICS<span>360</span></div>
+    <div class="nav-links">
+      <a href="demo-hero.html">Overview</a>
+      <a href="demo-extraction.html">Extraction</a>
+      <a href="demo-agents.html">Agents</a>
+      <a href="demo-intelligence.html" class="active">Intelligence</a>
+      <a href="demo-products.html">Product Library</a>
+    </div>
+  </div>
+</nav>
+
+<div class="page">
+  <div class="page-header">
+    <h1>Practice Intelligence</h1>
+    <div class="sub">Aggregated across 122 real consultations at Lumiere Aesthetics &mdash; every number grounded in transcript evidence</div>
+  </div>
+
+  <!-- Top KPIs -->
+  <div class="kpi-row">
+    <div class="kpi">
+      <div class="kpi-val">122</div>
+      <div class="kpi-label">Consultations Analyzed</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-val">335</div>
+      <div class="kpi-label">Opportunities Identified</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-val" style="color:var(--amber)">313</div>
+      <div class="kpi-label">Opportunities Not Yet Actioned (New)</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-val">2.1</div>
+      <div class="kpi-label">Avg Opportunities per Consultation</div>
+    </div>
+  </div>
+
+  <div class="grid">
+
+    <!-- Opportunity Pipeline -->
+    <div class="tc">
+      <div class="tc-hdr">Opportunity Pipeline <span class="count">335 total</span></div>
+      <div class="donut-row">
+        <div class="donut-item">
+          <div class="donut-val" style="color:var(--amber)">313</div>
+          <div class="donut-label">New</div>
+          <div class="donut-sub">93.4% unactioned</div>
+        </div>
+        <div class="donut-item">
+          <div class="donut-val" style="color:var(--blue)">7</div>
+          <div class="donut-label">In Progress</div>
+          <div class="donut-sub">2.1%</div>
+        </div>
+        <div class="donut-item">
+          <div class="donut-val" style="color:var(--green)">11</div>
+          <div class="donut-label">Won</div>
+          <div class="donut-sub">3.3%</div>
+        </div>
+        <div class="donut-item">
+          <div class="donut-val" style="color:var(--rose)">4</div>
+          <div class="donut-label">Lost</div>
+          <div class="donut-sub">1.2%</div>
+        </div>
+      </div>
+      <div style="padding:0 14px 10px;font-size:11px;color:var(--rose);font-weight:600">93% of identified opportunities have no follow-up action &mdash; this is the revenue gap A360 closes.</div>
+    </div>
+
+    <!-- Disposition Breakdown -->
+    <div class="tc">
+      <div class="tc-hdr">Offering Dispositions (All Consultations) <span class="count">335</span></div>
+      <div style="padding:14px">
+        <div class="bar-row">
+          <div class="bar-label">Discussed</div>
+          <div class="bar-track"><div class="bar-fill" style="width:55.5%;background:var(--cyan)"></div></div>
+          <div class="bar-val">186</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Recommended (Receptive)</div>
+          <div class="bar-track"><div class="bar-fill" style="width:25.4%;background:var(--green)"></div></div>
+          <div class="bar-val">85</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Unknown / Unclassified</div>
+          <div class="bar-track"><div class="bar-fill" style="width:15.2%;background:var(--slate-400)"></div></div>
+          <div class="bar-val">51</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Recommended (Hesitant)</div>
+          <div class="bar-track"><div class="bar-fill" style="width:3.9%;background:var(--amber)"></div></div>
+          <div class="bar-val">13</div>
+        </div>
+      </div>
+      <div style="padding:0 14px 10px;font-size:11px;color:var(--slate-500)">85 patients were receptive to a recommendation but didn't book &mdash; highest-value follow-up targets.</div>
+    </div>
+
+    <!-- Top Products -->
+    <div class="tc grid-full">
+      <div class="tc-hdr">Top Products & Services in Consultations <span class="count">by frequency across 122 transcripts</span></div>
+      <div class="t-header" style="grid-template-columns:2fr 1fr 1fr 1fr">
+        <div>Product / Service</div>
+        <div style="text-align:center">Mentions</div>
+        <div style="text-align:center">Category</div>
+        <div style="text-align:center">Opportunity Signal</div>
+      </div>
+      <div class="t-row" style="grid-template-columns:2fr 1fr 1fr 1fr">
+        <div style="font-weight:600">Botox</div>
+        <div style="text-align:center;font-family:var(--mono);font-weight:600">31</div>
+        <div style="text-align:center;font-size:11px;color:var(--slate-500)">Injectable</div>
+        <div style="text-align:center"><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:4px;background:var(--green-bg);color:var(--green)">High Volume</span></div>
+      </div>
+      <div class="t-row" style="grid-template-columns:2fr 1fr 1fr 1fr">
+        <div style="font-weight:600">Xeomin</div>
+        <div style="text-align:center;font-family:var(--mono);font-weight:600">9</div>
+        <div style="text-align:center;font-size:11px;color:var(--slate-500)">Injectable</div>
+        <div style="text-align:center"><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:4px;background:var(--blue-bg);color:var(--blue)">Growing</span></div>
+      </div>
+      <div class="t-row" style="grid-template-columns:2fr 1fr 1fr 1fr">
+        <div style="font-weight:600">Gua Sha</div>
+        <div style="text-align:center;font-family:var(--mono);font-weight:600">9</div>
+        <div style="text-align:center;font-size:11px;color:var(--slate-500)">Skincare Tool</div>
+        <div style="text-align:center"><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:4px;background:var(--amber-bg);color:var(--amber)">Cross-Sell</span></div>
+      </div>
+      <div class="t-row" style="grid-template-columns:2fr 1fr 1fr 1fr">
+        <div style="font-weight:600">Laser Skin Resurfacing</div>
+        <div style="text-align:center;font-family:var(--mono);font-weight:600">9</div>
+        <div style="text-align:center;font-size:11px;color:var(--slate-500)">Laser</div>
+        <div style="text-align:center"><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:4px;background:var(--green-bg);color:var(--green)">High Value</span></div>
+      </div>
+      <div class="t-row" style="grid-template-columns:2fr 1fr 1fr 1fr">
+        <div style="font-weight:600">Dermal Filler</div>
+        <div style="text-align:center;font-family:var(--mono);font-weight:600">9</div>
+        <div style="text-align:center;font-size:11px;color:var(--slate-500)">Injectable</div>
+        <div style="text-align:center"><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:4px;background:var(--green-bg);color:var(--green)">High Volume</span></div>
+      </div>
+      <div class="t-row" style="grid-template-columns:2fr 1fr 1fr 1fr">
+        <div style="font-weight:600">Microneedling</div>
+        <div style="text-align:center;font-family:var(--mono);font-weight:600">9</div>
+        <div style="text-align:center;font-size:11px;color:var(--slate-500)">Skin Treatment</div>
+        <div style="text-align:center"><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:4px;background:var(--blue-bg);color:var(--blue)">Growing</span></div>
+      </div>
+      <div class="t-row" style="grid-template-columns:2fr 1fr 1fr 1fr">
+        <div style="font-weight:600">Dysport</div>
+        <div style="text-align:center;font-family:var(--mono);font-weight:600">6</div>
+        <div style="text-align:center;font-size:11px;color:var(--slate-500)">Injectable</div>
+        <div style="text-align:center"><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:4px;background:var(--blue-bg);color:var(--blue)">Steady</span></div>
+      </div>
+      <div class="t-row" style="grid-template-columns:2fr 1fr 1fr 1fr">
+        <div style="font-weight:600">Lip Filler</div>
+        <div style="text-align:center;font-family:var(--mono);font-weight:600">5</div>
+        <div style="text-align:center;font-size:11px;color:var(--slate-500)">Injectable</div>
+        <div style="text-align:center"><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:4px;background:var(--amber-bg);color:var(--amber)">Cross-Sell</span></div>
+      </div>
+    </div>
+
+    <!-- Consultation Types -->
+    <div class="tc">
+      <div class="tc-hdr">Consultation Type Distribution <span class="count">122</span></div>
+      <div style="padding:14px">
+        <div class="bar-row">
+          <div class="bar-label">Treatment Visit</div>
+          <div class="bar-track"><div class="bar-fill" style="width:44.7%;background:var(--teal)"></div></div>
+          <div class="bar-val">34</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Follow-Up</div>
+          <div class="bar-track"><div class="bar-fill" style="width:31.6%;background:var(--blue)"></div></div>
+          <div class="bar-val">24</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Initial Consultation</div>
+          <div class="bar-track"><div class="bar-fill" style="width:13.2%;background:var(--green)"></div></div>
+          <div class="bar-val">10</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Procedure</div>
+          <div class="bar-track"><div class="bar-fill" style="width:3.9%;background:var(--purple)"></div></div>
+          <div class="bar-val">3</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Unclassified</div>
+          <div class="bar-track"><div class="bar-fill" style="width:60.5%;background:var(--slate-400)"></div></div>
+          <div class="bar-val">46</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PE Revenue Model -->
+    <div class="pe-card">
+      <div class="pe-body">
+        <div class="pe-title">Revenue Recovery Model (Single Practice)</div>
+        <div class="pe-row"><span class="label">Consultations analyzed</span><span class="val">122</span></div>
+        <div class="pe-row"><span class="label">Opportunities identified</span><span class="val">335</span></div>
+        <div class="pe-row"><span class="label">Receptive but unbooked</span><span class="val" style="color:var(--amber)">85</span></div>
+        <div class="pe-row"><span class="label">Avg treatment value (industry)</span><span class="val">$1,500</span></div>
+        <div class="pe-row"><span class="label">Recovery rate (A360 target)</span><span class="val">15 &ndash; 25%</span></div>
+        <div class="pe-row" style="border-top:2px solid var(--teal);padding-top:8px;margin-top:4px"><span class="label" style="font-weight:700;color:var(--slate-900)">Estimated recoverable revenue</span><span class="val" style="color:var(--green);font-size:14px">$19,125 &ndash; $31,875</span></div>
+        <div style="font-size:10px;color:var(--slate-400);margin-top:8px;line-height:1.4">Based on 85 receptive-but-unbooked opportunities &times; $1,500 avg value &times; 15-25% recovery rate. Single practice, 122 consultations. Scale linearly across portfolio.</div>
+      </div>
+    </div>
+
+    <!-- Revenue Leak Summary -->
+    <div class="tc grid-full">
+      <div class="tc-hdr">Revenue Leak Detection <span class="count">5 leak categories</span></div>
+      <div class="t-header" style="grid-template-columns:2fr 1fr 2fr 1fr">
+        <div>Leak Type</div>
+        <div style="text-align:center">Detection Signal</div>
+        <div>Recovery Mechanism</div>
+        <div style="text-align:right">Est. Monthly Impact</div>
+      </div>
+      <div class="t-row" style="grid-template-columns:2fr 1fr 2fr 1fr">
+        <div style="font-weight:600">Missed Close Opportunities</div>
+        <div style="text-align:center;font-size:11px">Intent &ge; 0.7, no ask</div>
+        <div style="font-size:11px;color:var(--slate-600)">Coaching alert with specific feedback + quotes</div>
+        <div style="text-align:right;font-family:var(--mono);font-weight:600;color:var(--green)">$15,000</div>
+      </div>
+      <div class="t-row" style="grid-template-columns:2fr 1fr 2fr 1fr">
+        <div style="font-weight:600">Unresolved Price Objections</div>
+        <div style="text-align:center;font-size:11px">Price objection + unresolved</div>
+        <div style="font-size:11px;color:var(--slate-600)">Financing education + real-time prompts</div>
+        <div style="text-align:right;font-family:var(--mono);font-weight:600;color:var(--green)">$24,000</div>
+      </div>
+      <div class="t-row" style="grid-template-columns:2fr 1fr 2fr 1fr">
+        <div style="font-weight:600">No Membership Offered (Recurring)</div>
+        <div style="text-align:center;font-size:11px">Recurring pattern + no offer</div>
+        <div style="font-size:11px;color:var(--slate-600)">Automated flag + staff training</div>
+        <div style="text-align:right;font-family:var(--mono);font-weight:600;color:var(--green)">$20,000</div>
+      </div>
+      <div class="t-row" style="grid-template-columns:2fr 1fr 2fr 1fr">
+        <div style="font-weight:600">Cross-Sell Gap</div>
+        <div style="text-align:center;font-size:11px">No provider recs beyond primary</div>
+        <div style="font-size:11px;color:var(--slate-600)">Cross-sell agent provides specific recs</div>
+        <div style="text-align:right;font-family:var(--mono);font-weight:600;color:var(--green)">+35% AOV</div>
+      </div>
+      <div class="t-row" style="grid-template-columns:2fr 1fr 2fr 1fr">
+        <div style="font-weight:600">Interested but No Follow-Up</div>
+        <div style="text-align:center;font-size:11px">Receptive + no contact</div>
+        <div style="font-size:11px;color:var(--slate-600)">Opportunities agent + automated email within 48hrs</div>
+        <div style="text-align:right;font-family:var(--mono);font-weight:600;color:var(--green)">15-25% recovery</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <div class="meta">aggregated across 122 transcripts &middot; lumiere aesthetics &middot; 335 opportunities</div>
+  <a href="demo-products.html" class="next-link">Product Library &rarr;</a>
+</footer>
+
+</body>
+</html>

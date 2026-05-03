@@ -1,0 +1,491 @@
+{
+  "pass": 1,
+  "areas": {
+    "concern_areas": {
+      "value": [
+        "dynamic lines",
+        "texture",
+        "melasma",
+        "acne/breakouts"
+      ],
+      "evidence": [
+        {
+          "quote": "Texture issues. Oh, it's a mess.",
+          "speaker": "patient",
+          "confidence": 0.9
+        },
+        {
+          "quote": "Melasma City. I'm like, this is so freaking genetic, and all of us have it.",
+          "speaker": "patient",
+          "confidence": 0.85
+        }
+      ],
+      "missing_reason": null
+    },
+    "treatment_areas": {
+      "value": [
+        "forehead",
+        "glabella",
+        "lateral canthus",
+        "crow's feet",
+        "face (general for microneedling)"
+      ],
+      "evidence": [
+        {
+          "quote": "I'm gonna just take care of the lateral canthus line. Just a little tiny bit here and here",
+          "speaker": "provider",
+          "confidence": 0.95
+        },
+        {
+          "quote": "I'm gonna micro needle my whole face after you.",
+          "speaker": "patient",
+          "confidence": 0.9
+        }
+      ],
+      "missing_reason": null
+    }
+  },
+  "interests": {
+    "future_interests": {
+      "value": [
+        {
+          "evidence": {
+            "quote": "I'll get you on the books, like, in a month for everything else if you've got time.",
+            "speaker": "provider",
+            "confidence": 0.85
+          },
+          "interest": "Full Botox retreatment",
+          "interest_level": "high"
+        },
+        {
+          "evidence": {
+            "quote": "I mean, I have filler in my lips. I've had it done in February.",
+            "speaker": "patient",
+            "confidence": 0.8
+          },
+          "interest": "Dermal filler (lips)",
+          "interest_level": "medium"
+        },
+        {
+          "evidence": {
+            "quote": "After summer, do something. I gotta back and do getting my skin back. To where it was. I worked so hard to get it good, and I'm",
+            "speaker": "patient",
+            "confidence": 0.8
+          },
+          "interest": "Comprehensive skin restoration",
+          "interest_level": "high"
+        }
+      ],
+      "missing_reason": null
+    },
+    "stated_interests": {
+      "value": [
+        "Botox touch-up",
+        "Microneedling",
+        "Topical PDGRN (salmon sperm)"
+      ],
+      "evidence": [
+        {
+          "quote": "Are we doing a full retreatment today?",
+          "speaker": "patient",
+          "confidence": 0.9
+        },
+        {
+          "quote": "I'm gonna micro needle my whole face after you.",
+          "speaker": "patient",
+          "confidence": 0.95
+        },
+        {
+          "quote": "I'm literally microneedling, and I wanna try it. What is it? It's salmon sperm. It's PDGRN.",
+          "speaker": "provider",
+          "confidence": 0.85
+        }
+      ],
+      "missing_reason": null
+    }
+  },
+  "offerings": [
+    {
+      "area": "lateral canthus",
+      "name": "Botox",
+      "type": "service",
+      "evidence": {
+        "quote": "I'm gonna just take care of the lateral canthus line. Just a little tiny bit here and here, and gonna do my very best to make sure I okay. Don't bruise you. And then I'll get you on the books, like, in a month for everything else if you've got time.",
+        "speaker": "provider",
+        "confidence": 0.95
+      },
+      "quantity": "2 units",
+      "disposition": "performed",
+      "catalog_match": "Botox",
+      "catalog_match_type": "exact",
+      "guidance_discovery": {
+        "guidance_type": null,
+        "provider_guided": false,
+        "patient_reception": null,
+        "guidance_rationale": null,
+        "reception_evidence": null
+      }
+    },
+    {
+      "area": "forehead and glabella",
+      "name": "Botox",
+      "type": "service",
+      "evidence": {
+        "quote": "Why don't we do just 2 yeah. Just a little bit here. Okay. I won't give you a brow lift injection. Only because you've got a beautiful arch to your brow, and I don't wanna change that. I like how that looks. I'm gonna get this guy. Okay. Then just a little too units right there. Okay. 4 and 2. Yeah. It's, like, 12 units.",
+        "speaker": "provider",
+        "confidence": 0.9
+      },
+      "quantity": "12 units total (4 and 2 units mentioned, plus additional)",
+      "disposition": "performed",
+      "catalog_match": "Botox",
+      "catalog_match_type": "exact",
+      "guidance_discovery": {
+        "guidance_type": null,
+        "provider_guided": false,
+        "patient_reception": null,
+        "guidance_rationale": null,
+        "reception_evidence": null
+      }
+    },
+    {
+      "area": "face (general)",
+      "name": "Microneedling",
+      "type": "service",
+      "evidence": {
+        "quote": "I'm gonna micro needle my whole face after you. Texture issues. Oh, it's a mess.",
+        "speaker": "patient",
+        "confidence": 0.95
+      },
+      "quantity": null,
+      "disposition": "performed",
+      "catalog_match": "Microneedling",
+      "catalog_match_type": "exact",
+      "guidance_discovery": {
+        "guidance_type": null,
+        "provider_guided": false,
+        "patient_reception": null,
+        "guidance_rationale": null,
+        "reception_evidence": null
+      }
+    },
+    {
+      "area": null,
+      "name": "PDGRN (Salmon Sperm Topical)",
+      "type": "product",
+      "evidence": {
+        "quote": "I'm literally microneedling, and I wanna try it. What is it? It's salmon sperm. It's PDGRN. Some people are injecting it which is way off. Label, and I'm not gonna do that. But I do wanna try a topical",
+        "speaker": "provider",
+        "confidence": 0.85
+      },
+      "quantity": null,
+      "disposition": "discussed",
+      "catalog_match": null,
+      "catalog_match_type": null,
+      "guidance_discovery": {
+        "guidance_type": "adjunctive",
+        "provider_guided": true,
+        "patient_reception": "curious",
+        "guidance_rationale": "treatment_synergy",
+        "reception_evidence": "I'm literally microneedling, and I wanna try it. What is it?"
+      }
+    },
+    {
+      "area": "lips",
+      "name": "Lip Flip (Botox)",
+      "type": "service",
+      "evidence": {
+        "quote": "Let's see. Let's how do you feel about lip flips? Do they drive you nuts? I mean, I've had it done before, and I didn't really notice a difference. Okay. I mean, I I have filler in my lips. I've had it done in February. Stuffed it. I can definitely do a little bit of talks around your eyes if those bother you.",
+        "speaker": "provider",
+        "confidence": 0.85
+      },
+      "quantity": null,
+      "disposition": "recommended_declined",
+      "catalog_match": "Botox",
+      "catalog_match_type": "category",
+      "guidance_discovery": {
+        "guidance_type": "enhancement",
+        "provider_guided": true,
+        "patient_reception": "hesitant",
+        "guidance_rationale": "value_creation",
+        "reception_evidence": "I mean, I've had it done before, and I didn't really notice a difference. I don't wanna give you that either because I like your look projection now. Like, I don't wanna change that either."
+      }
+    },
+    {
+      "area": "crow's feet",
+      "name": "Botox (crow's feet/eyes)",
+      "type": "service",
+      "evidence": {
+        "quote": "I can definitely do a little bit of talks around your eyes if those bother you. The only risk is the bruise before a vacation.",
+        "speaker": "provider",
+        "confidence": 0.8
+      },
+      "quantity": null,
+      "disposition": "recommended_hesitant",
+      "catalog_match": "Botox",
+      "catalog_match_type": "exact",
+      "guidance_discovery": {
+        "guidance_type": "complementary",
+        "provider_guided": true,
+        "patient_reception": "hesitant",
+        "guidance_rationale": "timing_opportunity",
+        "reception_evidence": "The only risk is the bruise before a vacation. Yeah. Which mean, I think it'll if I do bruise, I think she might be gone, but she shouldn't be gone."
+      }
+    },
+    {
+      "area": "neck",
+      "name": "Dermal Filler",
+      "type": "service",
+      "evidence": {
+        "quote": "But I think that Yeah. Just a little around your next week. Yeah. But if it drives you nuts, though.",
+        "speaker": "provider",
+        "confidence": 0.65
+      },
+      "quantity": null,
+      "disposition": "discussed",
+      "catalog_match": "Dermal Filler",
+      "catalog_match_type": "exact",
+      "guidance_discovery": {
+        "guidance_type": "complementary",
+        "provider_guided": true,
+        "patient_reception": "unexplored",
+        "guidance_rationale": "treatment_synergy",
+        "reception_evidence": null
+      }
+    },
+    {
+      "area": null,
+      "name": "Bruise Cream",
+      "type": "product",
+      "evidence": {
+        "quote": "I'm gonna dab some bruise cream on there. Before you go. I'm gonna dab some bruise. I do. Yes. With the top off.",
+        "speaker": "provider",
+        "confidence": 0.85
+      },
+      "quantity": null,
+      "disposition": "purchased",
+      "catalog_match": null,
+      "catalog_match_type": null,
+      "guidance_discovery": {
+        "guidance_type": null,
+        "provider_guided": false,
+        "patient_reception": null,
+        "guidance_rationale": null,
+        "reception_evidence": null
+      }
+    },
+    {
+      "area": "forehead, glabella, crow's feet",
+      "name": "Botox (full retreatment)",
+      "type": "service",
+      "evidence": {
+        "quote": "I'll get you on the books, like, in a month for everything else if you've got time.",
+        "speaker": "provider",
+        "confidence": 0.85
+      },
+      "quantity": null,
+      "disposition": "scheduled",
+      "catalog_match": "Botox",
+      "catalog_match_type": "exact",
+      "guidance_discovery": {
+        "guidance_type": null,
+        "provider_guided": false,
+        "patient_reception": null,
+        "guidance_rationale": null,
+        "reception_evidence": null
+      }
+    }
+  ],
+  "patient_goals": {
+    "goals": {
+      "value": [
+        "Look refreshed and youthful for vacation",
+        "Improve skin texture",
+        "Maintain smooth forehead appearance"
+      ],
+      "evidence": [
+        {
+          "quote": "And you wanna look good in your photos.",
+          "speaker": "provider",
+          "confidence": 0.85
+        },
+        {
+          "quote": "I'm gonna micro needle my whole face after you. Texture issues.",
+          "speaker": "patient",
+          "confidence": 0.9
+        }
+      ],
+      "missing_reason": null
+    },
+    "primary_concern": {
+      "value": "Maintain Botox results before vacation; minimize movement and look refreshed for trip",
+      "evidence": [
+        {
+          "quote": "you're going on your trip. Yeah. You're like, I might just need it a little bit. Yes. I think it's fully I mean, I can move a little bit, but not much. Really good. And then because we went hard with it. The Botox.",
+          "speaker": "provider",
+          "confidence": 0.9
+        },
+        {
+          "quote": "And you wanna look good in your photos.",
+          "speaker": "provider",
+          "confidence": 0.85
+        }
+      ],
+      "missing_reason": null
+    },
+    "secondary_concerns": {
+      "value": [
+        "Texture issues on face",
+        "Melasma/hyperpigmentation",
+        "Acne or skin breakouts"
+      ],
+      "evidence": [
+        {
+          "quote": "I'm gonna micro needle my whole face after you. Texture issues. Oh, it's a mess.",
+          "speaker": "patient",
+          "confidence": 0.9
+        },
+        {
+          "quote": "I look at my aunts, like, with everything going on with my dad, I spend a lot of time with my aunts. And they're all, like, Melasma City. I'm like, this is so freaking genetic, and all of us have it.",
+          "speaker": "patient",
+          "confidence": 0.85
+        },
+        {
+          "quote": "Me unfortunately I couldn't put 10 pounds of makeup on to go anywhere because of this. **NAME** has just exploded. Mine is so bad.",
+          "speaker": "patient",
+          "confidence": 0.8
+        }
+      ],
+      "missing_reason": null
+    },
+    "anticipated_outcomes": {
+      "value": [
+        "Minimal bruising before vacation",
+        "Natural-looking results",
+        "Improved skin texture from microneedling",
+        "No funny talking or smiling on trip"
+      ],
+      "evidence": [
+        {
+          "quote": "The only risk is the bruise before a vacation. Yeah. Which mean, I think it'll if I do bruise, I think she might be gone, but she shouldn't be gone.",
+          "speaker": "patient",
+          "confidence": 0.9
+        },
+        {
+          "quote": "I don't want you to talk fun. Talking funny or smiling funny on your trip. I want you to feel really good.",
+          "speaker": "provider",
+          "confidence": 0.9
+        }
+      ],
+      "missing_reason": null
+    }
+  },
+  "visit_context": {
+    "referrals": {
+      "value": null,
+      "evidence": [],
+      "missing_reason": "No specific referral details provided"
+    },
+    "visit_type": {
+      "value": "treatment_visit",
+      "evidence": [
+        {
+          "quote": "Are we doing a full retreatment today?",
+          "speaker": "patient",
+          "confidence": 0.95
+        }
+      ],
+      "missing_reason": null
+    },
+    "referred_by": {
+      "value": null,
+      "evidence": [],
+      "missing_reason": "No referral source mentioned in transcript"
+    },
+    "motivation_type": {
+      "value": "life_transition",
+      "evidence": [
+        {
+          "quote": "you're going on your trip",
+          "speaker": "provider",
+          "confidence": 0.85
+        }
+      ],
+      "missing_reason": null
+    },
+    "reason_for_visit": {
+      "value": "Botox touch-up before vacation trip; also addressing texture concerns with microneedling",
+      "evidence": [
+        {
+          "quote": "you're going on your trip",
+          "speaker": "provider",
+          "confidence": 0.9
+        },
+        {
+          "quote": "I'm gonna micro needle my whole face after you",
+          "speaker": "patient",
+          "confidence": 0.9
+        }
+      ],
+      "missing_reason": null
+    },
+    "motivating_events": [
+      {
+        "event": "Vacation trip",
+        "timing": "next Tuesday",
+        "urgency": "high",
+        "evidence": {
+          "quote": "You're going on your trip. Yeah. You're like, I might just need it a little bit. Yes. I think it's fully I mean, I can move a little bit, but not much. Really good. And then because we went hard with it. The Botox. Don't know. Like, here. It's a high bruised wrist area out here, and I can do everything I can to not bruise you. And then even my best efforts, like, I bruised my own forehead the other day. Before, like, a week. Okay. Alright. But we're leaving next not this So not tomorrow. Yep. But next Tuesday.",
+          "speaker": "provider",
+          "confidence": 0.95
+        }
+      }
+    ]
+  },
+  "cross_sell_summary": {
+    "count": 4,
+    "attempted": true,
+    "reception_summary": "mixed"
+  },
+  "extraction_version": "3.2",
+  "goal_treatment_connections": [
+    {
+      "goal": "Look refreshed and good in vacation photos",
+      "evidence": {
+        "quote": "And you wanna look good in your photos.",
+        "speaker": "provider",
+        "confidence": 0.85
+      },
+      "treatment": "Botox touch-up",
+      "connection_made_by": "provider"
+    },
+    {
+      "goal": "Avoid funny talking or smiling on trip",
+      "evidence": {
+        "quote": "I don't want you to talk fun. Talking funny or smiling funny on your trip. I want you to feel really good.",
+        "speaker": "provider",
+        "confidence": 0.9
+      },
+      "treatment": "Minimal Botox touch-up (conservative dosing)",
+      "connection_made_by": "provider"
+    },
+    {
+      "goal": "Improve skin texture",
+      "evidence": {
+        "quote": "I'm gonna micro needle my whole face after you. Texture issues.",
+        "speaker": "patient",
+        "confidence": 0.9
+      },
+      "treatment": "Microneedling",
+      "connection_made_by": "patient"
+    }
+  ],
+  "membership_package_summary": {
+    "package_discussed": false,
+    "missed_opportunity": "Patient is a regular Botox patient on 3-4 month maintenance schedule and has been coming for approximately 2 years. No membership or package plan was discussed despite clear recurring treatment pattern and loyalty.",
+    "membership_discussed": false,
+    "recurring_treatments": [
+      "Botox - 4 month cadence (patient mentioned waiting 4 months between treatments)",
+      "Botox - 3-4 month cadence (provider mentioned preemptive treatment timing)"
+    ]
+  }
+}

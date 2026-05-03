@@ -239,6 +239,29 @@ nav{background:var(--teal);padding:0 24px}
       </div>
     </div>
 
+    <!-- Raw Extraction JSON -->
+    <div class="tc grid-full">
+      <div class="transcript-toggle" id="p1Toggle" onclick="togglePanel('p1')">
+        <div class="label">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 18l6-6-6-6"/><path d="M8 6l-6 6 6 6"/></svg>
+          Pass 1 — Raw Extraction JSON (Context &amp; Offerings)
+        </div>
+        <span class="arrow">&#9660;</span>
+      </div>
+      <div class="transcript-body" id="p1Body" style="max-height:400px"><pre id="p1Json" style="font-family:var(--mono);font-size:11px;line-height:1.5;color:var(--slate-700);white-space:pre-wrap;word-break:break-word"></pre></div>
+    </div>
+
+    <div class="tc grid-full">
+      <div class="transcript-toggle" id="p2Toggle" onclick="togglePanel('p2')">
+        <div class="label">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 18l6-6-6-6"/><path d="M8 6l-6 6 6 6"/></svg>
+          Pass 2 — Raw Extraction JSON (Outcome &amp; Intelligence)
+        </div>
+        <span class="arrow">&#9660;</span>
+      </div>
+      <div class="transcript-body" id="p2Body" style="max-height:400px"><pre id="p2Json" style="font-family:var(--mono);font-size:11px;line-height:1.5;color:var(--slate-700);white-space:pre-wrap;word-break:break-word"></pre></div>
+    </div>
+
     <!-- Checklist -->
     <div class="tc grid-full">
       <div class="tc-hdr">Visit Checklist <span class="count">12 / 15 completed</span></div>
@@ -279,6 +302,33 @@ function toggleTranscript() {
     document.getElementById('transcriptLines').innerHTML = TRANSCRIPT_HTML;
     body.dataset.loaded = '1';
   }
+}
+
+function togglePanel(id) {
+  var toggle = document.getElementById(id + 'Toggle');
+  var body = document.getElementById(id + 'Body');
+  toggle.classList.toggle('open');
+  body.classList.toggle('open');
+  if (body.classList.contains('open') && !body.dataset.loaded) {
+    loadExtractionJson(id);
+    body.dataset.loaded = '1';
+  }
+}
+
+function loadExtractionJson(pass) {
+  var el = document.getElementById(pass + 'Json');
+  el.textContent = 'Loading from Prompt Runner API...';
+  fetch('https://prompt-runner-production.up.railway.app/runs/e76b2648-3cf6-4bf6-b0d8-63f6692b5801')
+    .then(r => r.json())
+    .then(data => {
+      var key = pass === 'p1' ? 'prompt_1' : 'prompt_2';
+      var output = (data.outputs || {})[key] || {};
+      var parsed = output.parsed_json || output;
+      el.textContent = JSON.stringify(parsed, null, 2);
+    })
+    .catch(err => {
+      el.textContent = 'Error loading: ' + err.message;
+    });
 }
 
 var TRANSCRIPT_HTML = `

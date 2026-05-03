@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A360 — Product Library</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#f5f6f8;--white:#fff;
+  --slate-900:#1a1f2e;--slate-700:#374151;--slate-600:#4b5563;--slate-500:#6b7280;--slate-400:#9ca3af;--slate-200:#e5e7eb;--slate-100:#f3f4f6;
+  --teal:#1b4f6b;--teal-light:#2c6f8f;
+  --blue:#2563eb;--blue-bg:#eff6ff;
+  --green:#059669;--green-bg:#ecfdf5;--green-border:#a7f3d0;
+  --amber:#d97706;--amber-bg:#fffbeb;
+  --rose:#dc2626;--rose-bg:#fef2f2;
+  --purple:#7c3aed;--purple-bg:#f5f3ff;
+  --cyan:#0891b2;--cyan-bg:#ecfeff;
+  --shadow:0 1px 3px rgba(0,0,0,.06);--shadow-md:0 2px 8px rgba(0,0,0,.08);
+  --r:8px;--r-sm:6px;
+  --font:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+  --mono:'JetBrains Mono',monospace;
+}
+body{background:var(--bg);color:var(--slate-900);font-family:var(--font);-webkit-font-smoothing:antialiased;font-size:13px;line-height:1.5}
+nav{background:var(--teal);padding:0 24px}
+.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;height:48px;gap:24px}
+.logo{font-weight:800;font-size:15px;color:#fff;letter-spacing:-.02em;margin-right:auto}
+.logo span{color:rgba(255,255,255,.5)}
+.nav-links{display:flex;gap:2px}
+.nav-links a{color:rgba(255,255,255,.65);text-decoration:none;font-size:12px;font-weight:500;padding:6px 12px;border-radius:var(--r-sm);transition:all .12s}
+.nav-links a:hover{color:#fff;background:rgba(255,255,255,.1)}
+.nav-links a.active{color:#fff;background:rgba(255,255,255,.15)}
+.page{max-width:1100px;margin:0 auto;padding:20px 24px 48px}
+.page-header{margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--slate-200)}
+.page-header h1{font-size:18px;font-weight:700;letter-spacing:-.02em;margin-bottom:2px}
+.page-header .sub{font-size:12px;color:var(--slate-500)}
+
+/* Stats row */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
+.stat{background:var(--white);border:1px solid var(--slate-200);border-radius:var(--r);padding:12px 14px;box-shadow:var(--shadow)}
+.stat-val{font-family:var(--mono);font-size:20px;font-weight:700;letter-spacing:-.03em}
+.stat-label{font-size:10px;font-weight:600;color:var(--slate-500);text-transform:uppercase;letter-spacing:.04em}
+
+/* Grid */
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.grid-full{grid-column:1/-1}
+
+/* Card */
+.tc{background:var(--white);border:1px solid var(--slate-200);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden}
+.tc-hdr{background:var(--teal);color:#fff;padding:8px 14px;font-size:11px;font-weight:600;display:flex;justify-content:space-between;align-items:center}
+.tc-hdr .count{font-family:var(--mono);font-size:10px;background:rgba(255,255,255,.2);padding:2px 8px;border-radius:4px}
+
+/* Product hero */
+.product-hero{display:flex;gap:20px;padding:18px;border-bottom:1px solid var(--slate-100)}
+.product-logo{width:60px;height:60px;border-radius:var(--r);background:var(--slate-100);display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden}
+.product-logo img{max-width:100%;max-height:100%}
+.product-info{flex:1}
+.product-name{font-size:20px;font-weight:800;letter-spacing:-.02em;margin-bottom:2px}
+.product-meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.pm-tag{font-size:10px;font-weight:600;padding:2px 8px;border-radius:4px;border:1px solid}
+
+/* Detail rows */
+.detail-row{padding:10px 18px;border-bottom:1px solid var(--slate-100);display:flex;gap:12px}
+.detail-row:last-child{border-bottom:none}
+.detail-row:hover{background:var(--slate-100)}
+.dl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--slate-400);width:140px;flex-shrink:0;padding-top:2px}
+.dv{font-size:12px;color:var(--slate-700);flex:1;line-height:1.5}
+
+/* Objection card */
+.objection{background:var(--bg);border:1px solid var(--slate-200);border-radius:var(--r-sm);padding:10px 12px;margin-bottom:8px}
+.objection:last-child{margin-bottom:0}
+.obj-q{font-size:12px;font-weight:600;color:var(--rose);margin-bottom:4px}
+.obj-a{font-size:12px;color:var(--slate-600);line-height:1.5}
+
+/* Talking point */
+.tp{display:flex;align-items:flex-start;gap:8px;padding:6px 0;font-size:12px;color:var(--slate-700);border-bottom:1px solid var(--slate-100)}
+.tp:last-child{border-bottom:none}
+.tp-dot{width:5px;height:5px;border-radius:50%;background:var(--teal);margin-top:6px;flex-shrink:0}
+
+/* Alias tags */
+.alias-tags{display:flex;gap:4px;flex-wrap:wrap;padding:12px 18px}
+.alias{font-size:10px;font-weight:500;padding:3px 8px;border-radius:4px;background:var(--slate-100);color:var(--slate-600);border:1px solid var(--slate-200)}
+
+/* Data source */
+.ds-row{display:flex;align-items:center;gap:6px;padding:4px 0;font-size:11px;color:var(--slate-500)}
+.ds-dot{width:4px;height:4px;border-radius:50%;background:var(--green);flex-shrink:0}
+
+footer{max-width:1100px;margin:0 auto;padding:14px 24px;border-top:1px solid var(--slate-200);display:flex;justify-content:space-between;align-items:center}
+footer .meta{font-size:11px;color:var(--slate-400);font-family:var(--mono)}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="logo">AESTHETICS<span>360</span></div>
+    <div class="nav-links">
+      <a href="demo-hero.html">Overview</a>
+      <a href="demo-extraction.html">Extraction</a>
+      <a href="demo-agents.html">Agents</a>
+      <a href="demo-intelligence.html">Intelligence</a>
+      <a href="demo-products.html" class="active">Product Library</a>
+    </div>
+  </div>
+</nav>
+
+<div class="page">
+  <div class="page-header">
+    <h1>Product Ontology</h1>
+    <div class="sub">324 enriched products with relationships, concern mapping, and patient-language aliases &mdash; the knowledge graph powering every agent</div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-row">
+    <div class="stat"><div class="stat-val">324</div><div class="stat-label">Products Enriched</div></div>
+    <div class="stat"><div class="stat-val">571</div><div class="stat-label">Patient-Language Aliases</div></div>
+    <div class="stat"><div class="stat-val">348</div><div class="stat-label">Product Relationships</div></div>
+    <div class="stat"><div class="stat-val">39</div><div class="stat-label">Concern Areas</div></div>
+  </div>
+
+  <!-- Product Deep Dive: Morpheus8 -->
+  <div class="tc grid-full" style="margin-bottom:14px">
+    <div class="tc-hdr">Product Deep Dive <span class="count">from Global Library</span></div>
+    <div class="product-hero">
+      <div class="product-logo"><img src="https://wvpgmawrizwkmvfnwqfl.supabase.co/storage/v1/object/public/gl-content/logos/inmode.png" alt="InMode"></div>
+      <div class="product-info">
+        <div class="product-name">Morpheus8</div>
+        <div style="font-size:12px;color:var(--slate-600)">Fractional radiofrequency microneedling device for skin rejuvenation, tissue remodeling, and collagen stimulation</div>
+        <div class="product-meta">
+          <span class="pm-tag" style="background:var(--blue-bg);color:var(--blue);border-color:#bfdbfe">Device</span>
+          <span class="pm-tag" style="background:var(--green-bg);color:var(--green);border-color:var(--green-border)">FDA Cleared (510(k))</span>
+          <span class="pm-tag" style="background:var(--purple-bg);color:var(--purple);border-color:#c4b5fd">InMode</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="detail-row"><div class="dl">Treatment Time</div><div class="dv" style="font-family:var(--mono)">30 &ndash; 60 minutes</div></div>
+    <div class="detail-row"><div class="dl">Onset</div><div class="dv">Initial improvement at 2-3 weeks as skin heals</div></div>
+    <div class="detail-row"><div class="dl">Peak Effect</div><div class="dv">3-6 months as collagen remodeling completes</div></div>
+    <div class="detail-row"><div class="dl">Duration</div><div class="dv">12-18 months; results build with each treatment</div></div>
+    <div class="detail-row"><div class="dl">Sessions</div><div class="dv">1-3 sessions, 4-6 weeks apart</div></div>
+    <div class="detail-row"><div class="dl">Downtime</div><div class="dv">Minimal — 2-5 days redness, mild swelling, possible pinpoint crusting. Socially presentable by day 3.</div></div>
+    <div class="detail-row"><div class="dl">Mechanism</div><div class="dv">Combines fractional microneedling with bipolar RF energy. Gold-coated needles penetrate to adjustable depths (0.5-4mm) delivering RF heat that triggers deep collagen remodeling.</div></div>
+    <div class="detail-row"><div class="dl">Depth Settings</div><div class="dv">
+      <span style="font-family:var(--mono);font-size:11px">1-2mm</span> superficial (fine lines, texture, pores)<br>
+      <span style="font-family:var(--mono);font-size:11px">2-3mm</span> mid-depth (wrinkles, acne scars)<br>
+      <span style="font-family:var(--mono);font-size:11px">3-4mm</span> deep (skin laxity, remodeling)
+    </div></div>
+    <div class="detail-row"><div class="dl">Indications</div><div class="dv">Acne scarring, fine lines & wrinkles, skin laxity, enlarged pores</div></div>
+    <div class="detail-row"><div class="dl">Contraindications</div><div class="dv">Active skin infections, pacemaker/defibrillator, pregnancy/nursing, active acne in treatment area, history of keloid scarring, isotretinoin within 6 months</div></div>
+  </div>
+
+  <div class="grid">
+    <!-- Patient-Language Aliases -->
+    <div class="tc">
+      <div class="tc-hdr">Patient-Language Aliases <span class="count">9</span></div>
+      <div class="alias-tags">
+        <span class="alias">morpheus</span>
+        <span class="alias">morpheus 8</span>
+        <span class="alias">morpheus eight</span>
+        <span class="alias">RF microneedling</span>
+        <span class="alias">radiofrequency needling</span>
+        <span class="alias">that needle RF thing</span>
+        <span class="alias">InMode treatment</span>
+        <span class="alias">fractional RF</span>
+        <span class="alias">skin tightening needles</span>
+      </div>
+      <div style="padding:0 18px 12px;font-size:11px;color:var(--slate-500)">When a patient says any of these in a consultation, A360 maps it to the canonical Morpheus8 product entry for accurate extraction and cross-sell recommendations.</div>
+    </div>
+
+    <!-- Common Objections -->
+    <div class="tc">
+      <div class="tc-hdr">Common Objections &amp; Responses <span class="count">4</span></div>
+      <div style="padding:12px 14px">
+        <div class="objection">
+          <div class="obj-q">"It's expensive — why not just use a dermaroller at home?"</div>
+          <div class="obj-a">At-home dermarollers only penetrate the surface and don't deliver any RF energy. Morpheus8 reaches depths of up to 4mm AND delivers radiofrequency heat that triggers deep collagen remodeling — something no home device can do.</div>
+        </div>
+        <div class="objection">
+          <div class="obj-q">"I can't afford to take days off for recovery"</div>
+          <div class="obj-a">Most patients have redness similar to a sunburn for 2-3 days. Schedule Thursday or Friday, back to normal by Monday. Mineral makeup can be applied after 24-48 hours.</div>
+        </div>
+        <div class="objection">
+          <div class="obj-q">"Microneedling with needles — doesn't that hurt?"</div>
+          <div class="obj-a">We apply strong topical numbing cream 30-45 minutes before. Most patients feel only pressure and warmth. On a comfort scale, most rate it 3-5 out of 10.</div>
+        </div>
+        <div class="objection">
+          <div class="obj-q">"I've seen scary TikTok videos — is it really safe?"</div>
+          <div class="obj-a">Social media shows the most dramatic moments, not the full story. In experienced hands, Morpheus8 is very safe with millions of treatments worldwide. The key is having a trained provider who understands proper settings for your skin type.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sales Talking Points -->
+    <div class="tc">
+      <div class="tc-hdr">Sales Talking Points <span class="count">6</span></div>
+      <div style="padding:10px 14px">
+        <div class="tp"><div class="tp-dot"></div>Treats face, neck, AND body — versatile single-device solution</div>
+        <div class="tp"><div class="tp-dot"></div>Gold-coated needles minimize post-inflammatory hyperpigmentation — safe for all skin tones</div>
+        <div class="tp"><div class="tp-dot"></div>Results continue improving for 3-6 months after treatment — patients see progressive change</div>
+        <div class="tp"><div class="tp-dot"></div>Minimal downtime compared to ablative lasers — 2-3 days vs 7-14 days</div>
+        <div class="tp"><div class="tp-dot"></div>Adjustable depth settings allow customized treatment for each patient's specific concerns</div>
+        <div class="tp"><div class="tp-dot"></div>Combines two proven technologies (microneedling + RF) in a single treatment session</div>
+      </div>
+    </div>
+
+    <!-- Data Sources -->
+    <div class="tc">
+      <div class="tc-hdr">Data Sources <span class="count">7 sources</span></div>
+      <div style="padding:12px 14px">
+        <div class="ds-row"><div class="ds-dot"></div>InMode official product documentation</div>
+        <div class="ds-row"><div class="ds-dot"></div>FDA 510(k) clearance database</div>
+        <div class="ds-row"><div class="ds-dot"></div>Clinical studies and peer-reviewed literature</div>
+        <div class="ds-row"><div class="ds-dot"></div>Manufacturer training materials</div>
+        <div class="ds-row"><div class="ds-dot"></div>Provider clinical experience reports</div>
+        <div class="ds-row"><div class="ds-dot"></div>RealSelf patient reviews (aggregated)</div>
+        <div class="ds-row"><div class="ds-dot"></div>A360 consultation transcript analysis</div>
+      </div>
+      <div style="padding:0 14px 12px;font-size:10px;color:var(--slate-400)">
+        Evidence level: FDA-cleared (510(k)) for dermatological procedures and subdermal coagulation
+      </div>
+    </div>
+
+    <!-- How This Connects to Agents -->
+    <div class="tc grid-full">
+      <div class="tc-hdr">How Product Data Powers the Agent Pipeline</div>
+      <div style="padding:14px 18px;font-size:12px;color:var(--slate-600);line-height:1.6">
+        <p style="margin-bottom:10px">When a patient says <strong>"I want that RF needling thing for my acne scars"</strong> during a consultation, here's what happens:</p>
+        <div style="display:grid;grid-template-columns:auto 1fr;gap:6px 12px;margin-bottom:10px">
+          <span style="font-family:var(--mono);font-size:11px;font-weight:600;color:var(--teal)">1. EXTRACT</span>
+          <span>"RF needling" matches alias → canonical product: <strong>Morpheus8</strong></span>
+          <span style="font-family:var(--mono);font-size:11px;font-weight:600;color:var(--teal)">2. MATCH</span>
+          <span>"acne scars" maps to indication → confirms clinical appropriateness</span>
+          <span style="font-family:var(--mono);font-size:11px;font-weight:600;color:var(--teal)">3. CROSS-SELL</span>
+          <span>Product relationships → recommend complementary products (e.g., post-treatment skincare)</span>
+          <span style="font-family:var(--mono);font-size:11px;font-weight:600;color:var(--teal)">4. COACH</span>
+          <span>Sales talking points + objection responses → feed coaching agent recommendations</span>
+          <span style="font-family:var(--mono);font-size:11px;font-weight:600;color:var(--teal)">5. FOLLOW-UP</span>
+          <span>Results timeline + patient's words → personalized email: "The Morpheus8 we discussed for your acne scarring typically shows peak results at 3-6 months..."</span>
+        </div>
+        <p style="font-size:11px;color:var(--slate-500)">This is one product. The ontology has <strong>324 products</strong> with this level of enrichment, connected by <strong>348 relationships</strong> and matched to <strong>39 concern areas</strong> via <strong>571 patient-language aliases</strong>. That is the data moat.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- GL Viewer link -->
+  <div style="text-align:center;padding:16px 0">
+    <a href="https://gl-viewer.vercel.app" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:var(--r-sm);background:var(--teal);color:#fff;text-decoration:none;font-size:12px;font-weight:600">Browse All 324 Products &rarr;</a>
+    <div style="font-size:10px;color:var(--slate-400);margin-top:6px">Opens the Global Library Viewer (password: A360)</div>
+  </div>
+</div>
+
+<footer>
+  <div class="meta">gl_products: 324 &middot; gl_concerns: 39 &middot; gl_product_relationships: 348 &middot; supabase:wvpgmawrizwkmvfnwqfl</div>
+</footer>
+
+</body>
+</html>

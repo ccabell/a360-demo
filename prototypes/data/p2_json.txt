@@ -1,0 +1,422 @@
+{
+  "pass": 2,
+  "outcome": {
+    "status": {
+      "value": "treatment_performed",
+      "evidence": [
+        {
+          "quote": "Why don't we do just 2 yeah. Just a little bit here. Okay. I won't give you a brow lift injection. Only because you've got a beautiful arch to your brow, and I don't wanna change that. I like how that looks. I'm gonna get this guy. Okay. Then just a little too units right there. Okay. 4 and 2. Yeah. It's, like, 12 units.",
+          "speaker": "provider",
+          "confidence": 0.95
+        },
+        {
+          "quote": "I'm gonna just take care of the lateral canthus line. Just a little tiny bit here and here, and gonna do my very best to make sure I okay. Don't bruise you.",
+          "speaker": "provider",
+          "confidence": 0.95
+        },
+        {
+          "quote": "I'm literally microneedling, and I wanna try it.",
+          "speaker": "patient",
+          "confidence": 0.95
+        },
+        {
+          "quote": "I'm gonna dab some bruise cream on there. Before you go. I'm gonna dab some bruise.",
+          "speaker": "provider",
+          "confidence": 0.9
+        }
+      ],
+      "missing_reason": null
+    },
+    "summary": {
+      "value": "Patient received Botox touch-up treatment (12 units to forehead/glabella and lateral canthus) and microneedling to full face with topical PDGRN. Provider applied bruise cream post-treatment. Patient booked for full Botox retreatment in approximately one month.",
+      "evidence": [
+        {
+          "quote": "Why don't we do just 2 yeah. Just a little bit here. Okay. I won't give you a brow lift injection. Only because you've got a beautiful arch to your brow, and I don't wanna change that. I like how that looks. I'm gonna get this guy. Okay. Then just a little too units right there. Okay. 4 and 2. Yeah. It's, like, 12 units.",
+          "speaker": "provider",
+          "confidence": 0.95
+        },
+        {
+          "quote": "And then I'll get you on the books, like, in a month for everything else if you've got time.",
+          "speaker": "provider",
+          "confidence": 0.95
+        }
+      ],
+      "missing_reason": null
+    }
+  },
+  "concerns": [
+    {
+      "concern": "Bruising risk with Botox injection before vacation",
+      "category": "clinical",
+      "evidence": {
+        "quote": "It's a high bruised wrist area out here, and I can do everything I can to not bruise you. And then even my best efforts, like, I bruised my own forehead the other day.",
+        "speaker": "provider",
+        "confidence": 0.95
+      },
+      "response": "Provider acknowledged personal bruising history, explained bruising is unpredictable despite best efforts, but reassured patient that bruising should resolve before Tuesday trip. Applied bruise cream post-treatment.",
+      "addressed": true,
+      "raised_by": "provider"
+    },
+    {
+      "concern": "Botox resistance from early retreatment",
+      "category": "clinical",
+      "evidence": {
+        "quote": "The only thing about treating with Botox early is that you're setting yourself up for Botox resistance. Oh, okay. And think they talk about Botox resistant as happening, like, super commonly. And, honestly, I've only truly seen it, like, 3 times ever, and 1 of them was an aunt.",
+        "speaker": "provider",
+        "confidence": 0.95
+      },
+      "response": "Provider educated patient on Botox resistance risk, shared clinical experience (only seen 3 times), explained patient's typical 4-month maintenance schedule, and recommended conservative touch-up approach to avoid resistance development",
+      "addressed": true,
+      "raised_by": "provider"
+    },
+    {
+      "concern": "Alcohol consumption within 72 hours of injection (blood thinner effect)",
+      "category": "safety",
+      "evidence": {
+        "quote": "Any alcohol in the last 72 hours? A lot. Oh, no. Okay. What do think? Well, yesterday, I had a couple.",
+        "speaker": "provider",
+        "confidence": 0.95
+      },
+      "response": "Provider asked about recent alcohol consumption. Patient disclosed having 'a couple' drinks yesterday. Provider acknowledged but did not prohibit treatment, framing it as patient's choice with no pressure.",
+      "addressed": true,
+      "raised_by": "provider"
+    },
+    {
+      "concern": "Fish oil supplementation increasing bruising risk",
+      "category": "clinical",
+      "evidence": {
+        "quote": "I bruise every time because I take fish oil.",
+        "speaker": "patient",
+        "confidence": 0.9
+      },
+      "response": "Patient disclosed taking fish oil. Provider acknowledged this increases bruising risk but proceeded with treatment after patient accepted the risk.",
+      "addressed": true,
+      "raised_by": "patient"
+    },
+    {
+      "concern": "Melasma and acne breakouts (secondary skin concerns)",
+      "category": "clinical",
+      "evidence": {
+        "quote": "Me unfortunately I couldn't put 10 pounds of makeup on to go anywhere because of this. **NAME** has just exploded. Mine is so bad.",
+        "speaker": "patient",
+        "confidence": 0.9
+      },
+      "response": "Provider discussed genetic predisposition to melasma, acknowledged severity of patient's acne/breakouts, and incorporated microneedling with topical PDGRN to address texture and skin quality issues",
+      "addressed": true,
+      "raised_by": "patient"
+    },
+    {
+      "concern": "Hormonal factors (progestin vs progesterone) affecting skin",
+      "category": "clinical",
+      "evidence": {
+        "quote": "And then I'm on pill, which I think progesterone. Over both with Doctor. **NAME**. And Okay. Yep. And different using a progestin, rather than a progesterone, Progesterone Some are more androgenizing.",
+        "speaker": "provider",
+        "confidence": 0.85
+      },
+      "response": "Provider discussed patient's birth control medication and its potential androgenizing effects on skin, coordinated with patient's doctor regarding medication choice",
+      "addressed": true,
+      "raised_by": "provider"
+    }
+  ],
+  "next_steps": [
+    {
+      "owner": "provider",
+      "action": "Full Botox retreatment (forehead, glabella, crow's feet)",
+      "timing": "Approximately 1 month",
+      "evidence": {
+        "quote": "And then I'll get you on the books, like, in a month for everything else if you've got time.",
+        "speaker": "provider",
+        "confidence": 0.95
+      }
+    },
+    {
+      "owner": "patient",
+      "action": "Post-treatment aftercare: avoid alcohol, manage bruising with provided cream, follow microneedling recovery protocol",
+      "timing": "Immediately post-treatment and following days",
+      "evidence": {
+        "quote": "I'm gonna dab some bruise cream on there. Before you go.",
+        "speaker": "provider",
+        "confidence": 0.9
+      }
+    },
+    {
+      "owner": "provider",
+      "action": "Comprehensive skin restoration treatment plan (post-summer)",
+      "timing": "After summer",
+      "evidence": {
+        "quote": "After summer, do something. I gotta back and do getting my skin back. To where it was. I worked so hard to get it good, and I'm",
+        "speaker": "patient",
+        "confidence": 0.85
+      }
+    }
+  ],
+  "objections": [
+    {
+      "type": "timing",
+      "evidence": {
+        "quote": "The only risk is the bruise before a vacation. Yeah. Which mean, I think it'll if I do bruise, I think she might be gone, but she shouldn't be gone.",
+        "speaker": "patient",
+        "confidence": 0.9
+      },
+      "resolved": true,
+      "statement": "Concerned about bruising before vacation trip next Tuesday",
+      "resolution_approach": "Provider acknowledged bruising risk, offered conservative touch-up dosing instead of full treatment, applied bruise cream, and set realistic expectations that any bruising should resolve before trip"
+    },
+    {
+      "type": "fear",
+      "evidence": {
+        "quote": "I don't want you to talk fun. Talking funny or smiling funny on your trip. I want you to feel really good.",
+        "speaker": "provider",
+        "confidence": 0.95
+      },
+      "resolved": true,
+      "statement": "Concerned about funny talking or smiling on vacation due to Botox effects",
+      "resolution_approach": "Provider reassured patient with conservative dosing approach and explicit commitment to natural results: 'I don't want you to talk fun. Talking funny or smiling funny on your trip. I want you to feel really good.'"
+    }
+  ],
+  "hesitations": [
+    {
+      "topic": "Lip flip treatment",
+      "evidence": {
+        "quote": "I mean, I've had it done before, and I didn't really notice a difference. Okay. I mean, I I have filler in my lips. I've had it done in February. Stuffed it. I can definitely do a little bit of talks around your eyes if those bother you.",
+        "speaker": "patient",
+        "confidence": 0.9
+      },
+      "resolved": true,
+      "statement": "Patient expressed prior experience with lip flip showing no noticeable difference",
+      "resolution_approach": "Provider respected patient's prior experience and did not push the treatment, instead affirming provider's own preference for patient's current lip projection"
+    },
+    {
+      "topic": "Full Botox retreatment timing",
+      "evidence": {
+        "quote": "The only thing about treating with Botox early is that you're setting yourself up for Botox resistance. Oh, okay. And think they talk about Botox resistant as happening, like, super commonly. And, honestly, I've only truly seen it, like, 3 times ever",
+        "speaker": "provider",
+        "confidence": 0.9
+      },
+      "resolved": true,
+      "statement": "Patient expressed uncertainty about whether full treatment was needed immediately due to early preemptive appointment",
+      "resolution_approach": "Provider explained Botox resistance risk with early retreatment, educated patient on 4-month maintenance schedule, and offered conservative touch-up instead with plan to schedule full treatment in one month"
+    }
+  ],
+  "signal_tags": [
+    "positive_sentiment",
+    "future_language",
+    "treatment_interest_high"
+  ],
+  "patient_signals": {
+    "commitment_level": {
+      "value": "committed",
+      "evidence": [
+        {
+          "quote": "Are we doing a full retreatment today?",
+          "speaker": "patient",
+          "confidence": 0.95
+        },
+        {
+          "quote": "I'm gonna micro needle my whole face after you.",
+          "speaker": "patient",
+          "confidence": 0.95
+        },
+        {
+          "quote": "Why don't we do just 2 yeah. Just a little bit here.",
+          "speaker": "patient",
+          "confidence": 0.9
+        },
+        {
+          "quote": "After summer, do something. I gotta back and do getting my skin back. To where it was.",
+          "speaker": "patient",
+          "confidence": 0.85
+        }
+      ],
+      "missing_reason": null
+    }
+  },
+  "visit_checklist": [
+    {
+      "item_id": "safety_1",
+      "category": "safety",
+      "evidence": {
+        "quote": null,
+        "speaker": null,
+        "confidence": null
+      },
+      "completed": null,
+      "item_label": "Confirmed patient identity/chart"
+    },
+    {
+      "item_id": "safety_2",
+      "category": "safety",
+      "evidence": {
+        "quote": "Any alcohol in the last 72 hours? A lot. Oh, no. Okay. What do think? Well, yesterday, I had a couple. I bruise every time because I take fish oil.",
+        "speaker": "provider",
+        "confidence": 0.95
+      },
+      "completed": true,
+      "item_label": "Reviewed relevant medical history"
+    },
+    {
+      "item_id": "safety_3",
+      "category": "safety",
+      "evidence": {
+        "quote": "And then I'm on pill, which I think progesterone. Over both with Doctor. **NAME**. And Okay. Yep. And different using a progestin, rather than a progesterone, Progesterone Some are more androgenizing.",
+        "speaker": "provider",
+        "confidence": 0.85
+      },
+      "completed": true,
+      "item_label": "Discussed contraindications if applicable"
+    },
+    {
+      "item_id": "safety_4",
+      "category": "safety",
+      "evidence": {
+        "quote": "It's a high bruised wrist area out here, and I can do everything I can to not bruise you. And then even my best efforts, like, I bruised my own forehead the other day. The only risk is the bruise before a vacation.",
+        "speaker": "provider",
+        "confidence": 0.95
+      },
+      "completed": true,
+      "item_label": "Explained risks and side effects"
+    },
+    {
+      "item_id": "safety_5",
+      "category": "safety",
+      "evidence": {
+        "quote": "Why don't we do just 2 yeah. Just a little bit here. Okay. I won't give you a brow lift injection. Only because you've got a beautiful arch to your brow, and I don't wanna change that.",
+        "speaker": "patient",
+        "confidence": 0.9
+      },
+      "completed": true,
+      "item_label": "Obtained informed consent (for procedures)"
+    },
+    {
+      "item_id": "clinical_1",
+      "category": "clinical",
+      "evidence": {
+        "quote": "Are we doing a full retreatment today? Because it was I know. I feel like I'm early. I think we did it on purpose because you're going to you're going on your trip.",
+        "speaker": "patient",
+        "confidence": 0.95
+      },
+      "completed": true,
+      "item_label": "Confirmed chief complaint/reason for visit"
+    },
+    {
+      "item_id": "clinical_2",
+      "category": "clinical",
+      "evidence": {
+        "quote": "I don't think need a full treat. Treatment right now. But I'll do whatever you're like, **NAME**, I'm moving. I don't want you to do it. Like, I can totally wait on the full treatment, but just touching you up with a few units is gonna get you all off skew on your yeah, on your schedule",
+        "speaker": "provider",
+        "confidence": 0.9
+      },
+      "completed": true,
+      "item_label": "Explained treatment options"
+    },
+    {
+      "item_id": "clinical_3",
+      "category": "clinical",
+      "evidence": {
+        "quote": "I don't want you to talk fun. Talking funny or smiling funny on your trip. I want you to feel really good.",
+        "speaker": "provider",
+        "confidence": 0.95
+      },
+      "completed": true,
+      "item_label": "Set realistic expectations"
+    },
+    {
+      "item_id": "clinical_4",
+      "category": "clinical",
+      "evidence": {
+        "quote": "The only thing about treating with Botox early is that you're setting yourself up for Botox resistance. And usually I wait, like, 4 months, and I, you know, I like Totally. It's gone.",
+        "speaker": "provider",
+        "confidence": 0.9
+      },
+      "completed": true,
+      "item_label": "Discussed expected results timeline"
+    },
+    {
+      "item_id": "clinical_5",
+      "category": "clinical",
+      "evidence": {
+        "quote": "I'm gonna dab some bruise cream on there. Before you go. I'm gonna dab some bruise. I do. Yes. With the top off.",
+        "speaker": "provider",
+        "confidence": 0.95
+      },
+      "completed": true,
+      "item_label": "Explained aftercare/post-procedure instructions"
+    },
+    {
+      "item_id": "education_1",
+      "category": "education",
+      "evidence": {
+        "quote": "You got $20 off. 22. And with the lymph node, I mean,",
+        "speaker": "provider",
+        "confidence": 0.75
+      },
+      "completed": true,
+      "item_label": "Discussed pricing/investment"
+    },
+    {
+      "item_id": "education_2",
+      "category": "education",
+      "evidence": {
+        "quote": "I'm literally microneedling, and I wanna try it. What is it? It's salmon sperm. It's PDGRN. Some people are injecting it which is way off. Label, and I'm not gonna do that. But I do wanna try a topical",
+        "speaker": "provider",
+        "confidence": 0.9
+      },
+      "completed": true,
+      "item_label": "Discussed product/treatment education (PDGRN, microneedling)"
+    },
+    {
+      "item_id": "closing_1",
+      "category": "closing",
+      "evidence": {
+        "quote": "And then I'll get you on the books, like, in a month for everything else if you've got time.",
+        "speaker": "provider",
+        "confidence": 0.95
+      },
+      "completed": true,
+      "item_label": "Asked for commitment/booking"
+    },
+    {
+      "item_id": "closing_2",
+      "category": "closing",
+      "evidence": {
+        "quote": "And then I'll get you on the books, like, in a month for everything else if you've got time.",
+        "speaker": "provider",
+        "confidence": 0.95
+      },
+      "completed": true,
+      "item_label": "Confirmed next steps"
+    },
+    {
+      "item_id": "closing_3",
+      "category": "closing",
+      "evidence": {
+        "quote": null,
+        "speaker": null,
+        "confidence": null
+      },
+      "completed": null,
+      "item_label": "Provided contact information for questions"
+    }
+  ],
+  "extraction_version": "3.2",
+  "conversation_events": [
+    {
+      "speaker": "provider",
+      "evidence": {
+        "quote": "And then I'll get you on the books, like, in a month for everything else if you've got time.",
+        "speaker": "provider",
+        "confidence": 0.95
+      },
+      "event_type": "next_steps_mentioned"
+    },
+    {
+      "speaker": "provider",
+      "evidence": {
+        "quote": "I don't want you to feel, like, pushed into doing it because I think need a full treat. Treatment right now. But I'll do whatever you're like, **NAME**, I'm moving. I don't want you to do it. Like, I can totally wait on the full treatment, but just touching you up with a few units is gonna get you all off skew on your yeah, on your schedule",
+        "speaker": "provider",
+        "confidence": 0.9
+      },
+      "event_type": "objection_response"
+    }
+  ]
+}
