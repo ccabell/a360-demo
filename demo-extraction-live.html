@@ -107,6 +107,17 @@ nav{background:var(--teal);padding:0 24px}
 .ao-body{padding:14px;max-height:400px;overflow-y:auto}
 .ao-body pre{font-family:var(--mono);font-size:11px;line-height:1.5;white-space:pre-wrap;word-break:break-word;color:var(--slate-700)}
 
+/* Tabs */
+.tab-bar{display:flex;gap:0;background:var(--white);border:1px solid var(--slate-200);border-radius:var(--r) var(--r) 0 0;overflow:hidden;margin-bottom:0}
+.tab{flex:1;padding:10px 14px;text-align:center;font-size:12px;font-weight:600;color:var(--slate-500);cursor:pointer;border-right:1px solid var(--slate-100);transition:all .12s;user-select:none}
+.tab:last-child{border-right:none}
+.tab:hover{background:var(--slate-100);color:var(--slate-700)}
+.tab.active{background:var(--teal);color:#fff}
+.tab-panel{display:none;background:var(--white);border:1px solid var(--slate-200);border-top:none;border-radius:0 0 var(--r) var(--r);box-shadow:var(--shadow);overflow:hidden;margin-bottom:14px}
+.tab-panel.active{display:block}
+.tab-panel-inner{max-height:600px;overflow-y:auto}
+.tab-panel pre{font-family:var(--mono);font-size:11px;line-height:1.5;color:var(--slate-700);white-space:pre-wrap;word-break:break-word;padding:14px}
+
 /* Empty state */
 .empty{text-align:center;padding:40px 20px;color:var(--slate-400);font-size:13px}
 
@@ -151,32 +162,50 @@ nav{background:var(--teal);padding:0 24px}
     <div class="meta-item"><div class="meta-lbl">Outcome</div><div class="meta-val" id="metaOutcome">—</div></div>
   </div>
 
-  <!-- Transcript (populated dynamically) -->
-  <div class="tc" id="transcriptCard" style="display:none">
-    <div class="transcript-toggle" onclick="this.classList.toggle('open');document.getElementById('transcriptBody').classList.toggle('open')">
-      <div class="label">Full Transcript <span id="transcriptMeta" style="font-size:10px;font-weight:500;color:var(--slate-400);font-family:var(--mono)"></span></div>
-      <span class="arrow">&#9660;</span>
-    </div>
-    <div class="transcript-body" id="transcriptBody"></div>
-  </div>
+  <!-- Main content: empty state before run selected -->
+  <div id="emptyState"><div class="empty">Select a run above to view extraction output</div></div>
 
-  <!-- Main content (populated dynamically) -->
-  <div id="content"><div class="empty">Select a run above to view extraction output</div></div>
+  <!-- Tabbed view (hidden until run loaded) -->
+  <div id="tabbedView" style="display:none">
+    <div class="tab-bar" id="tabBar">
+      <div class="tab active" data-tab="extraction" onclick="switchTab('extraction')">Extraction</div>
+      <div class="tab" data-tab="transcript" onclick="switchTab('transcript')">Full Transcript <span id="transcriptMeta" style="font-size:10px;font-weight:400;font-family:var(--mono)"></span></div>
+      <div class="tab" data-tab="json-p1" onclick="switchTab('json-p1')">Pass 1 JSON</div>
+      <div class="tab" data-tab="json-p2" onclick="switchTab('json-p2')">Pass 2 JSON</div>
+      <div class="tab" data-tab="json-full" onclick="switchTab('json-full')">Full Run JSON</div>
+    </div>
+
+    <!-- Tab: Extraction (rendered cards) -->
+    <div class="tab-panel active" id="panel-extraction">
+      <div style="padding:14px" id="content"></div>
+    </div>
+
+    <!-- Tab: Transcript -->
+    <div class="tab-panel" id="panel-transcript">
+      <div class="tab-panel-inner" id="transcriptBody" style="padding:14px"></div>
+    </div>
+
+    <!-- Tab: Pass 1 JSON -->
+    <div class="tab-panel" id="panel-json-p1">
+      <div class="tab-panel-inner"><pre id="jsonP1"></pre></div>
+    </div>
+
+    <!-- Tab: Pass 2 JSON -->
+    <div class="tab-panel" id="panel-json-p2">
+      <div class="tab-panel-inner"><pre id="jsonP2"></pre></div>
+    </div>
+
+    <!-- Tab: Full Run JSON -->
+    <div class="tab-panel" id="panel-json-full">
+      <div class="tab-panel-inner"><pre id="jsonFull"></pre></div>
+    </div>
+  </div>
 
   <!-- Agent execution -->
   <div id="agentSection" style="display:none">
     <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--slate-400);margin:14px 0 8px">Run Downstream Agents</div>
     <div class="agent-strip" id="agentStrip"></div>
     <div id="agentOutputs"></div>
-  </div>
-
-  <!-- Raw JSON -->
-  <div class="tc" id="jsonCard" style="display:none">
-    <div class="json-toggle" onclick="this.classList.toggle('open');document.getElementById('jsonBody').classList.toggle('open')">
-      <div class="label" style="font-size:12px;font-weight:600;color:var(--slate-700);display:flex;align-items:center;gap:8px">Full Extraction JSON</div>
-      <span class="arrow" style="font-size:14px;color:var(--slate-400)">&#9660;</span>
-    </div>
-    <div class="json-body" id="jsonBody"><pre id="jsonPre"></pre></div>
   </div>
 </div>
 
@@ -240,6 +269,11 @@ function setStatus(type, text) {
   el.textContent = text;
 }
 
+function switchTab(tabId) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tabId));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.toggle('active', p.id === 'panel-' + tabId));
+}
+
 async function loadRun(runId) {
   if (!runId) return;
   currentRunId = runId;
@@ -256,10 +290,22 @@ async function loadRun(runId) {
     const p1 = (outputs.prompt_1 || {}).parsed_json || {};
     const p2 = (outputs.prompt_2 || {}).parsed_json || {};
 
+    // Show tabbed view
+    document.getElementById('emptyState').style.display = 'none';
+    document.getElementById('tabbedView').style.display = 'block';
+
     // Load transcript
     if (run.transcript_id) {
       loadTranscript(run.transcript_id);
     }
+
+    // Populate JSON tabs
+    document.getElementById('jsonP1').textContent = JSON.stringify(p1, null, 2);
+    document.getElementById('jsonP2').textContent = JSON.stringify(p2, null, 2);
+    document.getElementById('jsonFull').textContent = JSON.stringify(run, null, 2);
+
+    // Build dynamic agent output tabs
+    buildAgentTabs(outputs);
 
     // Meta bar
     document.getElementById('metaBar').style.display = 'flex';
@@ -277,9 +323,8 @@ async function loadRun(runId) {
     // Agent section
     renderAgentSection(outputs);
 
-    // JSON viewer
-    document.getElementById('jsonCard').style.display = 'block';
-    document.getElementById('jsonPre').textContent = JSON.stringify({pass_1: p1, pass_2: p2}, null, 2);
+    // Default to extraction tab
+    switchTab('extraction');
 
     setStatus('ready', 'Loaded');
     document.getElementById('footerMeta').textContent = 'run:' + runId.substring(0,8) + ' | ' + (run.created_at||'').substring(0,10);
@@ -407,6 +452,47 @@ function renderExtraction(p1, p2) {
   el.innerHTML = html;
 }
 
+const AGENT_LABELS = {
+  cross_sell_guidance_v3: 'Cross-Sell',
+  opportunities_agent: 'Opportunities',
+  email_campaign: 'Email',
+  coaching_pipeline: 'Coaching',
+  coaching_evidence_extractor: 'Coaching Evidence',
+  coaching_generator: 'Coaching Gen',
+};
+
+function buildAgentTabs(outputs) {
+  const downstream = outputs.downstream || {};
+  const tabBar = document.getElementById('tabBar');
+  const tabbedView = document.getElementById('tabbedView');
+
+  // Remove any existing agent tabs/panels
+  document.querySelectorAll('.agent-tab').forEach(el => el.remove());
+  document.querySelectorAll('.agent-panel').forEach(el => el.remove());
+
+  Object.keys(downstream).forEach(agentId => {
+    const result = downstream[agentId].result;
+    if (!result || result.error) return;
+    const label = AGENT_LABELS[agentId] || agentId.replace(/_/g,' ');
+    const tabId = 'agent-' + agentId;
+
+    // Add tab
+    const tab = document.createElement('div');
+    tab.className = 'tab agent-tab';
+    tab.dataset.tab = tabId;
+    tab.onclick = function(){ switchTab(tabId); };
+    tab.textContent = label;
+    tabBar.appendChild(tab);
+
+    // Add panel
+    const panel = document.createElement('div');
+    panel.className = 'tab-panel agent-panel';
+    panel.id = 'panel-' + tabId;
+    panel.innerHTML = '<div class="tab-panel-inner"><pre>' + esc(JSON.stringify(result, null, 2)) + '</pre></div>';
+    tabbedView.appendChild(panel);
+  });
+}
+
 function renderAgentSection(outputs) {
   const section = document.getElementById('agentSection');
   section.style.display = 'block';
@@ -449,8 +535,30 @@ async function runAgent(agentId) {
     btn.className = 'agent-btn done';
     btn.innerHTML = '&#10003; ' + agentId.replace(/_/g,' ');
 
-    const outputsDiv = document.getElementById('agentOutputs');
-    outputsDiv.innerHTML = '<div class="agent-output"><div class="ao-hdr">' + agentId.replace(/_/g,' ') + ' <span style="font-size:10px;color:var(--green);font-weight:600">Just ran</span></div><div class="ao-body"><pre>' + esc(JSON.stringify(result, null, 2)) + '</pre></div></div>' + outputsDiv.innerHTML;
+    // Add agent tab
+    const label = AGENT_LABELS[agentId] || agentId.replace(/_/g,' ');
+    const tabId = 'agent-' + agentId;
+    // Remove existing tab/panel for this agent if re-run
+    document.querySelectorAll('[data-tab="' + tabId + '"]').forEach(el => el.remove());
+    document.getElementById('panel-' + tabId)?.remove();
+
+    const tabBar = document.getElementById('tabBar');
+    const tabbedView = document.getElementById('tabbedView');
+    const tab = document.createElement('div');
+    tab.className = 'tab agent-tab';
+    tab.dataset.tab = tabId;
+    tab.onclick = function(){ switchTab(tabId); };
+    tab.innerHTML = label + ' <span style="font-size:9px;color:var(--green)">NEW</span>';
+    tabBar.appendChild(tab);
+
+    const panel = document.createElement('div');
+    panel.className = 'tab-panel agent-panel';
+    panel.id = 'panel-' + tabId;
+    panel.innerHTML = '<div class="tab-panel-inner"><pre>' + esc(JSON.stringify(result, null, 2)) + '</pre></div>';
+    tabbedView.appendChild(panel);
+
+    // Switch to the new tab
+    switchTab(tabId);
   } catch(e) {
     btn.className = 'agent-btn';
     btn.innerHTML = '&#9888; ' + agentId.replace(/_/g,' ');
