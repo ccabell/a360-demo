@@ -1,0 +1,11 @@
+{
+  "projectSettings": {
+    "framework": null,
+    "buildCommand": "",
+    "outputDirectory": "."
+  },
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/", "destination": "/demo-hero.html" }
+  ]
+}

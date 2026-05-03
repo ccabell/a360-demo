@@ -4,294 +4,107 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>A360 Intelligence Platform</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#f5f6f8;--white:#fff;
+  --slate-900:#1a1f2e;--slate-700:#374151;--slate-600:#4b5563;--slate-500:#6b7280;--slate-400:#9ca3af;--slate-200:#e5e7eb;--slate-100:#f3f4f6;
+  --teal:#1b4f6b;--teal-light:#2c6f8f;--teal-dark:#143d54;
+  --blue:#2563eb;--blue-bg:#eff6ff;
+  --green:#059669;--green-bg:#ecfdf5;
+  --amber:#d97706;--amber-bg:#fffbeb;
+  --rose:#dc2626;--rose-bg:#fef2f2;
+  --purple:#7c3aed;--purple-bg:#f5f3ff;
+  --shadow:0 1px 3px rgba(0,0,0,.06);
+  --shadow-md:0 2px 8px rgba(0,0,0,.08);
+  --r:8px;--r-sm:6px;
+  --font:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+  --mono:'JetBrains Mono',monospace;
+}
+body{background:var(--bg);color:var(--slate-900);font-family:var(--font);-webkit-font-smoothing:antialiased;font-size:13px;line-height:1.5}
 
-  :root {
-    --bg: #fafbfc;
-    --white: #ffffff;
-    --text-primary: #1a1a2e;
-    --text-secondary: #5a5a7a;
-    --text-muted: #8e8ea0;
-    --border: #e8e8ef;
-    --border-light: #f0f0f5;
-    --purple: #6c5ce7;
-    --purple-light: #a29bfe;
-    --purple-bg: #f3f1ff;
-    --purple-border: #e0dafb;
-    --green: #00b894;
-    --green-bg: #e6f9f3;
-    --green-border: #b8f0de;
-    --blue: #0984e3;
-    --blue-bg: #e8f4fd;
-    --blue-border: #b3d9f5;
-    --orange: #f39c12;
-    --orange-bg: #fef5e7;
-    --orange-border: #fce4b8;
-    --rose: #e84393;
-    --rose-bg: #fde8f3;
-    --rose-border: #f5bdd9;
-    --shadow-sm: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.02);
-    --shadow-md: 0 4px 12px rgba(0,0,0,0.06), 0 1px 4px rgba(0,0,0,0.04);
-    --shadow-lg: 0 12px 40px rgba(0,0,0,0.08);
-    --radius: 12px;
-    --radius-sm: 8px;
-    --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  }
+/* Nav */
+nav{background:var(--teal);padding:0 24px}
+.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;height:48px;gap:24px}
+.logo{font-weight:800;font-size:15px;color:#fff;letter-spacing:-.02em;margin-right:auto}
+.logo span{color:rgba(255,255,255,.5)}
+.nav-links{display:flex;gap:2px}
+.nav-links a{color:rgba(255,255,255,.65);text-decoration:none;font-size:12px;font-weight:500;padding:6px 12px;border-radius:var(--r-sm);transition:all .12s}
+.nav-links a:hover{color:#fff;background:rgba(255,255,255,.1)}
+.nav-links a.active{color:#fff;background:rgba(255,255,255,.15)}
 
-  body {
-    background: var(--bg);
-    color: var(--text-primary);
-    font-family: var(--font);
-    -webkit-font-smoothing: antialiased;
-  }
+/* Page */
+.page{max-width:1100px;margin:0 auto;padding:20px 24px 48px}
+.page-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid var(--slate-200)}
+.page-header h1{font-size:18px;font-weight:700;letter-spacing:-.02em}
+.page-header p{font-size:12px;color:var(--slate-500)}
 
-  /* Nav */
-  nav {
-    background: var(--white);
-    border-bottom: 1px solid var(--border);
-    padding: 0 32px;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
-  .nav-inner {
-    max-width: 1120px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 60px;
-  }
-  .logo {
-    font-weight: 800;
-    font-size: 18px;
-    letter-spacing: -0.03em;
-    color: var(--text-primary);
-    display: flex;
-    align-items: center;
-    gap: 2px;
-  }
-  .logo .mark { color: var(--purple); }
-  .nav-links { display: flex; gap: 4px; }
-  .nav-links a {
-    color: var(--text-secondary);
-    text-decoration: none;
-    font-size: 13px;
-    font-weight: 500;
-    padding: 8px 14px;
-    border-radius: var(--radius-sm);
-    transition: all 0.15s;
-  }
-  .nav-links a:hover { background: var(--bg); color: var(--text-primary); }
-  .nav-links a.active { background: var(--purple-bg); color: var(--purple); }
+/* KPI row */
+.kpi-row{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:20px}
+.kpi{background:var(--white);border:1px solid var(--slate-200);border-radius:var(--r);padding:14px 16px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.kpi:nth-child(1)::before{background:var(--teal)}
+.kpi:nth-child(2)::before{background:var(--blue)}
+.kpi:nth-child(3)::before{background:var(--green)}
+.kpi:nth-child(4)::before{background:var(--amber)}
+.kpi:nth-child(5)::before{background:var(--rose)}
+.kpi-val{font-family:var(--mono);font-size:24px;font-weight:700;letter-spacing:-.03em;line-height:1;margin-bottom:2px}
+.kpi-label{font-size:11px;font-weight:500;color:var(--slate-500);margin-bottom:8px}
+.kpi-tags{display:flex;gap:3px;flex-wrap:wrap}
+.tag{font-size:9px;font-weight:600;padding:2px 6px;border-radius:4px;letter-spacing:.02em}
+.tag-teal{background:#e6f0f5;color:var(--teal)}
+.tag-blue{background:var(--blue-bg);color:var(--blue)}
+.tag-green{background:var(--green-bg);color:var(--green)}
+.tag-amber{background:var(--amber-bg);color:var(--amber)}
+.tag-rose{background:var(--rose-bg);color:var(--rose)}
 
-  /* Hero */
-  .hero {
-    max-width: 1120px;
-    margin: 0 auto;
-    padding: 72px 32px 48px;
-    text-align: center;
-  }
-  .hero-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: var(--purple-bg);
-    border: 1px solid var(--purple-border);
-    border-radius: 100px;
-    padding: 6px 16px 6px 12px;
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--purple);
-    margin-bottom: 28px;
-  }
-  .hero-badge .dot {
-    width: 7px; height: 7px;
-    background: var(--green);
-    border-radius: 50%;
-    animation: pulse 2s ease-in-out infinite;
-  }
-  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+/* Pipeline */
+.section-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--slate-400);margin-bottom:10px}
+.pipeline-card{background:var(--white);border:1px solid var(--slate-200);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden;margin-bottom:20px}
+.pipeline-header{background:var(--teal);color:#fff;padding:10px 16px;font-size:12px;font-weight:600}
+.pipeline-row{display:grid;grid-template-columns:repeat(6,1fr)}
+.pipeline-step{padding:16px 14px;border-right:1px solid var(--slate-100);text-align:center;transition:background .12s}
+.pipeline-step:last-child{border-right:none}
+.pipeline-step:hover{background:var(--slate-100)}
+.step-num{font-size:9px;font-weight:700;color:var(--teal);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.step-name{font-size:12px;font-weight:700;color:var(--slate-900);margin-bottom:2px}
+.step-desc{font-size:10px;color:var(--slate-500);line-height:1.4}
 
-  .hero h1 {
-    font-size: 48px;
-    font-weight: 800;
-    letter-spacing: -0.035em;
-    line-height: 1.1;
-    margin-bottom: 18px;
-    color: var(--text-primary);
-  }
-  .hero h1 .accent { color: var(--purple); }
-  .hero p {
-    color: var(--text-secondary);
-    font-size: 17px;
-    line-height: 1.65;
-    max-width: 580px;
-    margin: 0 auto 40px;
-  }
+/* Value prop */
+.value-section{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}
+.value-card{background:var(--white);border:1px solid var(--slate-200);border-radius:var(--r);padding:16px 18px;box-shadow:var(--shadow);border-left:3px solid var(--teal)}
+.value-card h3{font-size:13px;font-weight:700;margin-bottom:4px}
+.value-card p{font-size:12px;color:var(--slate-600);line-height:1.5}
 
-  /* CTAs */
-  .ctas { display: flex; gap: 12px; justify-content: center; margin-bottom: 56px; }
-  .btn {
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 12px 24px; border-radius: var(--radius-sm);
-    font-weight: 600; font-size: 14px; text-decoration: none;
-    transition: all 0.2s; cursor: pointer; border: none; font-family: var(--font);
-  }
-  .btn-primary {
-    background: var(--purple); color: white;
-    box-shadow: 0 2px 8px rgba(108,92,231,0.3);
-  }
-  .btn-primary:hover { background: #5b4bd5; box-shadow: 0 4px 14px rgba(108,92,231,0.4); transform: translateY(-1px); }
-  .btn-secondary {
-    background: var(--white); color: var(--text-secondary);
-    border: 1px solid var(--border); box-shadow: var(--shadow-sm);
-  }
-  .btn-secondary:hover { border-color: var(--purple-border); color: var(--purple); background: var(--purple-bg); }
+/* Table card */
+.table-card{background:var(--white);border:1px solid var(--slate-200);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden;margin-bottom:20px}
+.table-card .t-header{background:var(--teal);color:#fff;display:grid;padding:8px 16px;font-size:11px;font-weight:600}
+.table-card .t-row{display:grid;padding:8px 16px;border-bottom:1px solid var(--slate-100);font-size:12px;align-items:center}
+.table-card .t-row:last-child{border-bottom:none}
+.table-card .t-row:hover{background:var(--slate-100)}
 
-  /* KPI Strip */
-  .kpi-strip {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 14px;
-    max-width: 1120px;
-    margin: 0 auto 56px;
-    padding: 0 32px;
-  }
-  .kpi-card {
-    background: var(--white);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 20px;
-    box-shadow: var(--shadow-sm);
-    opacity: 0; transform: translateY(10px);
-    animation: fadeUp 0.4s ease forwards;
-    transition: box-shadow 0.2s, border-color 0.2s;
-  }
-  .kpi-card:hover { box-shadow: var(--shadow-md); border-color: var(--purple-border); }
-  .kpi-card:nth-child(1) { animation-delay: 0.05s; }
-  .kpi-card:nth-child(2) { animation-delay: 0.1s; }
-  .kpi-card:nth-child(3) { animation-delay: 0.15s; }
-  .kpi-card:nth-child(4) { animation-delay: 0.2s; }
-  .kpi-card:nth-child(5) { animation-delay: 0.25s; }
-  @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+/* CTA strip */
+.cta-strip{display:flex;gap:10px;justify-content:center;padding:20px 0}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border-radius:var(--r-sm);font-weight:600;font-size:12px;text-decoration:none;font-family:var(--font);border:none;cursor:pointer;transition:all .15s}
+.btn-primary{background:var(--teal);color:#fff;box-shadow:0 1px 4px rgba(27,79,107,.3)}
+.btn-primary:hover{background:var(--teal-light)}
+.btn-secondary{background:var(--white);color:var(--slate-700);border:1px solid var(--slate-200)}
+.btn-secondary:hover{border-color:var(--teal);color:var(--teal)}
 
-  .kpi-icon {
-    width: 36px; height: 36px; border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 16px; margin-bottom: 14px;
-  }
-  .kpi-value {
-    font-size: 30px; font-weight: 800; letter-spacing: -0.03em;
-    line-height: 1; margin-bottom: 4px; color: var(--text-primary);
-  }
-  .kpi-label {
-    font-size: 12px; font-weight: 500; color: var(--text-muted);
-    margin-bottom: 12px;
-  }
-  .kpi-tags { display: flex; gap: 4px; flex-wrap: wrap; }
-  .tag {
-    display: inline-flex; align-items: center;
-    padding: 3px 8px; border-radius: 6px;
-    font-size: 10px; font-weight: 600; letter-spacing: 0.02em;
-  }
-  .tag-purple { background: var(--purple-bg); color: var(--purple); }
-  .tag-green { background: var(--green-bg); color: var(--green); }
-  .tag-blue { background: var(--blue-bg); color: var(--blue); }
-  .tag-orange { background: var(--orange-bg); color: var(--orange); }
-  .tag-rose { background: var(--rose-bg); color: var(--rose); }
-
-  /* Pipeline */
-  .pipeline-section {
-    max-width: 1120px; margin: 0 auto; padding: 0 32px 64px;
-  }
-  .section-header {
-    display: flex; align-items: center; gap: 14px;
-    margin-bottom: 24px;
-  }
-  .section-header h2 {
-    font-size: 16px; font-weight: 700; letter-spacing: -0.02em;
-    color: var(--text-primary); white-space: nowrap;
-  }
-  .section-header .line { flex: 1; height: 1px; background: var(--border); }
-
-  .pipeline {
-    display: flex; align-items: stretch; gap: 0;
-    background: var(--white); border: 1px solid var(--border);
-    border-radius: var(--radius); box-shadow: var(--shadow-sm);
-    overflow: hidden;
-  }
-  .pipeline-step {
-    flex: 1; padding: 24px 16px; text-align: center;
-    border-right: 1px solid var(--border-light);
-    opacity: 0; animation: fadeUp 0.4s ease forwards;
-    transition: background 0.15s;
-  }
-  .pipeline-step:last-child { border-right: none; }
-  .pipeline-step:hover { background: var(--purple-bg); }
-  .pipeline-step:nth-child(1) { animation-delay: 0.3s; }
-  .pipeline-step:nth-child(2) { animation-delay: 0.35s; }
-  .pipeline-step:nth-child(3) { animation-delay: 0.4s; }
-  .pipeline-step:nth-child(4) { animation-delay: 0.45s; }
-  .pipeline-step:nth-child(5) { animation-delay: 0.5s; }
-  .pipeline-step:nth-child(6) { animation-delay: 0.55s; }
-
-  .step-icon {
-    width: 40px; height: 40px; border-radius: 10px;
-    display: inline-flex; align-items: center; justify-content: center;
-    font-size: 18px; margin-bottom: 10px;
-    background: var(--purple-bg); color: var(--purple);
-  }
-  .step-num {
-    font-size: 10px; font-weight: 700; color: var(--text-muted);
-    margin-bottom: 4px; letter-spacing: 0.06em;
-  }
-  .step-name { font-size: 13px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
-  .step-desc { font-size: 11px; color: var(--text-muted); line-height: 1.4; }
-
-  /* Narrative */
-  .narrative {
-    max-width: 1120px; margin: 0 auto; padding: 0 32px 72px;
-  }
-  .narrative-card {
-    background: var(--white); border: 1px solid var(--border);
-    border-radius: var(--radius); padding: 40px 48px;
-    box-shadow: var(--shadow-sm);
-    border-left: 4px solid var(--purple);
-  }
-  .narrative-card blockquote {
-    font-size: 17px; line-height: 1.7; color: var(--text-secondary);
-    font-style: italic; margin-bottom: 16px;
-  }
-  .narrative-card .attribution {
-    font-size: 13px; font-weight: 600; color: var(--text-primary);
-  }
-
-  /* Footer */
-  footer {
-    max-width: 1120px; margin: 0 auto; padding: 24px 32px;
-    border-top: 1px solid var(--border);
-    display: flex; justify-content: space-between; align-items: center;
-  }
-  footer .left { font-size: 12px; color: var(--text-muted); }
-  .live-badge {
-    display: inline-flex; align-items: center; gap: 6px;
-    font-size: 11px; font-weight: 600; color: var(--green);
-    background: var(--green-bg); border: 1px solid var(--green-border);
-    padding: 4px 10px; border-radius: 6px;
-  }
-  .live-badge .dot { width: 5px; height: 5px; background: var(--green); border-radius: 50%; }
+/* Footer */
+footer{max-width:1100px;margin:0 auto;padding:16px 24px;border-top:1px solid var(--slate-200);display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--slate-400)}
+.live-dot{width:5px;height:5px;background:var(--green);border-radius:50%;display:inline-block;margin-right:4px;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
 </style>
 </head>
 <body>
 
 <nav>
   <div class="nav-inner">
-    <div class="logo">A<span class="mark">360</span></div>
+    <div class="logo">AESTHETICS<span>360</span></div>
     <div class="nav-links">
-      <a href="demo-hero.html" class="active">Home</a>
+      <a href="demo-hero.html" class="active">Overview</a>
       <a href="demo-extraction.html">Extraction</a>
       <a href="demo-agents.html">Agents</a>
       <a href="demo-intelligence.html">Intelligence</a>
@@ -300,122 +113,134 @@
   </div>
 </nav>
 
-<section class="hero">
-  <div class="hero-badge">
-    <span class="dot"></span>
-    Live Intelligence Platform
+<div class="page">
+  <div class="page-header">
+    <div>
+      <h1>A360 Intelligence Platform</h1>
+      <p>Consultation intelligence layer for medical aesthetics &mdash; real-time extraction, coaching, and revenue recovery</p>
+    </div>
   </div>
-  <h1>The <span class="accent">Intelligence Layer</span><br>for Medical Aesthetics</h1>
-  <p>Every consultation is a revenue event. A360 captures what happens in the room — extracting structured intelligence that powers follow-up, coaching, and revenue recovery.</p>
-  <div class="ctas">
+
+  <!-- KPI Row -->
+  <div class="kpi-row">
+    <div class="kpi">
+      <div class="kpi-val">122</div>
+      <div class="kpi-label">Consultations Processed</div>
+      <div class="kpi-tags"><span class="tag tag-teal">Deepgram</span><span class="tag tag-teal">Real-time</span></div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-val">274</div>
+      <div class="kpi-label">Extraction Runs</div>
+      <div class="kpi-tags"><span class="tag tag-blue">V3.2</span><span class="tag tag-blue">2-Pass</span></div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-val">7</div>
+      <div class="kpi-label">Production Agents</div>
+      <div class="kpi-tags"><span class="tag tag-green">Cross-Sell</span><span class="tag tag-green">Coaching</span><span class="tag tag-green">Email</span></div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-val">324</div>
+      <div class="kpi-label">Product Ontology</div>
+      <div class="kpi-tags"><span class="tag tag-amber">571 Aliases</span><span class="tag tag-amber">39 Concerns</span></div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-val">335</div>
+      <div class="kpi-label">Revenue Opportunities</div>
+      <div class="kpi-tags"><span class="tag tag-rose">Pipeline</span><span class="tag tag-rose">Follow-up</span></div>
+    </div>
+  </div>
+
+  <!-- Pipeline -->
+  <div class="pipeline-card">
+    <div class="pipeline-header">Intelligence Pipeline</div>
+    <div class="pipeline-row">
+      <div class="pipeline-step">
+        <div class="step-num">Step 1</div>
+        <div class="step-name">Capture</div>
+        <div class="step-desc">Real-time transcription via Deepgram</div>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-num">Step 2</div>
+        <div class="step-name">Extract</div>
+        <div class="step-desc">2-pass intelligence extraction</div>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-num">Step 3</div>
+        <div class="step-name">Cross-Sell</div>
+        <div class="step-desc">Product recommendations</div>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-num">Step 4</div>
+        <div class="step-name">Opportunities</div>
+        <div class="step-desc">Revenue pipeline tracking</div>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-num">Step 5</div>
+        <div class="step-name">Coach</div>
+        <div class="step-desc">Provider performance</div>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-num">Step 6</div>
+        <div class="step-name">Follow-Up</div>
+        <div class="step-desc">Automated campaigns</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Boulevard AI Gap Table -->
+  <div class="table-card">
+    <div class="t-header" style="grid-template-columns:1fr 1fr">
+      <div>Boulevard AI Gap</div>
+      <div>A360 Capability</div>
+    </div>
+    <div class="t-row" style="grid-template-columns:1fr 1fr">
+      <div>Real-time consultation transcription</div>
+      <div>Deepgram Nova-3 with aesthetic medicine vocabulary</div>
+    </div>
+    <div class="t-row" style="grid-template-columns:1fr 1fr">
+      <div>Clinical documentation (SOAP notes)</div>
+      <div>Evidence-bound notes, every statement transcript-linked</div>
+    </div>
+    <div class="t-row" style="grid-template-columns:1fr 1fr">
+      <div>Conversational intelligence / coaching</div>
+      <div>25+ KPI frameworks, 42 coaching playbooks</div>
+    </div>
+    <div class="t-row" style="grid-template-columns:1fr 1fr">
+      <div>Treatment planning with clinical rationale</div>
+      <div>TCP: Good/Better/Best with pricing and sequencing</div>
+    </div>
+    <div class="t-row" style="grid-template-columns:1fr 1fr">
+      <div>Opportunity extraction from consultations</div>
+      <div>Revenue signals, cross-sell, financing detection</div>
+    </div>
+    <div class="t-row" style="grid-template-columns:1fr 1fr">
+      <div>Provider performance analytics</div>
+      <div>Per-consultation with transcript evidence</div>
+    </div>
+  </div>
+
+  <!-- Value Props -->
+  <div class="value-section">
+    <div class="value-card">
+      <h3>For Boulevard</h3>
+      <p>A360 fills every AI gap on Boulevard's Series D roadmap — consultation transcription, clinical notes, treatment plans, and provider coaching — without rebuilding the 18,000 hours of domain-encoded intelligence.</p>
+    </div>
+    <div class="value-card">
+      <h3>The Data Moat</h3>
+      <p>324 products, 39 concern areas, 571 patient-language aliases, and 348 product relationships. This ontology compounds with every conversation processed — it cannot be replicated from scratch.</p>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-strip">
     <a href="demo-extraction.html" class="btn btn-primary">See a Real Extraction &rarr;</a>
     <a href="demo-agents.html" class="btn btn-secondary">Explore Agent Pipeline</a>
   </div>
-</section>
-
-<div class="kpi-strip">
-  <div class="kpi-card">
-    <div class="kpi-icon" style="background: var(--purple-bg); color: var(--purple);">&#127908;</div>
-    <div class="kpi-value">122</div>
-    <div class="kpi-label">Consultations Processed</div>
-    <div class="kpi-tags">
-      <span class="tag tag-purple">Deepgram</span>
-      <span class="tag tag-purple">Real-time</span>
-    </div>
-  </div>
-  <div class="kpi-card">
-    <div class="kpi-icon" style="background: var(--green-bg); color: var(--green);">&#129504;</div>
-    <div class="kpi-value">274</div>
-    <div class="kpi-label">Extraction Runs</div>
-    <div class="kpi-tags">
-      <span class="tag tag-green">V3.2</span>
-      <span class="tag tag-green">2-Pass</span>
-    </div>
-  </div>
-  <div class="kpi-card">
-    <div class="kpi-icon" style="background: var(--blue-bg); color: var(--blue);">&#9881;</div>
-    <div class="kpi-value">7</div>
-    <div class="kpi-label">Production Agents</div>
-    <div class="kpi-tags">
-      <span class="tag tag-blue">Cross-Sell</span>
-      <span class="tag tag-blue">Coaching</span>
-    </div>
-  </div>
-  <div class="kpi-card">
-    <div class="kpi-icon" style="background: var(--orange-bg); color: var(--orange);">&#128218;</div>
-    <div class="kpi-value">324</div>
-    <div class="kpi-label">Product Ontology</div>
-    <div class="kpi-tags">
-      <span class="tag tag-orange">571 Aliases</span>
-      <span class="tag tag-orange">39 Concerns</span>
-    </div>
-  </div>
-  <div class="kpi-card">
-    <div class="kpi-icon" style="background: var(--rose-bg); color: var(--rose);">&#128176;</div>
-    <div class="kpi-value">335</div>
-    <div class="kpi-label">Revenue Opportunities</div>
-    <div class="kpi-tags">
-      <span class="tag tag-rose">Pipeline</span>
-      <span class="tag tag-rose">Follow-up</span>
-    </div>
-  </div>
 </div>
 
-<section class="pipeline-section">
-  <div class="section-header">
-    <h2>Intelligence Pipeline</h2>
-    <div class="line"></div>
-  </div>
-  <div class="pipeline">
-    <div class="pipeline-step">
-      <div class="step-icon">&#127908;</div>
-      <div class="step-num">STEP 1</div>
-      <div class="step-name">Capture</div>
-      <div class="step-desc">Real-time transcription via Deepgram</div>
-    </div>
-    <div class="pipeline-step">
-      <div class="step-icon">&#129504;</div>
-      <div class="step-num">STEP 2</div>
-      <div class="step-name">Extract</div>
-      <div class="step-desc">2-pass intelligence extraction</div>
-    </div>
-    <div class="pipeline-step">
-      <div class="step-icon">&#128200;</div>
-      <div class="step-num">STEP 3</div>
-      <div class="step-name">Cross-Sell</div>
-      <div class="step-desc">Product & service recommendations</div>
-    </div>
-    <div class="pipeline-step">
-      <div class="step-icon">&#127919;</div>
-      <div class="step-num">STEP 4</div>
-      <div class="step-name">Opportunities</div>
-      <div class="step-desc">Revenue pipeline tracking</div>
-    </div>
-    <div class="pipeline-step">
-      <div class="step-icon">&#128172;</div>
-      <div class="step-num">STEP 5</div>
-      <div class="step-name">Coach</div>
-      <div class="step-desc">Provider performance feedback</div>
-    </div>
-    <div class="pipeline-step">
-      <div class="step-icon">&#9993;</div>
-      <div class="step-num">STEP 6</div>
-      <div class="step-name">Follow-Up</div>
-      <div class="step-desc">Automated patient campaigns</div>
-    </div>
-  </div>
-</section>
-
-<section class="narrative">
-  <div class="narrative-card">
-    <blockquote>"Practices have zero visibility into what happens in the consultation room. A360 changes that. Our extraction pipeline processes real consultations and produces structured intelligence — the product ontology of 324 products, 39 concerns, and 571 patient-language aliases is a data moat that compounds with every conversation."</blockquote>
-    <div class="attribution">The A360 Thesis</div>
-  </div>
-</section>
-
 <footer>
-  <div class="left">&copy; 2026 Aesthetics360 — Consultation Intelligence Platform</div>
-  <div class="live-badge"><span class="dot"></span> Live Data &middot; 122 Transcripts</div>
+  <div>&copy; 2026 Aesthetics360 &mdash; Consultation Intelligence Platform</div>
+  <div><span class="live-dot"></span> Live Data &middot; 122 Transcripts &middot; 274 Runs</div>
 </footer>
 
 </body>
