@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A360 Intelligence Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #fafbfc;
+    --white: #ffffff;
+    --text-primary: #1a1a2e;
+    --text-secondary: #5a5a7a;
+    --text-muted: #8e8ea0;
+    --border: #e8e8ef;
+    --border-light: #f0f0f5;
+    --purple: #6c5ce7;
+    --purple-light: #a29bfe;
+    --purple-bg: #f3f1ff;
+    --purple-border: #e0dafb;
+    --green: #00b894;
+    --green-bg: #e6f9f3;
+    --green-border: #b8f0de;
+    --blue: #0984e3;
+    --blue-bg: #e8f4fd;
+    --blue-border: #b3d9f5;
+    --orange: #f39c12;
+    --orange-bg: #fef5e7;
+    --orange-border: #fce4b8;
+    --rose: #e84393;
+    --rose-bg: #fde8f3;
+    --rose-border: #f5bdd9;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.02);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.06), 0 1px 4px rgba(0,0,0,0.04);
+    --shadow-lg: 0 12px 40px rgba(0,0,0,0.08);
+    --radius: 12px;
+    --radius-sm: 8px;
+    --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text-primary);
+    font-family: var(--font);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Nav */
+  nav {
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: 0 32px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-inner {
+    max-width: 1120px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+  }
+  .logo {
+    font-weight: 800;
+    font-size: 18px;
+    letter-spacing: -0.03em;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 2px;
+  }
+  .logo .mark { color: var(--purple); }
+  .nav-links { display: flex; gap: 4px; }
+  .nav-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 8px 14px;
+    border-radius: var(--radius-sm);
+    transition: all 0.15s;
+  }
+  .nav-links a:hover { background: var(--bg); color: var(--text-primary); }
+  .nav-links a.active { background: var(--purple-bg); color: var(--purple); }
+
+  /* Hero */
+  .hero {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 72px 32px 48px;
+    text-align: center;
+  }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--purple-bg);
+    border: 1px solid var(--purple-border);
+    border-radius: 100px;
+    padding: 6px 16px 6px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--purple);
+    margin-bottom: 28px;
+  }
+  .hero-badge .dot {
+    width: 7px; height: 7px;
+    background: var(--green);
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+  .hero h1 {
+    font-size: 48px;
+    font-weight: 800;
+    letter-spacing: -0.035em;
+    line-height: 1.1;
+    margin-bottom: 18px;
+    color: var(--text-primary);
+  }
+  .hero h1 .accent { color: var(--purple); }
+  .hero p {
+    color: var(--text-secondary);
+    font-size: 17px;
+    line-height: 1.65;
+    max-width: 580px;
+    margin: 0 auto 40px;
+  }
+
+  /* CTAs */
+  .ctas { display: flex; gap: 12px; justify-content: center; margin-bottom: 56px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 24px; border-radius: var(--radius-sm);
+    font-weight: 600; font-size: 14px; text-decoration: none;
+    transition: all 0.2s; cursor: pointer; border: none; font-family: var(--font);
+  }
+  .btn-primary {
+    background: var(--purple); color: white;
+    box-shadow: 0 2px 8px rgba(108,92,231,0.3);
+  }
+  .btn-primary:hover { background: #5b4bd5; box-shadow: 0 4px 14px rgba(108,92,231,0.4); transform: translateY(-1px); }
+  .btn-secondary {
+    background: var(--white); color: var(--text-secondary);
+    border: 1px solid var(--border); box-shadow: var(--shadow-sm);
+  }
+  .btn-secondary:hover { border-color: var(--purple-border); color: var(--purple); background: var(--purple-bg); }
+
+  /* KPI Strip */
+  .kpi-strip {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 14px;
+    max-width: 1120px;
+    margin: 0 auto 56px;
+    padding: 0 32px;
+  }
+  .kpi-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    box-shadow: var(--shadow-sm);
+    opacity: 0; transform: translateY(10px);
+    animation: fadeUp 0.4s ease forwards;
+    transition: box-shadow 0.2s, border-color 0.2s;
+  }
+  .kpi-card:hover { box-shadow: var(--shadow-md); border-color: var(--purple-border); }
+  .kpi-card:nth-child(1) { animation-delay: 0.05s; }
+  .kpi-card:nth-child(2) { animation-delay: 0.1s; }
+  .kpi-card:nth-child(3) { animation-delay: 0.15s; }
+  .kpi-card:nth-child(4) { animation-delay: 0.2s; }
+  .kpi-card:nth-child(5) { animation-delay: 0.25s; }
+  @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+
+  .kpi-icon {
+    width: 36px; height: 36px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; margin-bottom: 14px;
+  }
+  .kpi-value {
+    font-size: 30px; font-weight: 800; letter-spacing: -0.03em;
+    line-height: 1; margin-bottom: 4px; color: var(--text-primary);
+  }
+  .kpi-label {
+    font-size: 12px; font-weight: 500; color: var(--text-muted);
+    margin-bottom: 12px;
+  }
+  .kpi-tags { display: flex; gap: 4px; flex-wrap: wrap; }
+  .tag {
+    display: inline-flex; align-items: center;
+    padding: 3px 8px; border-radius: 6px;
+    font-size: 10px; font-weight: 600; letter-spacing: 0.02em;
+  }
+  .tag-purple { background: var(--purple-bg); color: var(--purple); }
+  .tag-green { background: var(--green-bg); color: var(--green); }
+  .tag-blue { background: var(--blue-bg); color: var(--blue); }
+  .tag-orange { background: var(--orange-bg); color: var(--orange); }
+  .tag-rose { background: var(--rose-bg); color: var(--rose); }
+
+  /* Pipeline */
+  .pipeline-section {
+    max-width: 1120px; margin: 0 auto; padding: 0 32px 64px;
+  }
+  .section-header {
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 24px;
+  }
+  .section-header h2 {
+    font-size: 16px; font-weight: 700; letter-spacing: -0.02em;
+    color: var(--text-primary); white-space: nowrap;
+  }
+  .section-header .line { flex: 1; height: 1px; background: var(--border); }
+
+  .pipeline {
+    display: flex; align-items: stretch; gap: 0;
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: var(--radius); box-shadow: var(--shadow-sm);
+    overflow: hidden;
+  }
+  .pipeline-step {
+    flex: 1; padding: 24px 16px; text-align: center;
+    border-right: 1px solid var(--border-light);
+    opacity: 0; animation: fadeUp 0.4s ease forwards;
+    transition: background 0.15s;
+  }
+  .pipeline-step:last-child { border-right: none; }
+  .pipeline-step:hover { background: var(--purple-bg); }
+  .pipeline-step:nth-child(1) { animation-delay: 0.3s; }
+  .pipeline-step:nth-child(2) { animation-delay: 0.35s; }
+  .pipeline-step:nth-child(3) { animation-delay: 0.4s; }
+  .pipeline-step:nth-child(4) { animation-delay: 0.45s; }
+  .pipeline-step:nth-child(5) { animation-delay: 0.5s; }
+  .pipeline-step:nth-child(6) { animation-delay: 0.55s; }
+
+  .step-icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 18px; margin-bottom: 10px;
+    background: var(--purple-bg); color: var(--purple);
+  }
+  .step-num {
+    font-size: 10px; font-weight: 700; color: var(--text-muted);
+    margin-bottom: 4px; letter-spacing: 0.06em;
+  }
+  .step-name { font-size: 13px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+  .step-desc { font-size: 11px; color: var(--text-muted); line-height: 1.4; }
+
+  /* Narrative */
+  .narrative {
+    max-width: 1120px; margin: 0 auto; padding: 0 32px 72px;
+  }
+  .narrative-card {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 40px 48px;
+    box-shadow: var(--shadow-sm);
+    border-left: 4px solid var(--purple);
+  }
+  .narrative-card blockquote {
+    font-size: 17px; line-height: 1.7; color: var(--text-secondary);
+    font-style: italic; margin-bottom: 16px;
+  }
+  .narrative-card .attribution {
+    font-size: 13px; font-weight: 600; color: var(--text-primary);
+  }
+
+  /* Footer */
+  footer {
+    max-width: 1120px; margin: 0 auto; padding: 24px 32px;
+    border-top: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  footer .left { font-size: 12px; color: var(--text-muted); }
+  .live-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 11px; font-weight: 600; color: var(--green);
+    background: var(--green-bg); border: 1px solid var(--green-border);
+    padding: 4px 10px; border-radius: 6px;
+  }
+  .live-badge .dot { width: 5px; height: 5px; background: var(--green); border-radius: 50%; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="logo">A<span class="mark">360</span></div>
+    <div class="nav-links">
+      <a href="demo-hero.html" class="active">Home</a>
+      <a href="demo-extraction.html">Extraction</a>
+      <a href="demo-agents.html">Agents</a>
+      <a href="demo-intelligence.html">Intelligence</a>
+      <a href="demo-products.html">Product Library</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-badge">
+    <span class="dot"></span>
+    Live Intelligence Platform
+  </div>
+  <h1>The <span class="accent">Intelligence Layer</span><br>for Medical Aesthetics</h1>
+  <p>Every consultation is a revenue event. A360 captures what happens in the room — extracting structured intelligence that powers follow-up, coaching, and revenue recovery.</p>
+  <div class="ctas">
+    <a href="demo-extraction.html" class="btn btn-primary">See a Real Extraction &rarr;</a>
+    <a href="demo-agents.html" class="btn btn-secondary">Explore Agent Pipeline</a>
+  </div>
+</section>
+
+<div class="kpi-strip">
+  <div class="kpi-card">
+    <div class="kpi-icon" style="background: var(--purple-bg); color: var(--purple);">&#127908;</div>
+    <div class="kpi-value">122</div>
+    <div class="kpi-label">Consultations Processed</div>
+    <div class="kpi-tags">
+      <span class="tag tag-purple">Deepgram</span>
+      <span class="tag tag-purple">Real-time</span>
+    </div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-icon" style="background: var(--green-bg); color: var(--green);">&#129504;</div>
+    <div class="kpi-value">274</div>
+    <div class="kpi-label">Extraction Runs</div>
+    <div class="kpi-tags">
+      <span class="tag tag-green">V3.2</span>
+      <span class="tag tag-green">2-Pass</span>
+    </div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-icon" style="background: var(--blue-bg); color: var(--blue);">&#9881;</div>
+    <div class="kpi-value">7</div>
+    <div class="kpi-label">Production Agents</div>
+    <div class="kpi-tags">
+      <span class="tag tag-blue">Cross-Sell</span>
+      <span class="tag tag-blue">Coaching</span>
+    </div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-icon" style="background: var(--orange-bg); color: var(--orange);">&#128218;</div>
+    <div class="kpi-value">324</div>
+    <div class="kpi-label">Product Ontology</div>
+    <div class="kpi-tags">
+      <span class="tag tag-orange">571 Aliases</span>
+      <span class="tag tag-orange">39 Concerns</span>
+    </div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-icon" style="background: var(--rose-bg); color: var(--rose);">&#128176;</div>
+    <div class="kpi-value">335</div>
+    <div class="kpi-label">Revenue Opportunities</div>
+    <div class="kpi-tags">
+      <span class="tag tag-rose">Pipeline</span>
+      <span class="tag tag-rose">Follow-up</span>
+    </div>
+  </div>
+</div>
+
+<section class="pipeline-section">
+  <div class="section-header">
+    <h2>Intelligence Pipeline</h2>
+    <div class="line"></div>
+  </div>
+  <div class="pipeline">
+    <div class="pipeline-step">
+      <div class="step-icon">&#127908;</div>
+      <div class="step-num">STEP 1</div>
+      <div class="step-name">Capture</div>
+      <div class="step-desc">Real-time transcription via Deepgram</div>
+    </div>
+    <div class="pipeline-step">
+      <div class="step-icon">&#129504;</div>
+      <div class="step-num">STEP 2</div>
+      <div class="step-name">Extract</div>
+      <div class="step-desc">2-pass intelligence extraction</div>
+    </div>
+    <div class="pipeline-step">
+      <div class="step-icon">&#128200;</div>
+      <div class="step-num">STEP 3</div>
+      <div class="step-name">Cross-Sell</div>
+      <div class="step-desc">Product & service recommendations</div>
+    </div>
+    <div class="pipeline-step">
+      <div class="step-icon">&#127919;</div>
+      <div class="step-num">STEP 4</div>
+      <div class="step-name">Opportunities</div>
+      <div class="step-desc">Revenue pipeline tracking</div>
+    </div>
+    <div class="pipeline-step">
+      <div class="step-icon">&#128172;</div>
+      <div class="step-num">STEP 5</div>
+      <div class="step-name">Coach</div>
+      <div class="step-desc">Provider performance feedback</div>
+    </div>
+    <div class="pipeline-step">
+      <div class="step-icon">&#9993;</div>
+      <div class="step-num">STEP 6</div>
+      <div class="step-name">Follow-Up</div>
+      <div class="step-desc">Automated patient campaigns</div>
+    </div>
+  </div>
+</section>
+
+<section class="narrative">
+  <div class="narrative-card">
+    <blockquote>"Practices have zero visibility into what happens in the consultation room. A360 changes that. Our extraction pipeline processes real consultations and produces structured intelligence — the product ontology of 324 products, 39 concerns, and 571 patient-language aliases is a data moat that compounds with every conversation."</blockquote>
+    <div class="attribution">The A360 Thesis</div>
+  </div>
+</section>
+
+<footer>
+  <div class="left">&copy; 2026 Aesthetics360 — Consultation Intelligence Platform</div>
+  <div class="live-badge"><span class="dot"></span> Live Data &middot; 122 Transcripts</div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A360 — Extraction Intelligence</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #fafbfc; --white: #ffffff;
+    --text-primary: #1a1a2e; --text-secondary: #5a5a7a; --text-muted: #8e8ea0;
+    --border: #e8e8ef; --border-light: #f0f0f5;
+    --purple: #6c5ce7; --purple-light: #a29bfe; --purple-bg: #f3f1ff; --purple-border: #e0dafb;
+    --green: #00b894; --green-bg: #e6f9f3; --green-border: #b8f0de;
+    --blue: #0984e3; --blue-bg: #e8f4fd; --blue-border: #b3d9f5;
+    --orange: #f39c12; --orange-bg: #fef5e7; --orange-border: #fce4b8;
+    --rose: #e84393; --rose-bg: #fde8f3; --rose-border: #f5bdd9;
+    --cyan: #00cec9; --cyan-bg: #e6faf9; --cyan-border: #b3f0ef;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.02);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.06), 0 1px 4px rgba(0,0,0,0.04);
+    --radius: 12px; --radius-sm: 8px;
+    --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+  body { background: var(--bg); color: var(--text-primary); font-family: var(--font); -webkit-font-smoothing: antialiased; }
+
+  /* Nav */
+  nav { background: var(--white); border-bottom: 1px solid var(--border); padding: 0 32px; position: sticky; top: 0; z-index: 100; }
+  .nav-inner { max-width: 1120px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 60px; }
+  .logo { font-weight: 800; font-size: 18px; letter-spacing: -0.03em; }
+  .logo .mark { color: var(--purple); }
+  .nav-links { display: flex; gap: 4px; }
+  .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 13px; font-weight: 500; padding: 8px 14px; border-radius: var(--radius-sm); transition: all 0.15s; }
+  .nav-links a:hover { background: var(--bg); color: var(--text-primary); }
+  .nav-links a.active { background: var(--purple-bg); color: var(--purple); }
+
+  /* Page */
+  .page { max-width: 1120px; margin: 0 auto; padding: 32px 32px 64px; }
+
+  /* Page header */
+  .page-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 24px; }
+  .page-top h1 { font-size: 24px; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 4px; }
+  .page-top p { color: var(--text-secondary); font-size: 14px; }
+
+  /* Meta bar */
+  .meta-bar {
+    display: flex; gap: 0; background: var(--white); border: 1px solid var(--border);
+    border-radius: var(--radius); box-shadow: var(--shadow-sm); margin-bottom: 20px; overflow: hidden;
+  }
+  .meta-item {
+    flex: 1; padding: 14px 18px; border-right: 1px solid var(--border-light);
+  }
+  .meta-item:last-child { border-right: none; }
+  .meta-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); margin-bottom: 4px; }
+  .meta-value { font-size: 13px; font-weight: 600; color: var(--text-primary); }
+
+  /* Outcome badge */
+  .outcome-badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 4px 12px; border-radius: 6px; font-size: 12px; font-weight: 600;
+  }
+  .outcome-performed { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-border); }
+
+  /* Grid */
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .grid-full { grid-column: 1 / -1; }
+
+  /* Card */
+  .card {
+    background: var(--white); border: 1px solid var(--border); border-radius: var(--radius);
+    box-shadow: var(--shadow-sm); overflow: hidden;
+    opacity: 0; transform: translateY(6px); animation: cardIn 0.35s ease forwards;
+    transition: box-shadow 0.2s;
+  }
+  .card:hover { box-shadow: var(--shadow-md); }
+  .card:nth-child(1) { animation-delay: 0.05s; }
+  .card:nth-child(2) { animation-delay: 0.08s; }
+  .card:nth-child(3) { animation-delay: 0.11s; }
+  .card:nth-child(4) { animation-delay: 0.14s; }
+  .card:nth-child(5) { animation-delay: 0.17s; }
+  .card:nth-child(6) { animation-delay: 0.20s; }
+  @keyframes cardIn { to { opacity: 1; transform: translateY(0); } }
+
+  .card-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 18px; border-bottom: 1px solid var(--border-light);
+  }
+  .card-title { font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+  .card-count {
+    font-size: 11px; font-weight: 700; padding: 2px 10px; border-radius: 6px;
+  }
+  .card-body { padding: 18px; }
+
+  /* Offering row */
+  .offering { display: flex; align-items: flex-start; gap: 14px; padding: 12px 0; border-bottom: 1px solid var(--border-light); }
+  .offering:last-child { border-bottom: none; }
+  .offering-content { flex: 1; }
+  .offering-name { font-size: 14px; font-weight: 600; color: var(--text-primary); margin-bottom: 3px; }
+  .offering-quote { font-size: 12px; color: var(--text-muted); font-style: italic; line-height: 1.5; }
+  .disposition {
+    font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 6px;
+    text-transform: uppercase; letter-spacing: 0.03em; white-space: nowrap; margin-top: 2px;
+  }
+  .disp-performed { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-border); }
+  .disp-discussed { background: var(--cyan-bg); color: var(--cyan); border: 1px solid var(--cyan-border); }
+  .disp-declined { background: var(--rose-bg); color: var(--rose); border: 1px solid var(--rose-border); }
+  .disp-hesitant { background: var(--orange-bg); color: var(--orange); border: 1px solid var(--orange-border); }
+  .disp-purchased { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-border); }
+  .disp-scheduled { background: var(--purple-bg); color: var(--purple); border: 1px solid var(--purple-border); }
+
+  /* List items */
+  .list-item {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 8px 0; font-size: 13px; color: var(--text-secondary); line-height: 1.5;
+  }
+  .list-bullet { width: 7px; height: 7px; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
+
+  /* Goals */
+  .goal { padding: 10px 0; border-bottom: 1px solid var(--border-light); }
+  .goal:last-child { border-bottom: none; }
+  .goal-text { font-size: 14px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+  .goal-evidence { font-size: 12px; color: var(--text-muted); font-style: italic; line-height: 1.5; }
+
+  /* Next step */
+  .next-step {
+    background: var(--bg); border: 1px solid var(--border-light);
+    border-radius: var(--radius-sm); padding: 14px 16px; margin-bottom: 8px;
+  }
+  .next-step:last-child { margin-bottom: 0; }
+  .next-step-action { font-size: 13px; font-weight: 700; color: var(--text-primary); margin-bottom: 3px; }
+  .next-step-detail { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+
+  /* Checklist */
+  .check-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2px 20px; }
+  .check-item { display: flex; align-items: center; gap: 8px; padding: 6px 0; font-size: 12px; color: var(--text-secondary); }
+  .check-icon { font-size: 14px; flex-shrink: 0; }
+
+  /* Footer link */
+  .page-footer {
+    max-width: 1120px; margin: 0 auto; padding: 24px 32px;
+    border-top: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .page-footer .meta { font-size: 12px; color: var(--text-muted); }
+  .next-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 10px 20px; border-radius: var(--radius-sm);
+    background: var(--purple); color: white;
+    text-decoration: none; font-size: 13px; font-weight: 600;
+    box-shadow: 0 2px 8px rgba(108,92,231,0.3); transition: all 0.2s;
+  }
+  .next-link:hover { background: #5b4bd5; transform: translateY(-1px); }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="logo">A<span class="mark">360</span></div>
+    <div class="nav-links">
+      <a href="demo-hero.html">Home</a>
+      <a href="demo-extraction.html" class="active">Extraction</a>
+      <a href="demo-agents.html">Agents</a>
+      <a href="demo-intelligence.html">Intelligence</a>
+      <a href="demo-products.html">Product Library</a>
+    </div>
+  </div>
+</nav>
+
+<div class="page">
+  <div class="page-top">
+    <div>
+      <h1>Consultation Intelligence</h1>
+      <p>Real extraction from a 37-minute treatment visit at Lumiere Aesthetics</p>
+    </div>
+  </div>
+
+  <div class="meta-bar">
+    <div class="meta-item">
+      <div class="meta-label">Practice</div>
+      <div class="meta-value">Lumiere Aesthetics</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">Type</div>
+      <div class="meta-value">Treatment Visit</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">Duration</div>
+      <div class="meta-value">37.5 min</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">Extraction</div>
+      <div class="meta-value">v3.2 (2-pass)</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">Outcome</div>
+      <div class="meta-value"><span class="outcome-badge outcome-performed">&#10003; Treatment Performed</span></div>
+    </div>
+  </div>
+
+  <div class="grid">
+
+    <!-- Patient Goals -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">Patient Goals</div>
+        <span class="card-count" style="background: var(--purple-bg); color: var(--purple);">3</span>
+      </div>
+      <div class="card-body">
+        <div class="goal">
+          <div class="goal-text">Look refreshed and youthful for vacation</div>
+          <div class="goal-evidence">"And you wanna look good in your photos."</div>
+        </div>
+        <div class="goal">
+          <div class="goal-text">Improve skin texture</div>
+          <div class="goal-evidence">"I'm gonna micro needle my whole face after you. Texture issues."</div>
+        </div>
+        <div class="goal">
+          <div class="goal-text">Maintain smooth forehead appearance</div>
+          <div class="goal-evidence">"I came in early because I don't want it to wear off before my trip."</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Concerns -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">Concerns & Risks</div>
+        <span class="card-count" style="background: var(--rose-bg); color: var(--rose);">6</span>
+      </div>
+      <div class="card-body">
+        <div class="list-item"><div class="list-bullet" style="background: var(--rose);"></div>Bruising risk with Botox injection before vacation</div>
+        <div class="list-item"><div class="list-bullet" style="background: var(--rose);"></div>Botox resistance from early retreatment</div>
+        <div class="list-item"><div class="list-bullet" style="background: var(--orange);"></div>Alcohol consumption within 72 hours of injection</div>
+        <div class="list-item"><div class="list-bullet" style="background: var(--orange);"></div>Fish oil supplementation increasing bruising risk</div>
+        <div class="list-item"><div class="list-bullet" style="background: var(--text-muted);"></div>Melasma and acne breakouts (secondary skin concerns)</div>
+        <div class="list-item"><div class="list-bullet" style="background: var(--text-muted);"></div>Hormonal factors affecting skin condition</div>
+      </div>
+    </div>
+
+    <!-- Offerings -->
+    <div class="card grid-full">
+      <div class="card-header">
+        <div class="card-title">Offerings Discussed</div>
+        <span class="card-count" style="background: var(--green-bg); color: var(--green);">9 products/services</span>
+      </div>
+      <div class="card-body">
+        <div class="offering">
+          <div class="offering-content">
+            <div class="offering-name">Botox (forehead/glabella)</div>
+            <div class="offering-quote">"I'm gonna just take care of the lateral canthus line. Just a little tiny bit here."</div>
+          </div>
+          <div class="disposition disp-performed">Performed</div>
+        </div>
+        <div class="offering">
+          <div class="offering-content">
+            <div class="offering-name">Botox (brow area)</div>
+            <div class="offering-quote">"Why don't we do just 2 yeah. Just a little bit here. I won't give you a brow lift injection."</div>
+          </div>
+          <div class="disposition disp-performed">Performed</div>
+        </div>
+        <div class="offering">
+          <div class="offering-content">
+            <div class="offering-name">Microneedling (full face)</div>
+            <div class="offering-quote">"I'm gonna micro needle my whole face. Texture issues. Oh, it's a mess."</div>
+          </div>
+          <div class="disposition disp-performed">Performed</div>
+        </div>
+        <div class="offering">
+          <div class="offering-content">
+            <div class="offering-name">PDGRN (Salmon Sperm Topical)</div>
+            <div class="offering-quote">"I'm literally microneedling, and I wanna try it. What is it? It's salmon sperm."</div>
+          </div>
+          <div class="disposition disp-discussed">Discussed</div>
+        </div>
+        <div class="offering">
+          <div class="offering-content">
+            <div class="offering-name">Lip Flip (Botox)</div>
+            <div class="offering-quote">"How do you feel about lip flips? Do they drive you nuts?"</div>
+          </div>
+          <div class="disposition disp-declined">Declined</div>
+        </div>
+        <div class="offering">
+          <div class="offering-content">
+            <div class="offering-name">Botox (crow's feet / eyes)</div>
+            <div class="offering-quote">"I can definitely do a little bit around your eyes if those bother you."</div>
+          </div>
+          <div class="disposition disp-hesitant">Hesitant</div>
+        </div>
+        <div class="offering">
+          <div class="offering-content">
+            <div class="offering-name">Dermal Filler</div>
+            <div class="offering-quote">"Just a little around your next week. Yeah. But if it drives you nuts..."</div>
+          </div>
+          <div class="disposition disp-discussed">Discussed</div>
+        </div>
+        <div class="offering">
+          <div class="offering-content">
+            <div class="offering-name">Bruise Cream</div>
+            <div class="offering-quote">"I'm gonna dab some bruise cream on there before you go."</div>
+          </div>
+          <div class="disposition disp-purchased">Purchased</div>
+        </div>
+        <div class="offering">
+          <div class="offering-content">
+            <div class="offering-name">Botox (full retreatment)</div>
+            <div class="offering-quote">"I'll get you on the books, like, in a month for everything else."</div>
+          </div>
+          <div class="disposition disp-scheduled">Scheduled</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hesitations & Objections -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">Hesitations & Objections</div>
+        <span class="card-count" style="background: var(--orange-bg); color: var(--orange);">4</span>
+      </div>
+      <div class="card-body">
+        <div style="margin-bottom: 14px;">
+          <div style="font-size: 10px; font-weight: 700; text-transform: uppercase; color: var(--orange); margin-bottom: 8px; letter-spacing: 0.05em;">Hesitations</div>
+          <div class="list-item"><div class="list-bullet" style="background: var(--orange);"></div>Patient had prior lip flip with no noticeable difference</div>
+          <div class="list-item"><div class="list-bullet" style="background: var(--orange);"></div>Uncertain if full treatment needed due to early preemptive visit</div>
+        </div>
+        <div>
+          <div style="font-size: 10px; font-weight: 700; text-transform: uppercase; color: var(--rose); margin-bottom: 8px; letter-spacing: 0.05em;">Objections</div>
+          <div class="list-item"><div class="list-bullet" style="background: var(--rose);"></div>Concerned about bruising before vacation</div>
+          <div class="list-item"><div class="list-bullet" style="background: var(--rose);"></div>Questioned whether too early for retreatment (resistance)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Next Steps -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">Next Steps</div>
+        <span class="card-count" style="background: var(--purple-bg); color: var(--purple);">3</span>
+      </div>
+      <div class="card-body">
+        <div class="next-step">
+          <div class="next-step-action">Full Botox Retreatment</div>
+          <div class="next-step-detail">Forehead, glabella, crow's feet — scheduled ~1 month out after vacation</div>
+        </div>
+        <div class="next-step">
+          <div class="next-step-action">Post-Treatment Aftercare</div>
+          <div class="next-step-detail">Avoid alcohol, manage bruising with cream, follow microneedling recovery protocol</div>
+        </div>
+        <div class="next-step">
+          <div class="next-step-action">Comprehensive Skin Restoration</div>
+          <div class="next-step-detail">Post-summer plan addressing melasma, texture, and acne concerns</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Visit Checklist -->
+    <div class="card grid-full">
+      <div class="card-header">
+        <div class="card-title">Visit Checklist</div>
+        <span class="card-count" style="background: var(--green-bg); color: var(--green);">12/15 completed</span>
+      </div>
+      <div class="card-body">
+        <div class="check-grid">
+          <div class="check-item"><span class="check-icon" style="color: var(--green);">&#10003;</span> Greeted patient</div>
+          <div class="check-item"><span class="check-icon" style="color: var(--green);">&#10003;</span> Reviewed treatment history</div>
+          <div class="check-item"><span class="check-icon" style="color: var(--green);">&#10003;</span> Discussed goals</div>
+          <div class="check-item"><span class="check-icon" style="color: var(--green);">&#10003;</span> Skin assessment</div>
+          <div class="check-item"><span class="check-icon" style="color: var(--green);">&#10003;</span> Explained treatment plan</div>
+          <div class="check-item"><span class="check-icon" style="color: var(--green);">&#10003;</span> Discussed alternatives</div>
+          <div class="check-item"><span class="check-icon" style="color: var(--green);">&#10003;</span> Addressed concerns</div>
+          <div class="check-item"><span class="check-icon" style="color: var(--green);">&#10003;</span> Performed treatment</div>
+          <div class="check-item"><span class="check-icon" style="color: var(--green);">&#10003;</span> Post-treatment instructions</div>
+          <div class="check-item"><span class="check-icon" style="color: var(--green);">&#10003;</span> Product recommendation</div>
+          <div class="check-item"><span class="check-icon" style="color: var(--green);">&#10003;</span> Follow-up scheduled</div>
+          <div class="check-item"><span class="check-icon" style="color: var(--green);">&#10003;</span> Cross-sell attempted</div>
+          <div class="check-item"><span class="check-icon" style="color: var(--orange);">&#9679;</span> Did not discuss financing</div>
+          <div class="check-item"><span class="check-icon" style="color: var(--orange);">&#9679;</span> No membership discussion</div>
+          <div class="check-item"><span class="check-icon" style="color: var(--orange);">&#9679;</span> No formal close attempt</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="page-footer">
+  <div class="meta">Run e76b2648 &middot; Extraction v3.2 &middot; 2-Pass Intelligence</div>
+  <a href="demo-agents.html" class="next-link">See What Agents Do With This &rarr;</a>
+</div>
+
+</body>
+</html>
