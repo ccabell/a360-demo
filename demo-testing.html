@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A360 — Accuracy Lab</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#f5f6f8;--white:#fff;
+  --slate-900:#1a1f2e;--slate-700:#374151;--slate-600:#4b5563;--slate-500:#6b7280;--slate-400:#9ca3af;--slate-300:#d1d5db;--slate-200:#e5e7eb;--slate-100:#f3f4f6;--slate-50:#f9fafb;
+  --teal:#1b4f6b;--teal-light:#2c6f8f;
+  --blue:#2563eb;--blue-bg:#eff6ff;
+  --green:#059669;--green-bg:#ecfdf5;--green-border:#a7f3d0;
+  --amber:#d97706;--amber-bg:#fffbeb;--amber-border:#fcd34d;
+  --rose:#dc2626;--rose-bg:#fef2f2;
+  --purple:#7c3aed;--purple-bg:#f5f3ff;
+  --shadow:0 1px 3px rgba(0,0,0,.06);
+  --r:8px;--r-sm:6px;
+  --font:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+  --mono:'JetBrains Mono',monospace;
+}
+body{background:var(--bg);color:var(--slate-900);font-family:var(--font);-webkit-font-smoothing:antialiased;font-size:13px;line-height:1.5}
+nav{background:var(--teal);padding:0 24px}
+.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;height:48px;gap:24px}
+.logo{font-weight:800;font-size:15px;color:#fff;letter-spacing:-.02em;margin-right:auto}
+.logo span{color:rgba(255,255,255,.5)}
+.nav-links{display:flex;gap:2px}
+.nav-links a{color:rgba(255,255,255,.65);text-decoration:none;font-size:12px;font-weight:500;padding:6px 12px;border-radius:var(--r-sm);transition:all .12s}
+.nav-links a:hover{color:#fff;background:rgba(255,255,255,.1)}
+.nav-links a.active{color:#fff;background:rgba(255,255,255,.15)}
+
+.page{max-width:1100px;margin:0 auto;padding:20px 24px 48px}
+.page-header{margin-bottom:16px}
+.page-header h1{font-size:20px;font-weight:800;letter-spacing:-.02em;margin-bottom:2px}
+.page-header .sub{font-size:12px;color:var(--slate-500);font-weight:500}
+
+/* Run summary card */
+.run-summary{
+  background:var(--white);border:1px solid var(--slate-200);border-radius:var(--r);
+  box-shadow:var(--shadow);padding:0;margin-bottom:14px;overflow:hidden;
+}
+.rs-hdr{background:var(--teal);color:#fff;padding:8px 14px;display:flex;justify-content:space-between;align-items:center}
+.rs-hdr .lbl{font-size:11px;font-weight:600}
+.rs-hdr .ts{font-family:var(--mono);font-size:10px;color:rgba(255,255,255,.7)}
+.rs-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:0}
+.rs-cell{padding:10px 14px;border-right:1px solid var(--slate-100)}
+.rs-cell:last-child{border-right:none}
+.rs-cell .lbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--slate-400);margin-bottom:2px}
+.rs-cell .val{font-size:12px;font-weight:700;color:var(--slate-900);font-family:var(--mono)}
+.rs-cell .val.txt{font-family:var(--font)}
+
+/* Hero KPI strip */
+.kpi-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px}
+.kpi-card{
+  background:var(--white);border:1px solid var(--slate-200);border-radius:var(--r);
+  box-shadow:var(--shadow);padding:14px 16px;
+}
+.kpi-card .lbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--slate-400);margin-bottom:4px}
+.kpi-card .val{font-size:24px;font-weight:800;letter-spacing:-.02em;font-family:var(--mono);line-height:1}
+.kpi-card .desc{font-size:11px;color:var(--slate-500);margin-top:6px;line-height:1.4}
+.kpi-good{color:var(--green)}
+.kpi-warn{color:var(--amber)}
+.kpi-info{color:var(--teal)}
+
+/* Section */
+.tc{background:var(--white);border:1px solid var(--slate-200);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden;margin-bottom:14px}
+.tc-hdr{background:var(--teal);color:#fff;padding:8px 14px;font-size:11px;font-weight:600;display:flex;justify-content:space-between;align-items:center}
+.tc-hdr .count{font-family:var(--mono);font-size:10px;background:rgba(255,255,255,.2);padding:2px 8px;border-radius:4px}
+.tc-body{padding:12px 14px}
+
+/* Aggregate metrics bars */
+.metric-row{display:grid;grid-template-columns:200px 1fr 60px;gap:10px;align-items:center;padding:5px 0;border-bottom:1px solid var(--slate-100)}
+.metric-row:last-child{border-bottom:none}
+.metric-name{font-size:12px;color:var(--slate-700);font-weight:500}
+.metric-name .hint{font-size:10px;color:var(--slate-400);font-weight:400;display:block;margin-top:1px}
+.metric-bar{height:8px;background:var(--slate-100);border-radius:4px;overflow:hidden;position:relative}
+.metric-fill{height:100%;border-radius:4px;transition:width .4s ease}
+.metric-val{font-family:var(--mono);font-size:11px;font-weight:700;text-align:right}
+
+/* Histogram */
+.hist{display:flex;align-items:flex-end;gap:4px;height:120px;padding:0 14px 0;margin-top:6px}
+.hist-bar{flex:1;background:var(--teal-light);border-radius:3px 3px 0 0;position:relative;min-height:2px;transition:background .12s}
+.hist-bar:hover{background:var(--teal)}
+.hist-bar .count{position:absolute;top:-16px;left:50%;transform:translateX(-50%);font-family:var(--mono);font-size:9px;font-weight:700;color:var(--slate-700)}
+.hist-labels{display:flex;gap:4px;padding:6px 14px 0;border-top:1px solid var(--slate-100);margin-top:0}
+.hist-labels div{flex:1;text-align:center;font-family:var(--mono);font-size:9px;color:var(--slate-400)}
+.hist-stats{display:flex;justify-content:space-around;padding:8px 14px;background:var(--slate-50);border-top:1px solid var(--slate-100)}
+.hist-stat{text-align:center}
+.hist-stat .lbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--slate-400)}
+.hist-stat .val{font-size:13px;font-weight:700;font-family:var(--mono);color:var(--slate-900)}
+
+/* Per-run table */
+.tbl-wrap{overflow-x:auto}
+table.runs{width:100%;border-collapse:collapse;font-size:11.5px}
+table.runs thead th{
+  background:var(--slate-50);color:var(--slate-700);
+  font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;
+  padding:8px 10px;border-bottom:1px solid var(--slate-200);text-align:left;
+  cursor:pointer;user-select:none;white-space:nowrap;
+}
+table.runs thead th:hover{background:var(--slate-100);color:var(--slate-900)}
+table.runs thead th.asc::after{content:' ▲';color:var(--teal);font-size:8px}
+table.runs thead th.desc::after{content:' ▼';color:var(--teal);font-size:8px}
+table.runs tbody tr{border-bottom:1px solid var(--slate-100);cursor:pointer}
+table.runs tbody tr:hover{background:var(--blue-bg)}
+table.runs td{padding:7px 10px;color:var(--slate-700);white-space:nowrap}
+table.runs td.mono{font-family:var(--mono);font-size:11px}
+table.runs td.right{text-align:right}
+.outcome-pill{display:inline-block;font-size:9px;font-weight:700;padding:2px 7px;border-radius:4px;text-transform:uppercase;letter-spacing:.04em}
+.acc-cell{font-family:var(--mono);font-size:11px;font-weight:700}
+.acc-good{color:var(--green)}.acc-mid{color:var(--amber)}.acc-poor{color:var(--rose)}
+
+/* Test grid */
+.test-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:0 14px 14px}
+.test-card{
+  background:var(--slate-50);border:1px solid var(--slate-200);border-radius:var(--r-sm);
+  padding:10px 12px;
+}
+.test-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.test-fname{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--slate-900)}
+.test-count{font-family:var(--mono);font-size:10px;color:var(--green);font-weight:700}
+.test-list{font-size:10.5px;color:var(--slate-600);line-height:1.6;max-height:140px;overflow-y:auto;font-family:var(--mono)}
+.test-list .tst{display:flex;align-items:center;gap:5px}
+.test-list .tst::before{content:'✓';color:var(--green);font-weight:700}
+
+/* Prompt version timeline */
+.timeline{padding:6px 14px 14px}
+.tl-row{display:flex;gap:14px;padding:8px 0;border-bottom:1px solid var(--slate-100)}
+.tl-row:last-child{border-bottom:none}
+.tl-marker{
+  flex-shrink:0;width:60px;font-family:var(--mono);font-size:11px;font-weight:700;
+  color:var(--teal);padding-top:2px;
+}
+.tl-body{flex:1}
+.tl-title{font-size:13px;font-weight:700;color:var(--slate-900);margin-bottom:2px}
+.tl-detail{font-size:11px;color:var(--slate-500);line-height:1.5;margin-bottom:4px}
+.tl-deltas{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
+.tl-delta{font-family:var(--mono);font-size:10px;font-weight:600;padding:2px 8px;border-radius:4px}
+.delta-up{background:var(--green-bg);color:var(--green)}
+.delta-flat{background:var(--slate-100);color:var(--slate-500)}
+.delta-down{background:var(--rose-bg);color:var(--rose)}
+
+footer{max-width:1100px;margin:0 auto;padding:14px 24px;border-top:1px solid var(--slate-200);display:flex;justify-content:space-between;align-items:center}
+footer .meta{font-size:11px;color:var(--slate-400);font-family:var(--mono)}
+
+@media (max-width:780px){
+  .rs-grid{grid-template-columns:repeat(3,1fr)}
+  .kpi-strip{grid-template-columns:repeat(2,1fr)}
+  .test-grid{grid-template-columns:1fr}
+  .metric-row{grid-template-columns:140px 1fr 50px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="logo">AESTHETICS<span>360</span></div>
+    <div class="nav-links">
+      <a href="demo-hero.html">Overview</a>
+      <a href="demo-extraction.html">Extraction</a>
+      <a href="demo-extraction-live.html">Live Extraction</a>
+      <a href="demo-agents.html">Agents</a>
+      <a href="demo-testing.html" class="active">Testing</a>
+      <a href="demo-flywheel.html">Flywheel</a>
+      <a href="demo-intelligence.html">Intelligence</a>
+      <a href="demo-products.html">Product Library</a>
+    </div>
+  </div>
+</nav>
+
+<div class="page">
+  <div class="page-header" style="display:flex;align-items:flex-end;justify-content:space-between;gap:14px">
+    <div>
+      <h1>Accuracy Lab</h1>
+      <div class="sub">Every prompt change is graded against 50+ real consultations before it ships. These numbers are from the latest production batch — nothing is staged.</div>
+    </div>
+    <a href="demo-batch-test.html" style="font-size:11px;font-weight:700;color:var(--teal);text-decoration:none;padding:7px 12px;border:1px solid var(--slate-200);border-radius:6px;background:var(--white);white-space:nowrap;flex-shrink:0">→ Replay any historical batch</a>
+  </div>
+
+  <!-- Run summary -->
+  <div class="run-summary" id="runSummary"></div>
+
+  <!-- KPI strip -->
+  <div class="kpi-strip" id="kpiStrip"></div>
+
+  <!-- Aggregate metrics -->
+  <div class="tc">
+    <div class="tc-hdr"><span>Aggregate Metrics <button class="a360-info" data-agent="batch_eval_runner"></button></span><span class="count" id="metricsCount"></span></div>
+    <div class="tc-body" id="aggregateBars"></div>
+  </div>
+
+  <!-- Latency histogram -->
+  <div class="tc">
+    <div class="tc-hdr"><span>Latency Distribution</span><span class="count" id="latencyCount"></span></div>
+    <div id="hist"></div>
+    <div id="histLabels" class="hist-labels"></div>
+    <div id="histStats" class="hist-stats"></div>
+  </div>
+
+  <!-- Per-run table -->
+  <div class="tc">
+    <div class="tc-hdr"><span>Per-Run Metrics — click a row to open the run on the Live page</span><span class="count" id="runsCount"></span></div>
+    <div class="tbl-wrap">
+      <table class="runs" id="runsTable">
+        <thead>
+          <tr>
+            <th data-col="run_id_short">Run</th>
+            <th data-col="consult_type">Type</th>
+            <th data-col="duration_minutes" class="right">Duration</th>
+            <th data-col="elapsed_seconds" class="right">Latency</th>
+            <th data-col="evidence_accuracy" class="right desc">Evidence Acc</th>
+            <th data-col="evidence_quotes_checked" class="right">Quotes</th>
+            <th data-col="offerings_count" class="right">Offerings</th>
+            <th data-col="concerns_count" class="right">Concerns</th>
+            <th data-col="checklist_items" class="right">Checklist</th>
+            <th data-col="outcome_status">Outcome</th>
+          </tr>
+        </thead>
+        <tbody id="runsTbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Test suite -->
+  <div class="tc">
+    <div class="tc-hdr"><span>Test Suite — pytest tests/</span><span class="count" id="testsCount"></span></div>
+    <div class="test-grid" id="testGrid"></div>
+  </div>
+
+  <!-- Prompt version timeline -->
+  <div class="tc">
+    <div class="tc-hdr"><span>Prompt Version History — every release is gated by the eval suite above</span></div>
+    <div class="timeline" id="timeline"></div>
+  </div>
+</div>
+
+<footer>
+  <div class="meta">eval_report:v32_final_50 · 49 runs · ran 2026-04-22</div>
+  <a href="demo-extraction-live.html" style="font-size:12px;font-weight:600;color:var(--teal);text-decoration:none">→ Live Extraction</a>
+</footer>
+
+<script src="agent-info-panel.js"></script>
+<script>
+// ─── Inlined real eval data (eval_report_v32_final_50.json + batch report joins) ─────────
+const DATA = {"batch": {"label": "v32_final_50", "model": "us.anthropic.claude-haiku-4-5-20251001-v1:0", "provider": "bedrock", "prompt_set": "2step_v32", "count": 50, "successes": 49, "failures": 1, "avg_seconds": 52.0, "total_seconds": 2597.8, "timestamp": "2026-04-22T04:21:03.120836+00:00"}, "summary": {"schema_p1_compliance": 1.0, "schema_p2_compliance": 1.0, "p1_field_population": 0.8010204081632653, "evidence_coverage": 1.0, "evidence_accuracy": 0.8456266788867688, "offerings_avg": 4.755102040816326, "motivation_type_pct": 0.9183673469387755, "cross_sell_summary_pct": 1.0, "pricing_approach_pct": 0.0, "outcome_commitment_consistent": 1.0, "checklist_structured_evidence": 468, "checklist_bare_string_evidence": 0}, "runs_evaluated": 49, "per_run": [{"run_id": "3e52a172-1b15-4d14-8ccc-7ee87bd58b56", "transcript_id": "77d852dd-0efd-4d7c-8071-1e5fc236f1bb", "evidence_accuracy": 0.56, "evidence_quotes_checked": 75, "p1_field_population": 0.833, "offerings_count": 11, "concerns_count": 8, "objections_count": 2, "hesitations_count": 2, "checklist_items": 10, "signal_tag_count": 3, "outcome_status": "treatment_performed", "commitment_level": "committed", "has_motivation_type": true, "has_pricing_approach": false, "issues_count": 0, "elapsed_seconds": 68.9, "consult_type": "follow_up", "duration_minutes": 39.4}, {"run_id": "81462d94-03e6-4934-b751-930898d4a3f7", "transcript_id": "67de7833-0754-4b8f-979e-26d2629c691f", "evidence_accuracy": 0.842, "evidence_quotes_checked": 57, "p1_field_population": 0.833, "offerings_count": 3, "concerns_count": 4, "objections_count": 1, "hesitations_count": 0, "checklist_items": 10, "signal_tag_count": 2, "outcome_status": "treatment_performed", "commitment_level": "committed", "has_motivation_type": true, "has_pricing_approach": false, "issues_count": 0, "elapsed_seconds": 44.1, "consult_type": "treatment_visit", "duration_minutes": 22.1}, {"run_id": "eba8404f-a24c-495b-a661-9765a7424da4", "transcript_id": "feddfdaf-b4d6-4c1f-a8e3-672aeaf882a6", "evidence_accuracy": 0.548, "evidence_quotes_checked": 73, "p1_field_population": 0.833, "offerings_count": 8, "concerns_count": 5, "objections_count": 1, "hesitations_count": 2, "checklist_items": 14, "signal_tag_count": 3, "outcome_status": "booked", "commitment_level": "committed", "has_motivation_type": true, "has_pricing_approach": false, "issues_count": 0, "elapsed_seconds": 63.2, "consult_type": "follow_up", "duration_minutes": 48.7}, {"run_id": "f97fcb9a-0933-4461-b804-2567baec5dbf", "transcript_id": "e0062367-718c-4e62-94e8-74da94e300fe", "evidence_accuracy": 0.971, "evidence_quotes_checked": 34, "p1_field_population": 0.833, "offerings_count": 4, "concerns_count": 3, "objections_count": 0, "hesitations_count": 0, "checklist_items": 7, "signal_tag_count": 4, "outcome_status": "booked", "commitment_level": "committed", "has_motivation_type": true, "has_pricing_approach": false, "issues_count": 0, "elapsed_seconds": 27.7, "consult_type": "follow_up", "duration_minutes": 4.7}, {"run_id": "d027654b-f341-4f75-8ce6-85d1294a0a79", "transcript_id": "64450716-b6c3-4c44-960a-efe12e69096e", "evidence_accuracy": 1.0, "evidence_quotes_checked": 44, "p1_field_population": 0.75, "offerings_count": 4, "concerns_count": 3, "objections_count": 0, "hesitations_count": 0, "checklist_items": 8, "signal_tag_count": 4, "outcome_status": "booked", "commitment_level": "committed", "has_motivation_type": true, "has_pricing_approach": false, "issues_count": 0, "elapsed_seconds": 30.0, "consult_type": "initial_consultation", "duration_minutes": 1.3}, {"run_id": "402a3cdf-e832-4f08-a001-9635e797b7ce", "transcript_id": "f846ec3b-67b3-4ac9-afda-d26524999078", "evidence_accuracy": 0.795, "evidence_quotes_checked": 44, "p1_field_population": 0.75, "offerings_count": 3, "concerns_count": 3, "objections_count": 0, "hesitations_count": 0, "checklist_items": 14, "signal_tag_count": 2, "outcome_status": "treatment_performed", "commitment_level": "committed", "has_motivation_type": true, "has_pricing_approach": false, "issues_count": 0, "elapsed_seconds": 39.6, "consult_type": "treatment_visit", "duration_minutes": 20.4}, {"run_id": "3120f2ee-b807-454c-9ccd-76ec537fd8d5", "transcript_id": "ffda9229-4f7d-4448-adba-1e7a689f01c2", "evidence_accuracy": 0.903, "evidence_quotes_checked": 62, "p1_field_population": 0.917, "offerings_count": 4, "concerns_count": 4, "objections_count": 2, "hesitations_count": 1, "checklist_items": 10, "signal_tag_count": 4, "outcome_status": "booked", "commitment_level": "committed", "has_motivation_type": true, "has_pricing_approach": false, "issues_count": 0, "elapsed_seconds": 69.2, "consult_type": "follow_up", "duration_minutes": 25.2}, {"run_id": "ae6210ae-ca59-44aa-96c9-ad71b139e7e0", "transcript_id": "1dedc5af-79d1-4ac4-8a1f-dd845428ac38", "evidence_accuracy": 1.0, "evidence_quotes_checked": 40, "p1_field_population": 0.833, "offerings_count": 4, "concerns_count": 3, "objections_count": 0, "hesitations_count": 0, "checklist_items": 6, "signal_tag_count": 4, "outcome_status": "booked", "commitment_level": "committed", "has_motivation_type": true, "has_pricing_approach": false, "issues_count": 0, "elapsed_seconds": 29.1, "consult_type": "initial_consultation", "duration_minutes": 1.2}, {"run_id": "90f5abdb-5100-4722-adad-0dc40c5f6d4a", "transcript_id": "28b618bb-9390-40a3-b265-afe27e7cfcb1", "evidence_accuracy": 0.881, "evidence_quotes_checked": 42, "p1_field_population": 0.833, "offerings_count": 1, "concerns_count": 2, "objections_count": 0, "hesitations_count": 0, "checklist_items": 14, "signal_tag_count": 2, "outcome_status": "treatment_performed", "commitment_level": "committed", "has_motivation_type": true, "has_pricing_approach": false, "issues_count": 0, "elapsed_seconds": 33.9, "consult_type": "follow_up", "duration_minutes": 12.3}, {"run_id": "16d65e77-45ee-4076-ade9-ba28fd91db4e", "transcript_id": "27776b55-0aa0-4d86-a43c-44540f5b999f", "evidence_accuracy": 0.847, "evidence_quotes_checked": 59, "p1_field_population": 0.833, "offerings_count": 6, "concerns_count": 5, "objections_count": 0, "hesitations_count": 2, "checklist_items": 15, "signal_tag_count": 2, "outcome_status": "treatment_performed", "commitment_level": "committed", "has_motivation_type": true, "has_pricing_approach": false, "issues_count": 0, "elapsed_seconds": 56.4, "consult_type": "follow_up", "duration_minutes": 48.9}, {"run_id": "4fa6066d-0832-43e7-925b-f070c78bfb8c", "transcript_id": "4b756ffe-ec2b-415f-820d-982b1a68968a", "evidence_accuracy": 0.887, "evidence_quotes_checked": 62, "p1_field_population": 0.917, "offerings_count": 7, "concerns_count": 5, "objections_count": 2, "hesitations_count": 2, "checklist_items": 14, "signal_tag_count": 3, "outcome_status": "information_only", "commitment_level": "considering", "has_motivation_type": true, "has_pricing_approach": false, "issues_count": 0, "elapsed_seconds": 66.2, "consult_type": "initial_consultation", "duration_minutes": 30.6}, {"run_id": "dfa6a33e-8a2c-4136-ae27-f3c8cf1c0336", "transcript_id": "474130f6-b15f-4545-bfdb-d022772294c2", "evidence_accuracy": 0.945, "evidence_quotes_checked": 55, "p1_field_population": 0.833, "offerings_count": 3, "concerns_count": 4, "objections_count": 0, "hesitations_count": 1, "checklist_items": 8, "signal_tag_count": 3, "outcome_status": "treatment_performed", "commitment_level": "committed", "has_motivation_type": true, "has_pricing_approach": false, "issues_count": 0, "elapsed_seconds": 41.6, "consult_type": "follow_up", "duration_minutes": 31.9}, {"run_id": "7e751d90-eb75-48dc-9dfa-a2dae7d52007", "transcript_id": "28f718b0-f693-43e1-a9eb-e23f7c899604", "evidence_accuracy": 0.846, "evidence_quotes_checked": 78, "p1_field_population": 0.917, "offerings_count": 7, "concerns_count": 8, "objections_count": 0, "hesitations_count": 0, "checklist_items": 18, "signal_tag_count": 4, "outcome_status": "treatment_performed", "commitment_level": "committed", "has_motivation_type": true, "has_pricing_approach": false, "issues_count": 0, "elapsed_seconds": 100.7, "consult_type": "initial_consultation", "duration_minutes": 46.9}, {"run_id": "ccdad56a-b74f-44b3-a47f-027d7115809c", "transcript_id": "b2ea52a4-4d2d-483f-a848-4bb25f82b70d", "evidence_accuracy": 1.0, "evidence_quotes_checked": 50, "p1_field_population": 0.833, "offerings_count": 4, "concerns_count": 4, "objections_count": 0, "hesitations_count": 0, "checklist_items": 14, "signal_tag_count": 3, "outcome_status": "information_only", "commitment_level": "interested", "has_motivation_type": true, "has_pricing_approach": false, "issues_count": 0, "elapsed_seconds": 39.8, "consult_type": "initial_consultation", "duration_minutes": 7.0}, {"run_id": "26d502ea-9af8-41f0-9bfd-d8db48060363", "transcript_id": "cd3a440e-97e3-4eff-a702-3839cbfabc8a", "evidence_accuracy": 0.898, "evidence_quotes_checked": 98, "p1_field_population": 0.833, "offerings_count": 11, "concerns_count": 11, "objections_count": 1, "hesitations_count": 0, "checklist_items": 18, "signal_tag_count": 7, "outcome_status": "booked", "commitment_level": "committed", "has_motivation_type": true, "has_pricing_approach": false, "issues_count": 0, "elapsed_seconds": 162.8, "consult_type": "initial_consultation", "duration_minutes": 40.3}, {"run_id": "ef5fbc2a-ddad-4ed5-a9de-96544c1d29d3", "transcript_id": "46576474-b63b-4b37-8ce6-40b25ec350e7", "evidence_accuracy": 0.815, "evidence_quotes_checked": 65, "p1_field_population": 0.833, "offerings_count": 6, "concerns_count": 6, "objections_count": 1, "hesitations_count": 1, "checklist_items": 14, "signal_tag_count": 3, "outcome_status": "treatment_performed", "commitment_level": "committed", "has_motivation_type": true, "has_pricing_approach": false, "issues_count": 0, "elapsed_seconds": 60.1, "consult_type": "treatment_visit", "duration_minutes": 28.7}, {"run_id": "10b89889-a0eb-438d-af74-e058659e31dc", "transcript_id": "da4e0d3c-4165-4f29-9450-e49584451586", "evidence_accuracy": 0.68, "evidence_quotes_checked": 50, "p1_field_population": 0.917, "offerings_count": 3, "concerns_count": 3, "objections_count": 0, "hesitations_count": 0, "checklist_items": 9, "signal_tag_count": 3, "outcome_status": "treatment_performed", "commitment_level": "committed", "has_motivation_type": true, "has_pricing_approach": false, "issues_count": 0, "elapsed_seconds": 41.6, "consult_type": "unknown", "duration_minutes": 36.5}, {"run_id": "c8e58acc-5f3d-405b-ae50-2237a7152259", "transcript_id": "95923e8b-fbd2-427f-9641-884a7e96175f", "evidence_accuracy": 0.92, "evidence_quotes_checked": 50, "p1_field_population": 0.75, "offerings_count": 5, "concerns_count": 2, "objections_count": 0, "hesitations_count": 0, "checklist_items": 9, "signal_tag_count": 5, "outcome_status": "treatment_performed", "commitment_level": "committed", "has_motivation_type": true, "has_pricing_approach": false, "issues_count": 0, "elapsed_seconds": 45.4, "consult_type": "unknown", "duration_minutes": 31.9}, {"run_id": "f88ce752-9cac-40f9-ac31-6970402da16d", "transcript_id": "e4c4a41e-659b-4f40-9d0a-ff54d9df8d6a", "evidence_accuracy": 0.878, "evidence_quotes_checked": 41, "p1_field_population": 0.833, "offerings_count": 2, "concerns_count": 2, "objections_count": 0, "hesitations_count": 0, "checklist_items": 9, "signal_tag_count": 4, "outcome_status": "treatment_performed", "commitment_level": "committed", "has_motivation_type": true, "has_pricing_approach": false, "issues_count": 0, "elapsed_seconds": 34.2, "consult_type": "follow_up", "duration_minutes": 12.5}, {"run_id": "114c4ece-f44b-4388-b720-b11566d06f82", "transcript_id": "7ddd9a94-119b-4a34-86f5-1047e351bf97", "evidence_accuracy": 0.946, "evidence_quotes_checked": 56, "p1_field_population": 0.75, "offerings_count": 2, "concerns_count": 8, "objections_count": 0, "hesitations_count": 0, "checklist_items": 14, "signal_tag_count": 3, "outcome_status": "treatment_performed", "commitment_level": "committed", "has_motivation_type": false, "has_pricing_approach": false, "issues_count": 0, "elapsed_seconds": 54.7, "consult_type": "unknown", "duration_minutes": 30.8}, {"run_id": "a6eff21f-9f6f-455a-8272-4e2f4b42011a", "transcript_id": "b34a207d-fcb7-4de9-950d-addc7665cd9c", "evidence_accuracy": 0.778, "evidence_quotes_checked": 63, "p1_field_population": 0.75, "offerings_count": 5, "concerns_count": 6, "objections_count": 0, "hesitations_count": 1, "checklist_items": 14, "signal_tag_count": 4, "outcome_status": "treatment_performed", "commitment_level": "committed", "has_motivation_type": false, "has_pricing_approach": false, "issues_count": 0, "elapsed_seconds": 47.1, "consult_type": "procedure", "duration_minutes": 47.6}, {"run_id": "c1ff7027-17d8-4b7d-b4f1-7899f6468a16", "transcript_id": "537209de-3f64-43bd-a935-52d879173af8", "evidence_accuracy": 0.962, "evidence_quotes_checked": 79, "p1_field_population": 0.917, "offerings_count": 3, "concerns_count": 8, "objections_count": 0, "hesitations_count": 1, "checklist_items": 18, "signal_tag_count": 4, "outcome_status": "treatment_performed", "commitment_level": "committed", "has_motivation_type": true, "has_pricing_approach": false, "issues_count": 0, "elapsed_seconds": 80.1, "consult_type": "treatment_visit", "duration_minutes": 27.7}, {"run_id": "44c84ad1-7afe-4164-83c2-00c94fb8e313", "transcript_id": "b86fdfff-5989-47f7-babc-a37df146a070", "evidence_accuracy": 0.86, "evidence_quotes_checked": 50, "p1_field_population": 0.75, "offerings_count": 5, "concerns_count": 4, "objections_count": 0, "hesitations_count": 2, "checklist_items": 6, "signal_tag_count": 2, "outcome_status": "information_only", "commitment_level": "interested", "has_motivation_type": true, "has_pricing_approach": false, "issues_count": 0, "elapsed_seconds": 49.8, "consult_type": "follow_up", "duration_minutes": 13.7}, {"run_id": "c6b929ad-6cf6-4b6e-877f-a459091444c3", "transcript_id": "3b86b027-0ffe-4faa-b3b5-939fe917c204", "evidence_accuracy": 0.885, "evidence_quotes_checked": 26, "p1_field_population": 0.333, "offerings_count": 4, "concerns_count": 1, "objections_count": 0, "hesitations_count": 0, "checklist_items": 8, "signal_tag_count": 3, "outcome_status": "treatment_performed", "commitment_level": "committed", "has_motivation_type": true, "has_pricing_approach": false, "issues_count": 0, "elapsed_seconds": 25.0, "consult_type": "consultation", "duration_minutes": 34.0}, {"run_id": "ea611754-c040-468b-ba74-62244ed151a2", "transcript_id": "64bb52ad-85db-4717-a427-a00883a22104", "evidence_accuracy": 0.917, "evidence_quotes_checked": 36, "p1_field_population": 0.833, "offerings_count": 1, "concerns_count": 2, "objections_count": 0, "hesitations_count": 0, "checklist_items": 14, "signal_tag_count": 3, "outcome_status": "treatment_performed", "commitment_level": "committed", "has_motivation_type": true, "has_pricing_approach": false, "issues_count": 0, "elapsed_seconds": 28.1, "consult_type": "treatment_visit", "duration_minutes": 11.8}, {"run_id": "e69933c8-3314-42a0-9786-d5a819744e20", "transcript_id": "ffe2865d-735d-4beb-a142-5915e5b8b8db", "evidence_accuracy": 0.733, "evidence_quotes_checked": 75, "p1_field_population": 0.917, "offerings_count": 6, "concerns_count": 8, "objections_count": 1, "hesitations_count": 2, "checklist_items": 17, "signal_tag_count": 6, "outcome_status": "treatment_performed", "commitment_level": "committed", "has_motivation_type": true, "has_pricing_approach": false, "issues_count": 0, "elapsed_seconds": 73.8, "consult_type": "unknown", "duration_minutes": 48.0}, {"run_id": "a4eeefcb-b901-4a6c-85d3-b8443d0e973a", "transcript_id": "4ab51458-098e-48b4-9c65-39f25e0f024f", "evidence_accuracy": 0.938, "evidence_quotes_checked": 65, "p1_field_population": 0.75, "offerings_count": 4, "concerns_count": 17, "objections_count": 0, "hesitations_count": 0, "checklist_items": 14, "signal_tag_count": 5, "outcome_status": "treatment_performed", "commitment_level": "committed", "has_motivation_type": true, "has_pricing_approach": false, "issues_count": 0, "elapsed_seconds": 66.7, "consult_type": "unknown", "duration_minutes": 32.9}, {"run_id": "fa3217ff-147c-4852-aa36-f259c0f13004", "transcript_id": "4dbc3d4d-c64e-4e24-90eb-e7e4f23acdd7", "evidence_accuracy": 0.892, "evidence_quotes_checked": 37, "p1_field_population": 0.75, "offerings_count": 2, "concerns_count": 2, "objections_count": 0, "hesitations_count": 0, "checklist_items": 9, "signal_tag_count": 3, "outcome_status": "treatment_performed", "commitment_level": "committed", "has_motivation_type": true, "has_pricing_approach": false, "issues_count": 0, "elapsed_seconds": 32.5, "consult_type": "unknown", "duration_minutes": 31.4}, {"run_id": "ae63afb7-c3f9-420d-a4f5-0cd4347ac3d1", "transcript_id": "f09c4c7b-3b28-46ee-a224-73cec60276be", "evidence_accuracy": 0.812, "evidence_quotes_checked": 69, "p1_field_population": 0.833, "offerings_count": 11, "concerns_count": 5, "objections_count": 1, "hesitations_count": 1, "checklist_items": 14, "signal_tag_count": 3, "outcome_status": "treatment_performed", "commitment_level": "committed", "has_motivation_type": true, "has_pricing_approach": false, "issues_count": 0, "elapsed_seconds": 64.2, "consult_type": "unknown", "duration_minutes": 37.7}, {"run_id": "a8fe4d5e-3a73-4ffc-bb94-780c927443ca", "transcript_id": "4e181e54-562a-4461-9794-ca1417f992be", "evidence_accuracy": 0.904, "evidence_quotes_checked": 52, "p1_field_population": 0.833, "offerings_count": 3, "concerns_count": 4, "objections_count": 0, "hesitations_count": 0, "checklist_items": 7, "signal_tag_count": 3, "outcome_status": "treatment_performed", "commitment_level": "committed", "has_motivation_type": true, "has_pricing_approach": false, "issues_count": 0, "elapsed_seconds": 40.5, "consult_type": "treatment_visit", "duration_minutes": 16.4}, {"run_id": "ce723cd8-786e-4ead-ab90-ea0124d3a454", "transcript_id": "f8663fdc-217e-4294-b0bc-00aa9f546871", "evidence_accuracy": 0.702, "evidence_quotes_checked": 47, "p1_field_population": 0.75, "offerings_count": 4, "concerns_count": 4, "objections_count": 0, "hesitations_count": 0, "checklist_items": 14, "signal_tag_count": 2, "outcome_status": "treatment_performed", "commitment_level": "committed", "has_motivation_type": false, "has_pricing_approach": false, "issues_count": 0, "elapsed_seconds": 32.6, "consult_type": "treatment_visit", "duration_minutes": 11.3}, {"run_id": "b1d4f42a-ae86-492a-98ff-777aae6d850f", "transcript_id": "7ff22223-6aa9-4b67-82c4-9f33c7d2b165", "evidence_accuracy": 0.841, "evidence_quotes_checked": 63, "p1_field_population": 0.833, "offerings_count": 7, "concerns_count": 4, "objections_count": 0, "hesitations_count": 0, "checklist_items": 8, "signal_tag_count": 4, "outcome_status": "treatment_performed", "commitment_level": "committed", "has_motivation_type": true, "has_pricing_approach": false, "issues_count": 0, "elapsed_seconds": 58.8, "consult_type": "follow_up", "duration_minutes": 27.9}, {"run_id": "dded26b2-d31b-46b9-a524-3f554dacb33e", "transcript_id": "3242a32a-0458-4d96-b7b8-3d4216eba549", "evidence_accuracy": 0.853, "evidence_quotes_checked": 68, "p1_field_population": 0.833, "offerings_count": 5, "concerns_count": 6, "objections_count": 0, "hesitations_count": 1, "checklist_items": 13, "signal_tag_count": 4, "outcome_status": "agreed_pending_scheduling", "commitment_level": "interested", "has_motivation_type": true, "has_pricing_approach": false, "issues_count": 0, "elapsed_seconds": 77.5, "consult_type": "follow_up", "duration_minutes": 22.7}, {"run_id": "227daf00-8c67-4bde-981f-eae5aaeac643", "transcript_id": "49f3fbf6-58a3-4eac-a892-f34ade10bec3", "evidence_accuracy": 0.907, "evidence_quotes_checked": 54, "p1_field_population": 0.917, "offerings_count": 1, "concerns_count": 4, "objections_count": 0, "hesitations_count": 0, "checklist_items": 14, "signal_tag_count": 3, "outcome_status": "treatment_performed", "commitment_level": "committed", "has_motivation_type": true, "has_pricing_approach": false, "issues_count": 0, "elapsed_seconds": 45.1, "consult_type": "treatment_visit", "duration_minutes": 11.9}, {"run_id": "93befaf4-ca60-4186-aa78-b17ff10697d5", "transcript_id": "d781f720-0602-4169-b15f-aad97f9aa732", "evidence_accuracy": 0.746, "evidence_quotes_checked": 67, "p1_field_population": 0.833, "offerings_count": 6, "concerns_count": 5, "objections_count": 0, "hesitations_count": 2, "checklist_items": 14, "signal_tag_count": 5, "outcome_status": "treatment_performed", "commitment_level": "committed", "has_motivation_type": true, "has_pricing_approach": false, "issues_count": 0, "elapsed_seconds": 64.3, "consult_type": "unknown", "duration_minutes": 35.6}, {"run_id": "6750da85-463b-4e98-9640-de16d23bb413", "transcript_id": "3355f583-b490-4777-99ff-58fc3c5d9c3b", "evidence_accuracy": 0.808, "evidence_quotes_checked": 52, "p1_field_population": 0.75, "offerings_count": 4, "concerns_count": 4, "objections_count": 0, "hesitations_count": 0, "checklist_items": 14, "signal_tag_count": 3, "outcome_status": "treatment_performed", "commitment_level": "committed", "has_motivation_type": true, "has_pricing_approach": false, "issues_count": 0, "elapsed_seconds": 41.3, "consult_type": "unknown", "duration_minutes": 43.6}, {"run_id": "5cb26350-1c96-4fc6-963f-abf488fcb184", "transcript_id": "c270cafa-5ed0-4a52-b75a-f219d093c7c9", "evidence_accuracy": 0.714, "evidence_quotes_checked": 63, "p1_field_population": 0.917, "offerings_count": 7, "concerns_count": 4, "objections_count": 1, "hesitations_count": 1, "checklist_items": 14, "signal_tag_count": 5, "outcome_status": "booked", "commitment_level": "committed", "has_motivation_type": true, "has_pricing_approach": false, "issues_count": 0, "elapsed_seconds": 49.3, "consult_type": "unknown", "duration_minutes": 32.9}, {"run_id": "492be4fe-d60a-4183-8b5d-b0e6e4b4056f", "transcript_id": "d7f36b86-044a-40e8-9db7-824c482c5b83", "evidence_accuracy": 0.686, "evidence_quotes_checked": 51, "p1_field_population": 0.75, "offerings_count": 3, "concerns_count": 4, "objections_count": 1, "hesitations_count": 0, "checklist_items": 7, "signal_tag_count": 2, "outcome_status": "information_only", "commitment_level": "interested", "has_motivation_type": true, "has_pricing_approach": false, "issues_count": 0, "elapsed_seconds": 50.2, "consult_type": "follow_up", "duration_minutes": 19.2}, {"run_id": "a9fc32ae-b7be-472f-b119-0f99806b6064", "transcript_id": "3c098d48-7845-4037-9bb8-b04b7d5e0f55", "evidence_accuracy": 0.864, "evidence_quotes_checked": 44, "p1_field_population": 0.833, "offerings_count": 3, "concerns_count": 2, "objections_count": 0, "hesitations_count": 1, "checklist_items": 6, "signal_tag_count": 3, "outcome_status": "treatment_performed", "commitment_level": "committed", "has_motivation_type": true, "has_pricing_approach": false, "issues_count": 0, "elapsed_seconds": 37.4, "consult_type": "follow_up", "duration_minutes": 12.2}, {"run_id": "f0a0c7e9-1615-4c6c-892d-19adc19d2367", "transcript_id": "3dc1303e-1bef-4332-ba81-b13721c096b9", "evidence_accuracy": 0.983, "evidence_quotes_checked": 59, "p1_field_population": 0.833, "offerings_count": 5, "concerns_count": 5, "objections_count": 1, "hesitations_count": 0, "checklist_items": 13, "signal_tag_count": 3, "outcome_status": "treatment_performed", "commitment_level": "committed", "has_motivation_type": true, "has_pricing_approach": false, "issues_count": 0, "elapsed_seconds": 50.4, "consult_type": "unknown", "duration_minutes": 42.1}, {"run_id": "e76b2648-3cf6-4bf6-b0d8-63f6692b5801", "transcript_id": "2abf90ef-6e10-4b6c-9452-4b19f582a885", "evidence_accuracy": 0.689, "evidence_quotes_checked": 74, "p1_field_population": 0.833, "offerings_count": 9, "concerns_count": 6, "objections_count": 2, "hesitations_count": 2, "checklist_items": 15, "signal_tag_count": 3, "outcome_status": "treatment_performed", "commitment_level": "committed", "has_motivation_type": true, "has_pricing_approach": false, "issues_count": 0, "elapsed_seconds": 69.9, "consult_type": "unknown", "duration_minutes": 37.5}, {"run_id": "28e32426-6d78-4f9b-86a4-be7afbf38803", "transcript_id": "88438059-1cee-414f-81c0-d0a9d84e2fde", "evidence_accuracy": 0.842, "evidence_quotes_checked": 57, "p1_field_population": 0.833, "offerings_count": 6, "concerns_count": 5, "objections_count": 0, "hesitations_count": 0, "checklist_items": 14, "signal_tag_count": 3, "outcome_status": "treatment_performed", "commitment_level": "committed", "has_motivation_type": true, "has_pricing_approach": false, "issues_count": 0, "elapsed_seconds": 58.4, "consult_type": "unknown", "duration_minutes": 45.3}, {"run_id": "2aac0051-dc66-472b-b222-6cd3035b8b66", "transcript_id": "c7c6ca15-d91b-44fc-86f1-c3593b133a70", "evidence_accuracy": 0.83, "evidence_quotes_checked": 53, "p1_field_population": 0.917, "offerings_count": 4, "concerns_count": 3, "objections_count": 1, "hesitations_count": 0, "checklist_items": 13, "signal_tag_count": 3, "outcome_status": "treatment_performed", "commitment_level": "committed", "has_motivation_type": true, "has_pricing_approach": false, "issues_count": 0, "elapsed_seconds": 50.9, "consult_type": "unknown", "duration_minutes": 44.3}, {"run_id": "8115702c-fcfb-49e3-b2f1-e5cb9f4ceb5d", "transcript_id": "ce52930d-05b6-4a1a-a09f-be191707fd77", "evidence_accuracy": 0.805, "evidence_quotes_checked": 77, "p1_field_population": 0.917, "offerings_count": 7, "concerns_count": 8, "objections_count": 2, "hesitations_count": 1, "checklist_items": 16, "signal_tag_count": 4, "outcome_status": "agreed_pending_scheduling", "commitment_level": "interested", "has_motivation_type": true, "has_pricing_approach": false, "issues_count": 0, "elapsed_seconds": 76.3, "consult_type": "unknown", "duration_minutes": 42.2}, {"run_id": "26d5c90c-048b-4149-928d-53c2e5e84ddf", "transcript_id": "ea093322-cdfc-4f6d-9c1c-7a2657bb2b61", "evidence_accuracy": 0.817, "evidence_quotes_checked": 60, "p1_field_population": 0.917, "offerings_count": 4, "concerns_count": 5, "objections_count": 0, "hesitations_count": 2, "checklist_items": 14, "signal_tag_count": 3, "outcome_status": "treatment_performed", "commitment_level": "committed", "has_motivation_type": true, "has_pricing_approach": false, "issues_count": 0, "elapsed_seconds": 58.1, "consult_type": "unknown", "duration_minutes": 32.0}, {"run_id": "8a3a9f47-e0d9-47a7-bd03-ff97d29f1d34", "transcript_id": "a0d9cc64-1aa5-4d4d-a722-84599ed7c167", "evidence_accuracy": 0.837, "evidence_quotes_checked": 49, "p1_field_population": 0.833, "offerings_count": 5, "concerns_count": 2, "objections_count": 0, "hesitations_count": 0, "checklist_items": 14, "signal_tag_count": 3, "outcome_status": "treatment_performed", "commitment_level": "committed", "has_motivation_type": true, "has_pricing_approach": false, "issues_count": 0, "elapsed_seconds": 37.0, "consult_type": "treatment_visit", "duration_minutes": 24.4}, {"run_id": "4aac6c8f-b939-4480-b47a-2aeab77bf017", "transcript_id": "c5967c48-06e7-49f4-a9de-568e0b0a847f", "evidence_accuracy": 0.871, "evidence_quotes_checked": 62, "p1_field_population": 0.833, "offerings_count": 8, "concerns_count": 6, "objections_count": 0, "hesitations_count": 1, "checklist_items": 14, "signal_tag_count": 4, "outcome_status": "treatment_performed", "commitment_level": "committed", "has_motivation_type": true, "has_pricing_approach": false, "issues_count": 0, "elapsed_seconds": 63.3, "consult_type": "unknown", "duration_minutes": 33.4}, {"run_id": "7952d549-b72e-4845-b2c1-8485ebdaba4c", "transcript_id": "26daef4a-e63c-4687-8376-95077f0417b6", "evidence_accuracy": 0.867, "evidence_quotes_checked": 15, "p1_field_population": 0.417, "offerings_count": 1, "concerns_count": 1, "objections_count": 0, "hesitations_count": 0, "checklist_items": 14, "signal_tag_count": 2, "outcome_status": "treatment_performed", "commitment_level": "committed", "has_motivation_type": true, "has_pricing_approach": false, "issues_count": 0, "elapsed_seconds": 22.0, "consult_type": "follow_up", "duration_minutes": 15.9}, {"run_id": "ff4a58ec-53b0-4de3-91a3-1d7fc55c176d", "transcript_id": "8f12579e-68ad-4afa-bbcc-5aee3fe1c493", "evidence_accuracy": 0.929, "evidence_quotes_checked": 14, "p1_field_population": 0.167, "offerings_count": 2, "concerns_count": 1, "objections_count": 0, "hesitations_count": 0, "checklist_items": 13, "signal_tag_count": 1, "outcome_status": "treatment_performed", "commitment_level": "committed", "has_motivation_type": false, "has_pricing_approach": false, "issues_count": 0, "elapsed_seconds": 21.2, "consult_type": "treatment_visit", "duration_minutes": 17.4}]};
+
+const TESTS = {
+  'test_extraction.py': ['test_parse_json_clean','test_parse_json_with_fences','test_parse_json_empty','test_substitute_basic','test_substitute_gl_context','test_substitute_conditional_blocks','test_substitute_pass1_chaining','test_dedupe_offerings','test_detect_extraction_version','test_extract_consult_type','test_run_extraction_requires_input'],
+  'test_downstream.py': ['test_registry_all_modules','test_registry_unknown_module','test_email_campaign_structure','test_coaching_report_structure','test_coaching_language_validation','test_coaching_backward_compat','test_shared_utils','test_opportunities_intent_classification','test_opportunities_missed_detection'],
+  'test_coaching_signals.py': ['test_always_present','test_discovery_with_goals','test_discovery_without_goals','test_education_with_connections','test_education_without_connections','test_closing_with_next_steps','test_follow_up_with_timing','test_follow_up_no_timing','test_cross_sell_appears_when_offerings','test_cross_sell_absent_when_no_offerings','test_objection_handling_appears_when_objections','test_objection_handling_absent_when_none','test_safety_appears_when_checklist','test_safety_absent_when_no_checklist','test_no_score_key','test_no_percentage','test_output_structure','test_signal_structure','test_compute_coaching_scores_alias'],
+  'test_gl_context.py': ['test_exact_match','test_case_insensitive','test_substring_match_product_in_practice','test_substring_match_practice_in_product','test_no_match','test_empty_practice_list_allows_all','test_whitespace_handling','test_partial_overlap_no_match','test_filtered_functions_accept_practice_names','test_unfiltered_functions_no_practice_names','test_all_functions_importable'],
+  'test_revenue_leaks.py': ['test_high_intent_no_booking','test_high_intent_with_booking_attempt','test_low_intent_no_leak','test_booked_no_leak','test_price_objection_unresolved','test_price_objection_resolved','test_non_price_objection_no_leak','test_no_objections','test_recurring_no_membership','test_recurring_with_membership','test_no_recurring','test_no_cross_sell_with_offerings','test_cross_sell_attempted','test_interested_no_next_steps','test_interested_with_next_steps','test_performed_no_leak','test_worst_case_consultation','test_perfect_consultation'],
+};
+
+// Prompt version history (manual; reflects what's in C:\Projects\Prompts\prompts\)
+const VERSIONS = [
+  {ver:'v4', when:'2026-04', title:'Cross-Sell v4', detail:'Adds patient-benefit / clinical / practice scores per recommendation. Currently being graded against v3 baseline.', deltas:[{lbl:'Status',val:'In eval',cls:'delta-flat'}]},
+  {ver:'v3.2', when:'2026-04-22', title:'Extraction v3.2 (current production)', detail:'Two-pass: P1 extracts context + offerings + dispositions, P2 produces outcome + commercial intelligence. Structured evidence required for every checklist item — bare-string evidence is now zero across 49 runs.', deltas:[{lbl:'Schema',val:'100%',cls:'delta-up'},{lbl:'Evidence cov',val:'100%',cls:'delta-up'},{lbl:'Bare-string',val:'0',cls:'delta-up'}]},
+  {ver:'v3', when:'2026-03', title:'Extraction v3 (HITL gate added)', detail:'Introduced HITL verification step between extraction and downstream agents. Reviewer corrections now persist as labeled overrides for the next eval cycle.', deltas:[{lbl:'HITL',val:'enabled',cls:'delta-up'}]},
+  {ver:'v2', when:'2026-02', title:'Extraction v2', detail:'First two-pass extraction. P1+P2 stabilized but evidence quotes were inconsistent — sometimes free strings, sometimes structured objects. Drove the v3.2 evidence-format work.', deltas:[{lbl:'Pass count',val:'2',cls:'delta-flat'}]},
+];
+
+// ─── Utilities ─────────────────────────────────────────────────────────────
+function pct(v){ return Math.round(v*1000)/10 + '%'; }
+function pad(n){ return n<10?'0'+n:''+n; }
+function fmtTs(s){ return s.slice(0,10) + ' ' + s.slice(11,19); }
+function shortId(s){ return s.slice(0,8); }
+
+const OUTCOME_STYLES = {
+  treatment_performed: {bg:'#ecfdf5',fg:'#047857'},
+  booked:              {bg:'#f5f3ff',fg:'#6d28d9'},
+  agreed_pending_scheduling: {bg:'#eff6ff',fg:'#1d4ed8'},
+  information_only:    {bg:'#f3f4f6',fg:'#6b7280'},
+  unknown:             {bg:'#f3f4f6',fg:'#9ca3af'},
+};
+
+// ─── Render: Run summary ───────────────────────────────────────────────────
+function renderRunSummary(){
+  const b = DATA.batch;
+  const modelShort = b.model.split(':')[0].split('.').pop();
+  const totalMin = (b.total_seconds/60).toFixed(1);
+  document.getElementById('runSummary').innerHTML = `
+    <div class="rs-hdr">
+      <span class="lbl">Latest Production Eval — <span style="font-family:var(--mono)">${b.label}</span></span>
+      <span class="ts">${fmtTs(b.timestamp)} UTC</span>
+    </div>
+    <div class="rs-grid">
+      <div class="rs-cell"><div class="lbl">Provider</div><div class="val txt">${b.provider}</div></div>
+      <div class="rs-cell"><div class="lbl">Model</div><div class="val">${modelShort}</div></div>
+      <div class="rs-cell"><div class="lbl">Prompt Set</div><div class="val">${b.prompt_set}</div></div>
+      <div class="rs-cell"><div class="lbl">Sample</div><div class="val">${b.successes}/${b.count}</div></div>
+      <div class="rs-cell"><div class="lbl">Avg Latency</div><div class="val">${b.avg_seconds}s</div></div>
+      <div class="rs-cell"><div class="lbl">Total Run Time</div><div class="val">${totalMin} min</div></div>
+    </div>
+  `;
+}
+
+// ─── Render: KPI strip ─────────────────────────────────────────────────────
+function renderKpis(){
+  const s = DATA.summary;
+  const successRate = DATA.batch.successes / DATA.batch.count;
+  const cards = [
+    {lbl:'Schema Compliance', val:pct((s.schema_p1_compliance + s.schema_p2_compliance)/2), desc:'P1 + P2 schema valid on every run', cls:'kpi-good'},
+    {lbl:'Evidence Coverage',  val:pct(s.evidence_coverage), desc:'Every claim has a transcript quote', cls:'kpi-good'},
+    {lbl:'Evidence Accuracy',  val:pct(s.evidence_accuracy), desc:'Quotes verified verbatim in transcript', cls:'kpi-info'},
+    {lbl:'Field Population',   val:pct(s.p1_field_population), desc:'P1 fields populated when applicable', cls:'kpi-info'},
+  ];
+  document.getElementById('kpiStrip').innerHTML = cards.map(c =>
+    `<div class="kpi-card"><div class="lbl">${c.lbl}</div><div class="val ${c.cls}">${c.val}</div><div class="desc">${c.desc}</div></div>`
+  ).join('');
+}
+
+// ─── Render: Aggregate metrics bars ────────────────────────────────────────
+function renderAggregate(){
+  const s = DATA.summary;
+  const rows = [
+    {n:'P1 Schema Compliance',     v:s.schema_p1_compliance, hint:'Pass 1 output is JSON-schema valid'},
+    {n:'P2 Schema Compliance',     v:s.schema_p2_compliance, hint:'Pass 2 output is JSON-schema valid'},
+    {n:'Evidence Coverage',        v:s.evidence_coverage,    hint:'Every output has a transcript citation'},
+    {n:'Evidence Accuracy',        v:s.evidence_accuracy,    hint:'Citations match the transcript verbatim'},
+    {n:'Field Population (P1)',    v:s.p1_field_population,  hint:'Expected P1 fields populated'},
+    {n:'Motivation Type Captured', v:s.motivation_type_pct,  hint:'Why the patient is here — % of runs'},
+    {n:'Cross-Sell Summary',       v:s.cross_sell_summary_pct, hint:'Cross-sell summary block emitted'},
+    {n:'Outcome ↔ Commitment',     v:s.outcome_commitment_consistent, hint:'Outcome status consistent with commitment level'},
+    {n:'Pricing Approach Captured',v:s.pricing_approach_pct, hint:'Known gap — pricing extraction is the next prompt iteration', warn:true},
+  ];
+  let html = '';
+  rows.forEach(r => {
+    const v = r.v;
+    let cls = 'kpi-good', color = 'var(--green)';
+    if (r.warn || v < 0.5) { cls = 'kpi-warn'; color = 'var(--amber)'; }
+    else if (v < 0.85) { cls = 'kpi-info'; color = 'var(--teal-light)'; }
+    if (v === 0) color = 'var(--rose)';
+    html += `<div class="metric-row">
+      <div class="metric-name">${r.n}<span class="hint">${r.hint}</span></div>
+      <div class="metric-bar"><div class="metric-fill" style="width:${Math.max(v*100,1)}%;background:${color}"></div></div>
+      <div class="metric-val ${cls}">${pct(v)}</div>
+    </div>`;
+  });
+  // Append the raw counts row
+  html += `<div class="metric-row" style="border-top:1px solid var(--slate-200);margin-top:6px;padding-top:10px">
+    <div class="metric-name">Avg Offerings / Run<span class="hint">Mean offerings extracted per consultation</span></div>
+    <div class="metric-bar"><div class="metric-fill" style="width:${Math.min(s.offerings_avg/10,1)*100}%;background:var(--teal-light)"></div></div>
+    <div class="metric-val kpi-info">${s.offerings_avg.toFixed(2)}</div>
+  </div>
+  <div class="metric-row">
+    <div class="metric-name">Checklist: Structured Evidence<span class="hint">Total checklist items with structured evidence (bare strings: ${s.checklist_bare_string_evidence})</span></div>
+    <div class="metric-bar"><div class="metric-fill" style="width:100%;background:var(--green)"></div></div>
+    <div class="metric-val kpi-good">${s.checklist_structured_evidence}</div>
+  </div>`;
+  document.getElementById('aggregateBars').innerHTML = html;
+  document.getElementById('metricsCount').textContent = '12 metrics';
+}
+
+// ─── Render: Latency histogram ─────────────────────────────────────────────
+function renderHistogram(){
+  const lats = DATA.per_run.map(r => r.elapsed_seconds).filter(x => x != null).sort((a,b)=>a-b);
+  const min = Math.min(...lats), max = Math.max(...lats);
+  const buckets = 12;
+  const w = (max - min) / buckets;
+  const counts = new Array(buckets).fill(0);
+  lats.forEach(v => {
+    let i = Math.floor((v - min) / w);
+    if (i >= buckets) i = buckets - 1;
+    counts[i]++;
+  });
+  const peak = Math.max(...counts);
+  const histEl = document.getElementById('hist');
+  histEl.className = 'hist';
+  histEl.innerHTML = counts.map(c => {
+    const h = c === 0 ? 2 : (c/peak) * 100;
+    return `<div class="hist-bar" style="height:${h}%"><div class="count">${c||''}</div></div>`;
+  }).join('');
+
+  // labels: show min, mid, max
+  const labels = [];
+  for (let i=0; i<buckets; i++) {
+    const v = min + i*w;
+    labels.push(i % 3 === 0 ? Math.round(v) + 's' : '');
+  }
+  labels[buckets-1] = Math.round(max) + 's';
+  document.getElementById('histLabels').innerHTML = labels.map(l => `<div>${l}</div>`).join('');
+
+  // Stats
+  const sum = lats.reduce((a,b)=>a+b,0);
+  const mean = sum/lats.length;
+  const median = lats[Math.floor(lats.length/2)];
+  const p95 = lats[Math.floor(lats.length*0.95)];
+  document.getElementById('histStats').innerHTML = `
+    <div class="hist-stat"><div class="lbl">Min</div><div class="val">${min.toFixed(1)}s</div></div>
+    <div class="hist-stat"><div class="lbl">Median</div><div class="val">${median.toFixed(1)}s</div></div>
+    <div class="hist-stat"><div class="lbl">Mean</div><div class="val">${mean.toFixed(1)}s</div></div>
+    <div class="hist-stat"><div class="lbl">P95</div><div class="val">${p95.toFixed(1)}s</div></div>
+    <div class="hist-stat"><div class="lbl">Max</div><div class="val">${max.toFixed(1)}s</div></div>
+  `;
+  document.getElementById('latencyCount').textContent = lats.length + ' runs';
+}
+
+// ─── Render: Per-run table (sortable) ──────────────────────────────────────
+let runsSortCol = 'evidence_accuracy';
+let runsSortDir = 'desc';
+function renderRunsTable(){
+  const rows = DATA.per_run.slice();
+  rows.forEach(r => r.run_id_short = shortId(r.run_id));
+  rows.sort((a,b) => {
+    let av = a[runsSortCol], bv = b[runsSortCol];
+    if (typeof av === 'string') { return runsSortDir === 'asc' ? av.localeCompare(bv) : bv.localeCompare(av); }
+    if (av == null) av = -Infinity;
+    if (bv == null) bv = -Infinity;
+    return runsSortDir === 'asc' ? av - bv : bv - av;
+  });
+
+  // Update header indicators
+  document.querySelectorAll('table.runs thead th').forEach(th => {
+    th.classList.remove('asc','desc');
+    if (th.dataset.col === runsSortCol) th.classList.add(runsSortDir);
+  });
+
+  const accClass = v => v >= 0.85 ? 'acc-good' : v >= 0.7 ? 'acc-mid' : 'acc-poor';
+
+  const html = rows.map(r => {
+    const o = OUTCOME_STYLES[r.outcome_status] || OUTCOME_STYLES.unknown;
+    const dur = r.duration_minutes != null ? r.duration_minutes.toFixed(1) + ' min' : '—';
+    const lat = r.elapsed_seconds != null ? r.elapsed_seconds.toFixed(1) + 's' : '—';
+    return `<tr onclick="window.location.href='demo-extraction-live.html#${r.run_id}'">
+      <td class="mono" title="${r.run_id}">${r.run_id_short}…</td>
+      <td>${r.consult_type || '—'}</td>
+      <td class="right mono">${dur}</td>
+      <td class="right mono">${lat}</td>
+      <td class="right acc-cell ${accClass(r.evidence_accuracy)}">${pct(r.evidence_accuracy)}</td>
+      <td class="right mono">${r.evidence_quotes_checked}</td>
+      <td class="right mono">${r.offerings_count}</td>
+      <td class="right mono">${r.concerns_count}</td>
+      <td class="right mono">${r.checklist_items}</td>
+      <td><span class="outcome-pill" style="background:${o.bg};color:${o.fg}">${(r.outcome_status||'').replace(/_/g,' ')}</span></td>
+    </tr>`;
+  }).join('');
+  document.getElementById('runsTbody').innerHTML = html;
+  document.getElementById('runsCount').textContent = rows.length + ' runs';
+}
+
+document.querySelectorAll('table.runs thead th').forEach(th => {
+  th.addEventListener('click', () => {
+    const col = th.dataset.col;
+    if (col === runsSortCol) runsSortDir = runsSortDir === 'asc' ? 'desc' : 'asc';
+    else { runsSortCol = col; runsSortDir = 'desc'; }
+    renderRunsTable();
+  });
+});
+
+// ─── Render: Tests ─────────────────────────────────────────────────────────
+function renderTests(){
+  let total = 0;
+  const html = Object.entries(TESTS).map(([fname, tests]) => {
+    total += tests.length;
+    return `<div class="test-card">
+      <div class="test-hdr">
+        <span class="test-fname">${fname}</span>
+        <span class="test-count">${tests.length} pass</span>
+      </div>
+      <div class="test-list">
+        ${tests.map(t => `<div class="tst">${t}</div>`).join('')}
+      </div>
+    </div>`;
+  }).join('');
+  document.getElementById('testGrid').innerHTML = html;
+  document.getElementById('testsCount').textContent = total + ' tests · all green';
+}
+
+// ─── Render: Timeline ──────────────────────────────────────────────────────
+function renderTimeline(){
+  document.getElementById('timeline').innerHTML = VERSIONS.map(v => {
+    const deltaHtml = (v.deltas||[]).map(d => `<span class="tl-delta ${d.cls}">${d.lbl}: ${d.val}</span>`).join('');
+    return `<div class="tl-row">
+      <div class="tl-marker">${v.ver}<br><span style="font-size:9px;color:var(--slate-400);font-weight:500">${v.when}</span></div>
+      <div class="tl-body">
+        <div class="tl-title">${v.title}</div>
+        <div class="tl-detail">${v.detail}</div>
+        <div class="tl-deltas">${deltaHtml}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ─── Boot ──────────────────────────────────────────────────────────────────
+renderRunSummary();
+renderKpis();
+renderAggregate();
+renderHistogram();
+renderRunsTable();
+renderTests();
+renderTimeline();
+</script>
+</body>
+</html>

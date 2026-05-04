@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A360 — Batch Test Replay</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#f5f6f8;--white:#fff;
+  --slate-900:#1a1f2e;--slate-700:#374151;--slate-600:#4b5563;--slate-500:#6b7280;--slate-400:#9ca3af;--slate-300:#d1d5db;--slate-200:#e5e7eb;--slate-100:#f3f4f6;--slate-50:#f9fafb;
+  --teal:#1b4f6b;--teal-light:#2c6f8f;
+  --blue:#2563eb;--blue-bg:#eff6ff;
+  --green:#059669;--green-bg:#ecfdf5;--green-border:#a7f3d0;
+  --amber:#d97706;--amber-bg:#fffbeb;
+  --rose:#dc2626;--rose-bg:#fef2f2;
+  --shadow:0 1px 3px rgba(0,0,0,.06);
+  --r:8px;--r-sm:6px;
+  --font:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+  --mono:'JetBrains Mono',monospace;
+}
+body{background:var(--bg);color:var(--slate-900);font-family:var(--font);-webkit-font-smoothing:antialiased;font-size:13px;line-height:1.5}
+nav{background:var(--teal);padding:0 24px}
+.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;height:48px;gap:24px}
+.logo{font-weight:800;font-size:15px;color:#fff;letter-spacing:-.02em;margin-right:auto}
+.logo span{color:rgba(255,255,255,.5)}
+.nav-links{display:flex;gap:2px}
+.nav-links a{color:rgba(255,255,255,.65);text-decoration:none;font-size:12px;font-weight:500;padding:6px 12px;border-radius:var(--r-sm);transition:all .12s}
+.nav-links a:hover{color:#fff;background:rgba(255,255,255,.1)}
+.nav-links a.active{color:#fff;background:rgba(255,255,255,.15)}
+.page{max-width:1100px;margin:0 auto;padding:20px 24px 48px}
+.page-header{margin-bottom:14px}
+.page-header h1{font-size:20px;font-weight:800;letter-spacing:-.02em;margin-bottom:2px}
+.page-header .sub{font-size:12px;color:var(--slate-500);max-width:740px;line-height:1.55}
+
+/* Picker bar */
+.picker{
+  display:flex;align-items:center;gap:14px;padding:12px 16px;
+  background:var(--white);border:1px solid var(--slate-200);border-radius:var(--r);
+  box-shadow:var(--shadow);margin-bottom:14px;flex-wrap:wrap;
+}
+.picker label{font-size:11px;font-weight:700;color:var(--slate-700);text-transform:uppercase;letter-spacing:.05em}
+.picker select{
+  font-family:var(--mono);font-size:12px;padding:7px 10px;
+  border:1px solid var(--slate-200);border-radius:var(--r-sm);background:var(--white);
+  color:var(--slate-900);min-width:380px;cursor:pointer;
+}
+.picker select:focus{outline:none;border-color:var(--teal)}
+.run-btn{
+  margin-left:auto;font-family:var(--font);font-size:12px;font-weight:700;
+  padding:8px 16px;border-radius:var(--r-sm);border:1px solid var(--slate-200);
+  background:var(--slate-100);color:var(--slate-400);cursor:not-allowed;
+  display:inline-flex;align-items:center;gap:6px;
+}
+.run-btn .lock{font-family:var(--mono);font-size:11px}
+.run-btn .v2-tag{font-size:9px;font-weight:700;padding:2px 6px;border-radius:3px;background:var(--amber-bg);color:var(--amber);text-transform:uppercase;letter-spacing:.04em}
+
+/* Run summary */
+.run-summary{background:var(--white);border:1px solid var(--slate-200);border-radius:var(--r);box-shadow:var(--shadow);margin-bottom:14px;overflow:hidden}
+.rs-hdr{background:var(--teal);color:#fff;padding:8px 14px;display:flex;justify-content:space-between;align-items:center}
+.rs-hdr .lbl{font-size:11px;font-weight:600}
+.rs-hdr .ts{font-family:var(--mono);font-size:10px;color:rgba(255,255,255,.7)}
+.rs-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:0}
+.rs-cell{padding:10px 14px;border-right:1px solid var(--slate-100)}
+.rs-cell:last-child{border-right:none}
+.rs-cell .lbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--slate-400);margin-bottom:2px}
+.rs-cell .val{font-size:12px;font-weight:700;color:var(--slate-900);font-family:var(--mono)}
+.rs-cell .val.txt{font-family:var(--font)}
+.rs-cell .val.success{color:var(--green)}
+.rs-cell .val.warn{color:var(--amber)}
+
+/* Eval summary cards (if eval exists) */
+.kpi-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px}
+.kpi-card{background:var(--white);border:1px solid var(--slate-200);border-radius:var(--r);box-shadow:var(--shadow);padding:14px 16px}
+.kpi-card .lbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--slate-400);margin-bottom:4px}
+.kpi-card .val{font-size:22px;font-weight:800;letter-spacing:-.02em;font-family:var(--mono);line-height:1}
+.kpi-card .desc{font-size:10.5px;color:var(--slate-500);margin-top:5px}
+.kpi-good{color:var(--green)}.kpi-info{color:var(--teal)}.kpi-warn{color:var(--amber)}
+
+.tc{background:var(--white);border:1px solid var(--slate-200);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden;margin-bottom:14px}
+.tc-hdr{background:var(--teal);color:#fff;padding:8px 14px;font-size:11px;font-weight:600;display:flex;justify-content:space-between;align-items:center}
+.tc-hdr .count{font-family:var(--mono);font-size:10px;background:rgba(255,255,255,.2);padding:2px 8px;border-radius:4px}
+
+.tbl-wrap{overflow-x:auto}
+table.runs{width:100%;border-collapse:collapse;font-size:11.5px}
+table.runs thead th{background:var(--slate-50);color:var(--slate-700);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:8px 10px;border-bottom:1px solid var(--slate-200);text-align:left;white-space:nowrap}
+table.runs tbody tr{border-bottom:1px solid var(--slate-100)}
+table.runs tbody tr.failure{background:var(--rose-bg)}
+table.runs td{padding:7px 10px;color:var(--slate-700);white-space:nowrap}
+table.runs td.mono{font-family:var(--mono);font-size:11px}
+table.runs td.right{text-align:right}
+.status-pill{display:inline-block;font-size:9px;font-weight:700;padding:2px 7px;border-radius:4px;text-transform:uppercase;letter-spacing:.04em}
+.status-success{background:var(--green-bg);color:var(--green)}
+.status-failure{background:var(--rose-bg);color:var(--rose)}
+
+/* Compare strip — when 2+ batches selected (future) */
+.cmp-info{
+  background:var(--blue-bg);border:1px solid var(--blue-bg);border-left:3px solid var(--blue);
+  padding:10px 14px;font-size:12px;color:var(--slate-700);line-height:1.5;
+  border-radius:var(--r-sm);margin-bottom:14px;
+}
+.cmp-info strong{color:var(--slate-900)}
+
+footer{max-width:1100px;margin:0 auto;padding:14px 24px;border-top:1px solid var(--slate-200);display:flex;justify-content:space-between;align-items:center}
+footer .meta{font-size:11px;color:var(--slate-400);font-family:var(--mono)}
+
+@media (max-width:780px){
+  .rs-grid{grid-template-columns:repeat(3,1fr)}
+  .kpi-strip{grid-template-columns:repeat(2,1fr)}
+  .picker select{min-width:280px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="logo">AESTHETICS<span>360</span></div>
+    <div class="nav-links">
+      <a href="demo-hero.html">Overview</a>
+      <a href="demo-extraction.html">Extraction</a>
+      <a href="demo-extraction-live.html">Live Extraction</a>
+      <a href="demo-agents.html">Agents</a>
+      <a href="demo-testing.html">Testing</a>
+      <a href="demo-flywheel.html">Flywheel</a>
+      <a href="demo-intelligence.html">Intelligence</a>
+      <a href="demo-products.html">Product Library</a>
+    </div>
+  </div>
+</nav>
+
+<div class="page">
+  <div class="page-header">
+    <h1>Batch Test Replay</h1>
+    <div class="sub">Pick any historical batch and inspect what shipped. These are the actual reports we use to decide whether a prompt change is safe to merge — same artifacts, no rendering tricks.</div>
+  </div>
+
+  <!-- Picker -->
+  <div class="picker">
+    <label>Replay batch:</label>
+    <select id="batchSelect" onchange="renderBatch(this.value)">
+      <option value="">— choose a batch —</option>
+    </select>
+    <button class="run-btn" disabled title="Live batch execution requires a Prompt Runner endpoint with rate-limit guards. MVP shows replay; full version coming in v2.">
+      <span class="lock">▷</span> Run new batch <span class="v2-tag">v2</span>
+    </button>
+  </div>
+
+  <div id="content"></div>
+</div>
+
+<footer>
+  <div class="meta" id="footerMeta">5 historical batches available · click a row to drill into the run</div>
+  <a href="demo-testing.html" style="font-size:12px;font-weight:600;color:var(--teal);text-decoration:none">→ Latest production eval (Accuracy Lab)</a>
+</footer>
+
+<script src="agent-info-panel.js"></script>
+<script>
+const BATCHES = [{"label": "v32_final_50", "model": "us.anthropic.claude-haiku-4-5-20251001-v1:0", "provider": "bedrock", "prompt_set": "2step_v32", "count": 50, "successes": 49, "failures": 1, "avg_seconds": 52.0, "total_seconds": 2597.8, "timestamp": "2026-04-22T04:21:03.120836+00:00", "results": [{"transcript_id": "77d852dd-0ef", "consult_type": "follow_up", "duration_minutes": 39.4, "run_id": "3e52a172-1b1", "status": "success", "elapsed_seconds": 68.9}, {"transcript_id": "67de7833-075", "consult_type": "treatment_visit", "duration_minutes": 22.1, "run_id": "81462d94-03e", "status": "success", "elapsed_seconds": 44.1}, {"transcript_id": "e0062367-718", "consult_type": "follow_up", "duration_minutes": 4.7, "run_id": "f97fcb9a-093", "status": "success", "elapsed_seconds": 27.7}, {"transcript_id": "feddfdaf-b4d", "consult_type": "follow_up", "duration_minutes": 48.7, "run_id": "eba8404f-a24", "status": "success", "elapsed_seconds": 63.2}, {"transcript_id": "64450716-b6c", "consult_type": "initial_consultation", "duration_minutes": 1.3, "run_id": "d027654b-f34", "status": "success", "elapsed_seconds": 30.0}, {"transcript_id": "f846ec3b-67b", "consult_type": "treatment_visit", "duration_minutes": 20.4, "run_id": "402a3cdf-e83", "status": "success", "elapsed_seconds": 39.6}, {"transcript_id": "ffda9229-4f7", "consult_type": "follow_up", "duration_minutes": 25.2, "run_id": "3120f2ee-b80", "status": "success", "elapsed_seconds": 69.2}, {"transcript_id": "1dedc5af-79d", "consult_type": "initial_consultation", "duration_minutes": 1.2, "run_id": "ae6210ae-ca5", "status": "success", "elapsed_seconds": 29.1}, {"transcript_id": "28b618bb-939", "consult_type": "follow_up", "duration_minutes": 12.3, "run_id": "90f5abdb-510", "status": "success", "elapsed_seconds": 33.9}, {"transcript_id": "27776b55-0aa", "consult_type": "follow_up", "duration_minutes": 48.9, "run_id": "16d65e77-45e", "status": "success", "elapsed_seconds": 56.4}, {"transcript_id": "4b756ffe-ec2", "consult_type": "initial_consultation", "duration_minutes": 30.6, "run_id": "4fa6066d-083", "status": "success", "elapsed_seconds": 66.2}, {"transcript_id": "474130f6-b15", "consult_type": "follow_up", "duration_minutes": 31.9, "run_id": "dfa6a33e-8a2", "status": "success", "elapsed_seconds": 41.6}, {"transcript_id": "28f718b0-f69", "consult_type": "initial_consultation", "duration_minutes": 46.9, "run_id": "7e751d90-eb7", "status": "success", "elapsed_seconds": 100.7}, {"transcript_id": "b2ea52a4-4d2", "consult_type": "initial_consultation", "duration_minutes": 7.0, "run_id": "ccdad56a-b74", "status": "success", "elapsed_seconds": 39.8}, {"transcript_id": "cd3a440e-97e", "consult_type": "initial_consultation", "duration_minutes": 40.3, "run_id": "26d502ea-9af", "status": "success", "elapsed_seconds": 162.8}, {"transcript_id": "46576474-b63", "consult_type": "treatment_visit", "duration_minutes": 28.7, "run_id": "ef5fbc2a-dda", "status": "success", "elapsed_seconds": 60.1}, {"transcript_id": "da4e0d3c-416", "consult_type": "unknown", "duration_minutes": 36.5, "run_id": "10b89889-a0e", "status": "success", "elapsed_seconds": 41.6}, {"transcript_id": "95923e8b-fbd", "consult_type": "unknown", "duration_minutes": 31.9, "run_id": "c8e58acc-5f3", "status": "success", "elapsed_seconds": 45.4}, {"transcript_id": "e4c4a41e-659", "consult_type": "follow_up", "duration_minutes": 12.5, "run_id": "f88ce752-9ca", "status": "success", "elapsed_seconds": 34.2}, {"transcript_id": "7ddd9a94-119", "consult_type": "unknown", "duration_minutes": 30.8, "run_id": "114c4ece-f44", "status": "success", "elapsed_seconds": 54.7}, {"transcript_id": "b34a207d-fcb", "consult_type": "procedure", "duration_minutes": 47.6, "run_id": "a6eff21f-9f6", "status": "success", "elapsed_seconds": 47.1}, {"transcript_id": "537209de-3f6", "consult_type": "treatment_visit", "duration_minutes": 27.7, "run_id": "c1ff7027-17d", "status": "success", "elapsed_seconds": 80.1}, {"transcript_id": "b86fdfff-598", "consult_type": "follow_up", "duration_minutes": 13.7, "run_id": "44c84ad1-7af", "status": "success", "elapsed_seconds": 49.8}, {"transcript_id": "3b86b027-0ff", "consult_type": "consultation", "duration_minutes": 34.0, "run_id": "c6b929ad-6cf", "status": "success", "elapsed_seconds": 25.0}, {"transcript_id": "64bb52ad-85d", "consult_type": "treatment_visit", "duration_minutes": 11.8, "run_id": "ea611754-c04", "status": "success", "elapsed_seconds": 28.1}, {"transcript_id": "ffe2865d-735", "consult_type": "unknown", "duration_minutes": 48.0, "run_id": "e69933c8-331", "status": "success", "elapsed_seconds": 73.8}, {"transcript_id": "4ab51458-098", "consult_type": "unknown", "duration_minutes": 32.9, "run_id": "a4eeefcb-b90", "status": "success", "elapsed_seconds": 66.7}, {"transcript_id": "4dbc3d4d-c64", "consult_type": "unknown", "duration_minutes": 31.4, "run_id": "fa3217ff-147", "status": "success", "elapsed_seconds": 32.5}, {"transcript_id": "f09c4c7b-3b2", "consult_type": "unknown", "duration_minutes": 37.7, "run_id": "ae63afb7-c3f", "status": "success", "elapsed_seconds": 64.2}, {"transcript_id": "4e181e54-562", "consult_type": "treatment_visit", "duration_minutes": 16.4, "run_id": "a8fe4d5e-3a7", "status": "success", "elapsed_seconds": 40.5}, {"transcript_id": "f8663fdc-217", "consult_type": "treatment_visit", "duration_minutes": 11.3, "run_id": "ce723cd8-786", "status": "success", "elapsed_seconds": 32.6}, {"transcript_id": "7ff22223-6aa", "consult_type": "follow_up", "duration_minutes": 27.9, "run_id": "b1d4f42a-ae8", "status": "success", "elapsed_seconds": 58.8}, {"transcript_id": "3242a32a-045", "consult_type": "follow_up", "duration_minutes": 22.7, "run_id": "dded26b2-d31", "status": "success", "elapsed_seconds": 77.5}, {"transcript_id": "49f3fbf6-58a", "consult_type": "treatment_visit", "duration_minutes": 11.9, "run_id": "227daf00-8c6", "status": "success", "elapsed_seconds": 45.1}, {"transcript_id": "d781f720-060", "consult_type": "unknown", "duration_minutes": 35.6, "run_id": "93befaf4-ca6", "status": "success", "elapsed_seconds": 64.3}, {"transcript_id": "3355f583-b49", "consult_type": "unknown", "duration_minutes": 43.6, "run_id": "6750da85-463", "status": "success", "elapsed_seconds": 41.3}, {"transcript_id": "c270cafa-5ed", "consult_type": "unknown", "duration_minutes": 32.9, "run_id": "5cb26350-1c9", "status": "success", "elapsed_seconds": 49.3}, {"transcript_id": "d7f36b86-044", "consult_type": "follow_up", "duration_minutes": 19.2, "run_id": "492be4fe-d60", "status": "success", "elapsed_seconds": 50.2}, {"transcript_id": "3c098d48-784", "consult_type": "follow_up", "duration_minutes": 12.2, "run_id": "a9fc32ae-b7b", "status": "success", "elapsed_seconds": 37.4}, {"transcript_id": "3dc1303e-1be", "consult_type": "unknown", "duration_minutes": 42.1, "run_id": "f0a0c7e9-161", "status": "success", "elapsed_seconds": 50.4}, {"transcript_id": "2abf90ef-6e1", "consult_type": "unknown", "duration_minutes": 37.5, "run_id": "e76b2648-3cf", "status": "success", "elapsed_seconds": 69.9}, {"transcript_id": "88438059-1ce", "consult_type": "unknown", "duration_minutes": 45.3, "run_id": "28e32426-6d7", "status": "success", "elapsed_seconds": 58.4}, {"transcript_id": "c7c6ca15-d91", "consult_type": "unknown", "duration_minutes": 44.3, "run_id": "2aac0051-dc6", "status": "success", "elapsed_seconds": 50.9}, {"transcript_id": "ce52930d-05b", "consult_type": "unknown", "duration_minutes": 42.2, "run_id": "8115702c-fcf", "status": "success", "elapsed_seconds": 76.3}, {"transcript_id": "ea093322-cdf", "consult_type": "unknown", "duration_minutes": 32.0, "run_id": "26d5c90c-048", "status": "success", "elapsed_seconds": 58.1}, {"transcript_id": "a0d9cc64-1aa", "consult_type": "treatment_visit", "duration_minutes": 24.4, "run_id": "8a3a9f47-e0d", "status": "success", "elapsed_seconds": 37.0}, {"transcript_id": "c5967c48-06e", "consult_type": "unknown", "duration_minutes": 33.4, "run_id": "4aac6c8f-b93", "status": "success", "elapsed_seconds": 63.3}, {"transcript_id": "26daef4a-e63", "consult_type": "follow_up", "duration_minutes": 15.9, "run_id": "7952d549-b72", "status": "success", "elapsed_seconds": 22.0}, {"transcript_id": "c43e0a89-903", "consult_type": "unknown", "duration_minutes": 29.3, "run_id": null, "status": "error", "elapsed_seconds": 16.7}, {"transcript_id": "8f12579e-68a", "consult_type": "treatment_visit", "duration_minutes": 17.4, "run_id": "ff4a58ec-53b", "status": "success", "elapsed_seconds": 21.2}], "summary": {"schema_p1_compliance": 1.0, "schema_p2_compliance": 1.0, "p1_field_population": 0.8010204081632653, "evidence_coverage": 1.0, "evidence_accuracy": 0.8456266788867688, "offerings_avg": 4.755102040816326, "motivation_type_pct": 0.9183673469387755, "cross_sell_summary_pct": 1.0, "pricing_approach_pct": 0.0, "outcome_commitment_consistent": 1.0, "checklist_structured_evidence": 468, "checklist_bare_string_evidence": 0}}, {"label": "v32_haiku45_50", "model": "us.anthropic.claude-haiku-4-5-20251001-v1:0", "provider": "bedrock", "prompt_set": "2step_v32", "count": 28, "successes": 28, "failures": 0, "avg_seconds": 42.8, "total_seconds": 1198.4, "timestamp": "2026-04-20T04:15:31.441616+00:00", "results": [{"transcript_id": "67de7833-075", "consult_type": "treatment_visit", "duration_minutes": 22.1, "run_id": "96b8261e-6ae", "status": "success", "elapsed_seconds": 44.6}, {"transcript_id": "e0062367-718", "consult_type": "follow_up", "duration_minutes": 4.7, "run_id": "db3045df-0d4", "status": "success", "elapsed_seconds": 30.3}, {"transcript_id": "f846ec3b-67b", "consult_type": "treatment_visit", "duration_minutes": 20.4, "run_id": "a518f2c0-00e", "status": "success", "elapsed_seconds": 39.3}, {"transcript_id": "ffda9229-4f7", "consult_type": "follow_up", "duration_minutes": 25.2, "run_id": "bfd4fd19-83d", "status": "success", "elapsed_seconds": 60.7}, {"transcript_id": "28b618bb-939", "consult_type": "treatment_visit", "duration_minutes": 12.3, "run_id": "77913521-761", "status": "success", "elapsed_seconds": 36.6}, {"transcript_id": "b2ea52a4-4d2", "consult_type": "initial_consultation", "duration_minutes": 7.0, "run_id": "a4af4a8c-e8f", "status": "success", "elapsed_seconds": 37.3}, {"transcript_id": "46576474-b63", "consult_type": "unknown", "duration_minutes": 28.7, "run_id": "160f1ad0-0db", "status": "success", "elapsed_seconds": 52.5}, {"transcript_id": "e4c4a41e-659", "consult_type": "unknown", "duration_minutes": 12.5, "run_id": "858b4db8-a8d", "status": "success", "elapsed_seconds": 35.5}, {"transcript_id": "537209de-3f6", "consult_type": "unknown", "duration_minutes": 27.7, "run_id": "297217b3-5c6", "status": "success", "elapsed_seconds": 75.3}, {"transcript_id": "b86fdfff-598", "consult_type": "unknown", "duration_minutes": 13.7, "run_id": "92515d26-2ee", "status": "success", "elapsed_seconds": 51.6}, {"transcript_id": "64bb52ad-85d", "consult_type": "unknown", "duration_minutes": 11.8, "run_id": "07921bec-92d", "status": "success", "elapsed_seconds": 31.8}, {"transcript_id": "4e181e54-562", "consult_type": "unknown", "duration_minutes": 16.4, "run_id": "1069b645-a62", "status": "success", "elapsed_seconds": 34.6}, {"transcript_id": "f8663fdc-217", "consult_type": "unknown", "duration_minutes": 11.3, "run_id": "aee54b0e-663", "status": "success", "elapsed_seconds": 38.4}, {"transcript_id": "7ff22223-6aa", "consult_type": "unknown", "duration_minutes": 27.9, "run_id": "64ed806e-e98", "status": "success", "elapsed_seconds": 66.0}, {"transcript_id": "3242a32a-045", "consult_type": "unknown", "duration_minutes": 22.7, "run_id": "14a752ed-40f", "status": "success", "elapsed_seconds": 59.2}, {"transcript_id": "49f3fbf6-58a", "consult_type": "unknown", "duration_minutes": 11.9, "run_id": "fee37abf-ee5", "status": "success", "elapsed_seconds": 42.1}, {"transcript_id": "d7f36b86-044", "consult_type": "unknown", "duration_minutes": 19.2, "run_id": "62f3cf51-055", "status": "success", "elapsed_seconds": 50.0}, {"transcript_id": "3c098d48-784", "consult_type": "unknown", "duration_minutes": 12.2, "run_id": "7a253810-26c", "status": "success", "elapsed_seconds": 38.1}, {"transcript_id": "a0d9cc64-1aa", "consult_type": "unknown", "duration_minutes": 24.4, "run_id": "5e965c8f-d4b", "status": "success", "elapsed_seconds": 29.4}, {"transcript_id": "26daef4a-e63", "consult_type": "unknown", "duration_minutes": 15.9, "run_id": "3bbc59b4-7a5", "status": "success", "elapsed_seconds": 23.4}, {"transcript_id": "c43e0a89-903", "consult_type": "unknown", "duration_minutes": 29.3, "run_id": "8b646f72-3df", "status": "success", "elapsed_seconds": 17.4}, {"transcript_id": "8f12579e-68a", "consult_type": "unknown", "duration_minutes": 17.4, "run_id": "df99c734-121", "status": "success", "elapsed_seconds": 21.2}, {"transcript_id": "2fb8b91f-0a4", "consult_type": "unknown", "duration_minutes": 22.2, "run_id": "710e2574-b3c", "status": "success", "elapsed_seconds": 56.3}, {"transcript_id": "10d2b26e-365", "consult_type": "unknown", "duration_minutes": 20.4, "run_id": "134ec875-0bf", "status": "success", "elapsed_seconds": 49.8}, {"transcript_id": "ca4089b5-9e6", "consult_type": "follow_up", "duration_minutes": 27.5, "run_id": "0b6ef160-2e4", "status": "success", "elapsed_seconds": 38.8}, {"transcript_id": "722fa639-6d6", "consult_type": "unknown", "duration_minutes": 27.1, "run_id": "1732f623-bc7", "status": "success", "elapsed_seconds": 35.0}, {"transcript_id": "5a19cc4e-248", "consult_type": "unknown", "duration_minutes": 24.9, "run_id": "5fd650a1-968", "status": "success", "elapsed_seconds": 38.6}, {"transcript_id": "847fbc3f-27e", "consult_type": "unknown", "duration_minutes": 2.3, "run_id": "aa7a2999-b97", "status": "success", "elapsed_seconds": 64.6}], "summary": {"schema_p1_compliance": 1.0, "schema_p2_compliance": 1.0, "p1_field_population": 0.7589285714285714, "evidence_coverage": 0.9642857142857143, "evidence_accuracy": 0.8422335119352405, "offerings_avg": 3.2857142857142856, "motivation_type_pct": 0.8928571428571429, "cross_sell_summary_pct": 1.0, "pricing_approach_pct": 0.21428571428571427, "outcome_commitment_consistent": 0.9629629629629629, "checklist_structured_evidence": 225, "checklist_bare_string_evidence": 0}}, {"label": "v32b_haiku45_28", "model": "us.anthropic.claude-haiku-4-5-20251001-v1:0", "provider": "bedrock", "prompt_set": "2step_v32", "count": 28, "successes": 25, "failures": 3, "avg_seconds": 42.3, "total_seconds": 1184.5, "timestamp": "2026-04-20T11:07:38.182146+00:00", "results": [{"transcript_id": "67de7833-075", "consult_type": "treatment_visit", "duration_minutes": 22.1, "run_id": "347aadb8-185", "status": "success", "elapsed_seconds": 46.3}, {"transcript_id": "e0062367-718", "consult_type": "follow_up", "duration_minutes": 4.7, "run_id": "9388ab10-b9f", "status": "success", "elapsed_seconds": 29.0}, {"transcript_id": "f846ec3b-67b", "consult_type": "treatment_visit", "duration_minutes": 20.4, "run_id": "ffb42035-f5b", "status": "success", "elapsed_seconds": 40.5}, {"transcript_id": "ffda9229-4f7", "consult_type": "follow_up", "duration_minutes": 25.2, "run_id": "551568d1-d06", "status": "success", "elapsed_seconds": 78.9}, {"transcript_id": "28b618bb-939", "consult_type": "treatment_visit", "duration_minutes": 12.3, "run_id": null, "status": "error", "elapsed_seconds": 42.5}, {"transcript_id": "b2ea52a4-4d2", "consult_type": "initial_consultation", "duration_minutes": 7.0, "run_id": "eed5aa5a-73d", "status": "success", "elapsed_seconds": 36.3}, {"transcript_id": "46576474-b63", "consult_type": "treatment_visit", "duration_minutes": 28.7, "run_id": "c7bbbaaa-c0f", "status": "success", "elapsed_seconds": 57.6}, {"transcript_id": "e4c4a41e-659", "consult_type": "follow_up", "duration_minutes": 12.5, "run_id": "fb00b865-aec", "status": "success", "elapsed_seconds": 32.7}, {"transcript_id": "537209de-3f6", "consult_type": "treatment_visit", "duration_minutes": 27.7, "run_id": "dd3df25b-a50", "status": "success", "elapsed_seconds": 69.5}, {"transcript_id": "b86fdfff-598", "consult_type": "follow_up", "duration_minutes": 13.7, "run_id": "ce446dc8-9fe", "status": "success", "elapsed_seconds": 40.3}, {"transcript_id": "64bb52ad-85d", "consult_type": "treatment_visit", "duration_minutes": 11.8, "run_id": "7628ce82-965", "status": "success", "elapsed_seconds": 37.5}, {"transcript_id": "4e181e54-562", "consult_type": "follow_up", "duration_minutes": 16.4, "run_id": "7b7d3d16-29a", "status": "success", "elapsed_seconds": 38.9}, {"transcript_id": "f8663fdc-217", "consult_type": "treatment_visit", "duration_minutes": 11.3, "run_id": "b72a49bd-1e4", "status": "success", "elapsed_seconds": 29.8}, {"transcript_id": "7ff22223-6aa", "consult_type": "follow_up", "duration_minutes": 27.9, "run_id": "499edf99-d5f", "status": "success", "elapsed_seconds": 52.8}, {"transcript_id": "3242a32a-045", "consult_type": "follow_up", "duration_minutes": 22.7, "run_id": "4fc3f6ce-da4", "status": "success", "elapsed_seconds": 69.0}, {"transcript_id": "49f3fbf6-58a", "consult_type": "treatment_visit", "duration_minutes": 11.9, "run_id": "e7af4eaf-3d9", "status": "success", "elapsed_seconds": 47.1}, {"transcript_id": "d7f36b86-044", "consult_type": "follow_up", "duration_minutes": 19.2, "run_id": "f3891b85-ee2", "status": "success", "elapsed_seconds": 38.9}, {"transcript_id": "3c098d48-784", "consult_type": "follow_up", "duration_minutes": 12.2, "run_id": "c8fb1685-382", "status": "success", "elapsed_seconds": 37.3}, {"transcript_id": "a0d9cc64-1aa", "consult_type": "treatment_visit", "duration_minutes": 24.4, "run_id": "22517233-8e5", "status": "success", "elapsed_seconds": 29.2}, {"transcript_id": "26daef4a-e63", "consult_type": "treatment_visit", "duration_minutes": 15.9, "run_id": "a37a2ab5-c4d", "status": "success", "elapsed_seconds": 24.0}, {"transcript_id": "c43e0a89-903", "consult_type": "unknown", "duration_minutes": 29.3, "run_id": "ea67decf-e50", "status": "success", "elapsed_seconds": 16.7}, {"transcript_id": "8f12579e-68a", "consult_type": "treatment_visit", "duration_minutes": 17.4, "run_id": null, "status": "error", "elapsed_seconds": 24.0}, {"transcript_id": "2fb8b91f-0a4", "consult_type": "treatment_visit", "duration_minutes": 22.2, "run_id": "c0f4e132-ab0", "status": "success", "elapsed_seconds": 38.7}, {"transcript_id": "10d2b26e-365", "consult_type": "follow_up", "duration_minutes": 20.4, "run_id": "1cbb3188-a8e", "status": "success", "elapsed_seconds": 49.1}, {"transcript_id": "ca4089b5-9e6", "consult_type": "follow_up", "duration_minutes": 27.5, "run_id": "de6d66f1-081", "status": "success", "elapsed_seconds": 41.0}, {"transcript_id": "722fa639-6d6", "consult_type": "treatment_visit", "duration_minutes": 27.1, "run_id": null, "status": "error", "elapsed_seconds": 32.9}, {"transcript_id": "5a19cc4e-248", "consult_type": "treatment_visit", "duration_minutes": 24.9, "run_id": "35288886-dcf", "status": "success", "elapsed_seconds": 39.7}, {"transcript_id": "847fbc3f-27e", "consult_type": "consultation_only", "duration_minutes": 2.3, "run_id": "5ef38554-6ee", "status": "success", "elapsed_seconds": 64.4}], "summary": {"schema_p1_compliance": 1.0, "schema_p2_compliance": 1.0, "p1_field_population": 0.7766666666666667, "evidence_coverage": 0.96, "evidence_accuracy": 0.8529514423031347, "offerings_avg": 3.16, "motivation_type_pct": 0.96, "cross_sell_summary_pct": 1.0, "pricing_approach_pct": 0.16, "outcome_commitment_consistent": 1.0, "checklist_structured_evidence": 191, "checklist_bare_string_evidence": 0}}, {"label": "v32c_test5", "model": "us.anthropic.claude-haiku-4-5-20251001-v1:0", "provider": "bedrock", "prompt_set": "2step_v32", "count": 5, "successes": 5, "failures": 0, "avg_seconds": 42.1, "total_seconds": 210.7, "timestamp": "2026-04-20T11:35:52.233116+00:00", "results": [{"transcript_id": "67de7833-075", "consult_type": "treatment_visit", "duration_minutes": 22.1, "run_id": "67f45d2b-9b5", "status": "success", "elapsed_seconds": 47.3}, {"transcript_id": "e0062367-718", "consult_type": "follow_up", "duration_minutes": 4.7, "run_id": "7fa89f71-2c0", "status": "success", "elapsed_seconds": 26.2}, {"transcript_id": "f846ec3b-67b", "consult_type": "treatment_visit", "duration_minutes": 20.4, "run_id": "b897a2c8-b25", "status": "success", "elapsed_seconds": 33.2}, {"transcript_id": "ffda9229-4f7", "consult_type": "follow_up", "duration_minutes": 25.2, "run_id": "0aa48414-fb6", "status": "success", "elapsed_seconds": 70.5}, {"transcript_id": "28b618bb-939", "consult_type": "treatment_visit", "duration_minutes": 12.3, "run_id": "77b974a9-f83", "status": "success", "elapsed_seconds": 33.6}]}, {"label": "test_v32_haiku45_5", "model": "us.anthropic.claude-haiku-4-5-20251001-v1:0", "provider": "bedrock", "prompt_set": "2step_v32", "count": 5, "successes": 5, "failures": 0, "avg_seconds": 40.4, "total_seconds": 202.2, "timestamp": "2026-04-20T03:29:31.758006+00:00", "results": [{"transcript_id": "67de7833-075", "consult_type": "procedure", "duration_minutes": 22.1, "run_id": "388a9eb3-8dd", "status": "success", "elapsed_seconds": 48.0}, {"transcript_id": "e0062367-718", "consult_type": "initial_consultation", "duration_minutes": 4.7, "run_id": "82ea6379-92e", "status": "success", "elapsed_seconds": 26.4}, {"transcript_id": "f846ec3b-67b", "consult_type": "treatment_visit", "duration_minutes": 20.4, "run_id": "45d122f1-95e", "status": "success", "elapsed_seconds": 35.3}, {"transcript_id": "ffda9229-4f7", "consult_type": "initial_consultation", "duration_minutes": 25.2, "run_id": "ad664aff-6f2", "status": "success", "elapsed_seconds": 56.1}, {"transcript_id": "28b618bb-939", "consult_type": "unknown", "duration_minutes": 12.3, "run_id": "fb152f8f-b0d", "status": "success", "elapsed_seconds": 36.4}], "summary": {"schema_p1_compliance": 1.0, "schema_p2_compliance": 1.0, "p1_field_population": 0.8333333333333334, "evidence_coverage": 1.0, "evidence_accuracy": 0.8148362026939827, "offerings_avg": 3.4, "motivation_type_pct": 1.0, "cross_sell_summary_pct": 1.0, "pricing_approach_pct": 0.4, "outcome_commitment_consistent": 1.0, "checklist_structured_evidence": 48, "checklist_bare_string_evidence": 0}}];
+
+function pct(v){ return v == null ? '—' : Math.round(v*1000)/10 + '%'; }
+function fmtTs(s){ return s.slice(0,10) + ' ' + s.slice(11,19) + ' UTC'; }
+function modelShort(s){ return s.split(':')[0].split('.').pop(); }
+
+// Build the dropdown
+function init(){
+  const sel = document.getElementById('batchSelect');
+  BATCHES.forEach((b,i) => {
+    const opt = document.createElement('option');
+    opt.value = String(i);
+    const dt = b.timestamp.slice(0,10);
+    const successRate = ((b.successes/b.count)*100).toFixed(0) + '%';
+    opt.textContent = `${b.label}  ·  ${b.count} runs  ·  ${successRate} ok  ·  ${dt}`;
+    sel.appendChild(opt);
+  });
+  // Auto-select the first batch (production v32_final_50)
+  sel.value = '0';
+  renderBatch('0');
+}
+
+function renderBatch(idxStr){
+  if (!idxStr) {
+    document.getElementById('content').innerHTML = '';
+    return;
+  }
+  const b = BATCHES[parseInt(idxStr)];
+  const totalMin = (b.total_seconds/60).toFixed(1);
+  const successRate = b.successes / b.count;
+  const isPerfect = b.failures === 0;
+
+  let html = '';
+
+  // Run summary card
+  html += `
+    <div class="run-summary">
+      <div class="rs-hdr">
+        <span class="lbl">Batch — <span style="font-family:var(--mono)">${b.label}</span></span>
+        <span class="ts">${fmtTs(b.timestamp)}</span>
+      </div>
+      <div class="rs-grid">
+        <div class="rs-cell"><div class="lbl">Provider</div><div class="val txt">${b.provider}</div></div>
+        <div class="rs-cell"><div class="lbl">Model</div><div class="val">${modelShort(b.model)}</div></div>
+        <div class="rs-cell"><div class="lbl">Prompt Set</div><div class="val">${b.prompt_set}</div></div>
+        <div class="rs-cell"><div class="lbl">Sample</div><div class="val ${isPerfect?'success':'warn'}">${b.successes}/${b.count}</div></div>
+        <div class="rs-cell"><div class="lbl">Avg Latency</div><div class="val">${b.avg_seconds.toFixed(1)}s</div></div>
+        <div class="rs-cell"><div class="lbl">Total Run</div><div class="val">${totalMin} min</div></div>
+      </div>
+    </div>
+  `;
+
+  // KPI strip if we have eval summary
+  if (b.summary) {
+    const s = b.summary;
+    const cards = [
+      {lbl:'Schema Compliance', val:pct((s.schema_p1_compliance + s.schema_p2_compliance)/2), desc:'P1 + P2 schema valid', cls:'kpi-good'},
+      {lbl:'Evidence Coverage',  val:pct(s.evidence_coverage),                                desc:'every claim cited',    cls:'kpi-good'},
+      {lbl:'Evidence Accuracy',  val:pct(s.evidence_accuracy),                                desc:'quotes verified verbatim', cls:'kpi-info'},
+      {lbl:'Field Population',   val:pct(s.p1_field_population),                              desc:'P1 fields populated', cls:'kpi-info'},
+    ];
+    html += '<div class="kpi-strip">' + cards.map(c =>
+      `<div class="kpi-card"><div class="lbl">${c.lbl}</div><div class="val ${c.cls}">${c.val}</div><div class="desc">${c.desc}</div></div>`
+    ).join('') + '</div>';
+  } else {
+    html += `<div class="cmp-info"><strong>No eval summary on file.</strong> This batch was a smoke-test run — we measured latency + success rate but didn't run the full grading rubric. Pick <span style="font-family:var(--mono)">v32_final_50</span> or <span style="font-family:var(--mono)">v32_haiku45_50</span> to see the full eval rubric.</div>`;
+  }
+
+  // Per-run table
+  html += `
+    <div class="tc">
+      <div class="tc-hdr">
+        <span>Per-Run Results — click a row to open the run on the Live page <button class="a360-info" data-agent="batch_eval_runner"></button></span>
+        <span class="count">${b.results.length} rows</span>
+      </div>
+      <div class="tbl-wrap">
+        <table class="runs">
+          <thead>
+            <tr>
+              <th>#</th><th>Run</th><th>Type</th>
+              <th class="right">Duration</th><th class="right">Latency</th><th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${b.results.map((r,i) => {
+              const lat = r.elapsed_seconds != null ? r.elapsed_seconds.toFixed(1)+'s' : '—';
+              const dur = r.duration_minutes != null ? r.duration_minutes.toFixed(1)+' min' : '—';
+              const cls = r.status === 'success' ? '' : 'failure';
+              const stCls = r.status === 'success' ? 'status-success' : 'status-failure';
+              const drillHref = r.run_id ? `demo-extraction-live.html#${r.run_id}` : '';
+              const onclick = drillHref ? `onclick="window.location.href='${drillHref}'" style="cursor:pointer"` : '';
+              return `<tr class="${cls}" ${onclick}>
+                <td class="mono">${i+1}</td>
+                <td class="mono">${r.run_id || '—'}…</td>
+                <td>${r.consult_type || '—'}</td>
+                <td class="right mono">${dur}</td>
+                <td class="right mono">${lat}</td>
+                <td><span class="status-pill ${stCls}">${r.status}</span></td>
+              </tr>`;
+            }).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  `;
+
+  document.getElementById('content').innerHTML = html;
+  if (window.A360) window.A360.attachInfoIcons(document.getElementById('content'));
+  document.getElementById('footerMeta').textContent = `batch:${b.label} · ${b.count} runs · ran ${b.timestamp.slice(0,10)}`;
+}
+
+init();
+</script>
+</body>
+</html>
