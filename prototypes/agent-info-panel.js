@@ -328,6 +328,82 @@
       outputs: ['Resolved offering matches', 'Ambiguity flags', 'Confidence per match'],
       references: ['Practice Library', 'Global Library product alias map'],
     },
+
+    // ── TCP Builder agents (prototype scope — see TCP_Builder_Requirements.md) ─
+    tcp_goals_agent: {
+      name: 'Goals Agent (TCP)',
+      type: 'Generation',
+      model: 'Claude Sonnet 4.5 (planned)',
+      system: 'TCP Builder · Pulse',
+      status: 'Designed',
+      description: 'Drafts a 2–3 sentence patient-friendly goals narrative for the TCP from selected concerns, anatomy areas, and (optionally) a transcript excerpt. Provider can edit directly or regenerate.',
+      inputs: ['Selected concerns', 'Selected anatomy areas', 'Transcript excerpt (optional)', 'Patient name'],
+      outputs: ['2–3 sentence goals narrative', 'Suggested follow-up questions if intent is ambiguous'],
+      references: [
+        'Global Library: gl_concerns (28 concerns)',
+        'Global Library: gl_anatomy_areas (23 areas)',
+      ],
+    },
+    tcp_recommendation_agent: {
+      name: 'Recommendation Agent (TCP)',
+      type: 'Recommendation',
+      model: 'Claude Sonnet 4.5 (planned)',
+      system: 'TCP Builder · Pulse',
+      status: 'Designed',
+      description: 'Ranks practice catalog items against selected concerns + anatomy areas using the GL junction tables, then refines with goals context. Suggests phase grouping (immediate / follow-up / maintenance). Distinct from cross_sell_guidance_v3 — that one runs post-consultation; this one drives the builder.',
+      inputs: ['Selected concerns', 'Selected anatomy areas', 'Patient goals', 'Practice catalog (PL with GL fallback)'],
+      outputs: ['Ranked treatment list', 'Per-treatment rationale', 'Suggested phase grouping'],
+      references: [
+        'gl_product_concerns / gl_service_concerns junctions',
+        'gl_product_anatomy_areas / gl_service_anatomy_areas junctions',
+        'Practice Library (pl_products / pl_services) with COALESCE on GL',
+      ],
+    },
+    tcp_education_agent: {
+      name: 'Education Agent (TCP)',
+      type: 'RAG',
+      model: 'Claude Sonnet 4.5 (planned)',
+      system: 'TCP Builder · Pulse',
+      status: 'Designed',
+      description: 'Curates patient-education content for each selected treatment: before/after photos, videos, brochures, pre/post-procedure instructions. Pulls from gl_product_content / gl_service_content; falls back to instruction fields on the base product/service when content tables are empty.',
+      inputs: ['Selected treatments', 'gl_product_content', 'gl_service_content', 'Base product/service instruction fields'],
+      outputs: ['Per-treatment content package (photos, videos, PDFs)', 'Pre/post instructions', 'Plan-level recovery summary'],
+      references: [
+        'gl_product_content (currently empty — populate for prototype)',
+        'gl_service_content (currently empty — populate for prototype)',
+        'gl_products: pre/post_procedure_instructions, dosing_guidelines',
+        'gl_services: pre/post_procedure_instructions, expected_outcomes, recovery_timeline',
+      ],
+    },
+    tcp_pricing_agent: {
+      name: 'Pricing Agent (TCP)',
+      type: 'Evaluation',
+      model: 'Deterministic (no LLM)',
+      system: 'TCP Builder · Pulse',
+      status: 'Designed',
+      description: 'Computes the investment summary: line totals, phase subtotals, plan total, financing-option monthly payments at configurable terms, and package-bundle detection. Pure deterministic calculation — runs locally, no LLM cost, no latency.',
+      inputs: ['Treatment list with qty + price', 'Practice financing terms', 'pl_packages catalog'],
+      outputs: ['Subtotal + total', 'Financing options (monthly payment per term)', 'Package match + savings if any'],
+      references: [
+        'pl_packages (package_price, total_value, savings_amount)',
+        'pl_package_items (item_type, product_id, service_id, quantity)',
+        'Practice financing terms (default: 6mo/0%, 12mo/7.99%, 24mo/9.99%)',
+      ],
+    },
+    tcp_action_agent: {
+      name: 'Action Agent (TCP)',
+      type: 'Generation',
+      model: 'Claude Sonnet 4.5 (planned)',
+      system: 'TCP Builder · Pulse',
+      status: 'Designed',
+      description: 'Generates a numbered next-steps list and follow-up schedule from the finalized treatment plan. Derives target dates from treatment protocols (min_retreatment_interval, recommended_sessions, maintenance_interval).',
+      inputs: ['Finalized treatments', 'Phase structure', 'Treatment protocols from gl_products / gl_services'],
+      outputs: ['Numbered next-steps list', 'Follow-up schedule (event + target_date pairs)'],
+      references: [
+        'gl_products: min_retreatment_interval, recommended_sessions, maintenance_interval',
+        'gl_services: recovery_timeline, treatment_frequency',
+      ],
+    },
   };
 
   // ─── CSS injection ─────────────────────────────────────────────────────────
