@@ -102,6 +102,8 @@ footer .meta{font-size:11px;color:var(--slate-400);font-family:var(--mono)}
       <a href="demo-hero.html">Overview</a>
       <a href="demo-extraction.html">Extraction</a>
       <a href="demo-agents.html" class="active">Agents</a>
+      <a href="demo-testing.html">Testing</a>
+      <a href="demo-flywheel.html">Flywheel</a>
       <a href="demo-intelligence.html">Intelligence</a>
       <a href="demo-products.html">Product Library</a>
     </div>
@@ -116,12 +118,12 @@ footer .meta{font-size:11px;color:var(--slate-400);font-family:var(--mono)}
 
   <!-- Pipeline flow -->
   <div class="pipeline-flow">
-    <div class="pf-step active"><div class="num">Step 1</div><div class="name">Extraction</div><div class="status status-live">2-pass v3.2</div></div>
-    <div class="pf-step"><div class="num">Step 2</div><div class="name">Cross-Sell</div><div class="status status-live">3 recs</div></div>
-    <div class="pf-step"><div class="num">Step 3</div><div class="name">Opportunities</div><div class="status status-live">6 sections</div></div>
-    <div class="pf-step"><div class="num">Step 4</div><div class="name">Coaching</div><div class="status status-live">3-stage pipeline</div></div>
-    <div class="pf-step"><div class="num">Step 5</div><div class="name">Email</div><div class="status status-live">Personalized</div></div>
-    <div class="pf-step"><div class="num">Step 6</div><div class="name">TCP</div><div class="status status-ready">Ready</div></div>
+    <div class="pf-step active" onclick="A360.openAgentPanel('p1_extraction')" style="cursor:pointer"><div class="num">Step 1</div><div class="name">Extraction</div><div class="status status-live">2-pass v3.2</div></div>
+    <div class="pf-step" onclick="A360.openAgentPanel('cross_sell_guidance_v3')" style="cursor:pointer"><div class="num">Step 2</div><div class="name">Cross-Sell</div><div class="status status-live">3 recs</div></div>
+    <div class="pf-step" onclick="A360.openAgentPanel('opportunities_agent')" style="cursor:pointer"><div class="num">Step 3</div><div class="name">Opportunities</div><div class="status status-live">6 sections</div></div>
+    <div class="pf-step" onclick="A360.openAgentPanel('coaching_pipeline')" style="cursor:pointer"><div class="num">Step 4</div><div class="name">Coaching</div><div class="status status-live">3-stage pipeline</div></div>
+    <div class="pf-step" onclick="A360.openAgentPanel('email_campaign')" style="cursor:pointer"><div class="num">Step 5</div><div class="name">Email</div><div class="status status-live">Personalized</div></div>
+    <div class="pf-step" onclick="A360.openAgentPanel('treatment_care_plan')" style="cursor:pointer"><div class="num">Step 6</div><div class="name">TCP</div><div class="status status-ready">Ready</div></div>
   </div>
 
   <div class="agent-grid">
@@ -129,7 +131,7 @@ footer .meta{font-size:11px;color:var(--slate-400);font-family:var(--mono)}
     <!-- Cross-Sell Agent -->
     <div class="agent-card">
       <div class="ac-header">
-        <div class="ac-title">Cross-Sell Guidance <span class="ac-badge" style="background:var(--green-bg);color:var(--green);border:1px solid var(--green-border)">v3</span></div>
+        <div class="ac-title">Cross-Sell Guidance <span class="ac-badge" style="background:var(--green-bg);color:var(--green);border:1px solid var(--green-border)">v3</span> <button class="a360-info dark" data-agent="cross_sell_guidance_v3"></button></div>
       </div>
       <div class="ac-body">
         <div class="ac-desc">Analyzes extraction output against the practice catalog and recommends complementary treatments the provider didn't mention.</div>
@@ -160,7 +162,7 @@ footer .meta{font-size:11px;color:var(--slate-400);font-family:var(--mono)}
     <!-- Opportunities Agent -->
     <div class="agent-card">
       <div class="ac-header">
-        <div class="ac-title">Opportunities Agent</div>
+        <div class="ac-title">Opportunities Agent <button class="a360-info dark" data-agent="opportunities_agent"></button></div>
       </div>
       <div class="ac-body">
         <div class="ac-desc">Produces a 6-section follow-up artifact: sell plan, patient interests, CRM personalization, marketing hooks, next-visit reference, and follow-up timeline.</div>
@@ -188,7 +190,7 @@ footer .meta{font-size:11px;color:var(--slate-400);font-family:var(--mono)}
     <!-- Coaching Pipeline (full width) -->
     <div class="agent-card agent-full">
       <div class="ac-header">
-        <div class="ac-title">Coaching Pipeline <span class="ac-badge" style="background:var(--purple-bg);color:var(--purple);border:1px solid var(--purple-border)">3-stage</span></div>
+        <div class="ac-title">Coaching Pipeline <span class="ac-badge" style="background:var(--purple-bg);color:var(--purple);border:1px solid var(--purple-border)">3-stage</span> <button class="a360-info dark" data-agent="coaching_pipeline"></button></div>
         <div style="font-size:10px;color:var(--slate-400)">Evidence Extraction → Coaching Generation → Language Validation</div>
       </div>
       <div class="ac-body">
@@ -256,7 +258,7 @@ footer .meta{font-size:11px;color:var(--slate-400);font-family:var(--mono)}
     <!-- Email Campaign -->
     <div class="agent-card">
       <div class="ac-header">
-        <div class="ac-title">Email Campaign</div>
+        <div class="ac-title">Email Campaign <button class="a360-info dark" data-agent="email_campaign"></button></div>
         <div class="ac-badge" style="background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-border)">1 message</div>
       </div>
       <div class="ac-body">
@@ -292,11 +294,11 @@ footer .meta{font-size:11px;color:var(--slate-400);font-family:var(--mono)}
         <div class="out-section" style="margin-top:10px">
           <div class="out-label">Platform Agents (AWS Step Functions)</div>
           <div style="font-size:12px;color:var(--slate-600)">
-            <div style="padding:4px 0;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between"><span>Clinical Notes (SOAP)</span><span style="font-family:var(--mono);font-size:10px;color:var(--slate-400)">Claude Sonnet</span></div>
-            <div style="padding:4px 0;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between"><span>Treatment Care Plan</span><span style="font-family:var(--mono);font-size:10px;color:var(--slate-400)">Claude Sonnet</span></div>
-            <div style="padding:4px 0;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between"><span>Follow-Up Email</span><span style="font-family:var(--mono);font-size:10px;color:var(--slate-400)">Claude Sonnet</span></div>
-            <div style="padding:4px 0;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between"><span>Consultation Summary</span><span style="font-family:var(--mono);font-size:10px;color:var(--slate-400)">Claude Sonnet</span></div>
-            <div style="padding:4px 0;display:flex;justify-content:space-between"><span>Medical Relevance Gate</span><span style="font-family:var(--mono);font-size:10px;color:var(--slate-400)">Claude Haiku</span></div>
+            <div style="padding:4px 0;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between;align-items:center"><span>Clinical Notes (SOAP) <button class="a360-info dark" data-agent="soap_notes"></button></span><span style="font-family:var(--mono);font-size:10px;color:var(--slate-400)">Claude Sonnet</span></div>
+            <div style="padding:4px 0;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between;align-items:center"><span>Treatment Care Plan <button class="a360-info dark" data-agent="treatment_care_plan"></button></span><span style="font-family:var(--mono);font-size:10px;color:var(--slate-400)">Claude Sonnet</span></div>
+            <div style="padding:4px 0;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between;align-items:center"><span>Follow-Up Email <button class="a360-info dark" data-agent="follow_up_email"></button></span><span style="font-family:var(--mono);font-size:10px;color:var(--slate-400)">Claude Sonnet</span></div>
+            <div style="padding:4px 0;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between;align-items:center"><span>Consultation Summary <button class="a360-info dark" data-agent="consultation_summary"></button></span><span style="font-family:var(--mono);font-size:10px;color:var(--slate-400)">Claude Sonnet</span></div>
+            <div style="padding:4px 0;display:flex;justify-content:space-between;align-items:center"><span>Medical Relevance Gate <button class="a360-info dark" data-agent="medical_relevance_gate"></button></span><span style="font-family:var(--mono);font-size:10px;color:var(--slate-400)">Claude Haiku</span></div>
           </div>
         </div>
       </div>
@@ -310,5 +312,6 @@ footer .meta{font-size:11px;color:var(--slate-400);font-family:var(--mono)}
   <a href="demo-intelligence.html" class="next-link">Practice Intelligence &rarr;</a>
 </footer>
 
+<script src="agent-info-panel.js"></script>
 </body>
 </html>

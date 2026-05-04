@@ -136,6 +136,8 @@ nav{background:var(--teal);padding:0 24px}
       <a href="demo-extraction.html">Extraction</a>
       <a href="demo-extraction-live.html" class="active">Live Extraction</a>
       <a href="demo-agents.html">Agents</a>
+      <a href="demo-testing.html">Testing</a>
+      <a href="demo-flywheel.html">Flywheel</a>
       <a href="demo-intelligence.html">Intelligence</a>
       <a href="demo-products.html">Product Library</a>
     </div>
@@ -213,6 +215,7 @@ nav{background:var(--teal);padding:0 24px}
   <div class="meta" id="footerMeta">prompt-runner-production.up.railway.app</div>
 </div>
 
+<script src="agent-info-panel.js"></script>
 <script>
 const API = 'https://prompt-runner-production.up.railway.app';
 let currentRunId = null;
@@ -370,7 +373,7 @@ function renderExtraction(p1, p2) {
   const goalList = goals.goals?.value || goals.value || [];
   const goalEvidence = goals.goals?.evidence || goals.evidence || [];
   if (goalList.length) {
-    html += '<div class="tc"><div class="tc-hdr">Patient Goals <span class="count">' + goalList.length + '</span></div>';
+    html += '<div class="tc"><div class="tc-hdr"><span>Patient Goals <button class="a360-info" data-agent="p1_extraction"></button></span><span class="count">' + goalList.length + '</span></div>';
     goalList.forEach((g, i) => {
       const ev = goalEvidence[i];
       const quote = ev ? (ev.quote || '') : '';
@@ -384,7 +387,7 @@ function renderExtraction(p1, p2) {
   // Concerns
   const concerns = p2.concerns || [];
   if (concerns.length) {
-    html += '<div class="tc"><div class="tc-hdr">Concerns &amp; Risks <span class="count">' + concerns.length + '</span></div>';
+    html += '<div class="tc"><div class="tc-hdr"><span>Concerns &amp; Risks <button class="a360-info" data-agent="p1_extraction"></button></span><span class="count">' + concerns.length + '</span></div>';
     concerns.forEach(c => {
       const text = typeof c === 'string' ? c : (c.concern || c.text || JSON.stringify(c));
       html += '<div class="li"><div class="dot" style="background:var(--amber)"></div>' + esc(text) + '</div>';
@@ -395,7 +398,7 @@ function renderExtraction(p1, p2) {
   // Offerings
   const offerings = p1.offerings || [];
   if (offerings.length) {
-    html += '<div class="tc grid-full"><div class="tc-hdr">Offerings Discussed <span class="count">' + offerings.length + '</span></div>';
+    html += '<div class="tc grid-full"><div class="tc-hdr"><span>Offerings Discussed <button class="a360-info" data-agent="p1_extraction"></button></span><span class="count">' + offerings.length + '</span></div>';
     offerings.forEach(o => {
       const name = o.name || 'Unknown';
       const disp = o.disposition || 'discussed';
@@ -414,7 +417,7 @@ function renderExtraction(p1, p2) {
   const hesitations = p2.hesitations || [];
   const objections = p2.objections || [];
   if (hesitations.length || objections.length) {
-    html += '<div class="tc"><div class="tc-hdr">Hesitations &amp; Objections <span class="count">' + (hesitations.length + objections.length) + '</span></div>';
+    html += '<div class="tc"><div class="tc-hdr"><span>Hesitations &amp; Objections <button class="a360-info" data-agent="p2_extraction"></button></span><span class="count">' + (hesitations.length + objections.length) + '</span></div>';
     if (hesitations.length) {
       html += '<div style="padding:8px 14px 2px"><div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--amber)">Hesitations</div></div>';
       hesitations.forEach(h => {
@@ -435,7 +438,7 @@ function renderExtraction(p1, p2) {
   // Next Steps
   const steps = p2.next_steps || [];
   if (steps.length) {
-    html += '<div class="tc"><div class="tc-hdr">Next Steps <span class="count">' + steps.length + '</span></div>';
+    html += '<div class="tc"><div class="tc-hdr"><span>Next Steps <button class="a360-info" data-agent="p2_extraction"></button></span><span class="count">' + steps.length + '</span></div>';
     steps.forEach(s => {
       if (typeof s === 'string') {
         html += '<div class="ns"><div class="ns-action">' + esc(s) + '</div></div>';
@@ -450,6 +453,7 @@ function renderExtraction(p1, p2) {
 
   html += '</div>'; // close grid
   el.innerHTML = html;
+  if (window.A360) window.A360.attachInfoIcons(el);
 }
 
 const AGENT_LABELS = {
@@ -506,8 +510,12 @@ function renderAgentSection(outputs) {
     const hasOutput = !!downstream[id];
     const cls = hasOutput ? 'agent-btn done' : 'agent-btn';
     const icon = hasOutput ? '&#10003; ' : '&#9654; ';
-    return '<button class="' + cls + '" onclick="runAgent(\'' + id + '\')" id="btn-' + id + '">' + icon + id.replace(/_/g,' ') + '</button>';
+    return '<span style="display:inline-flex;align-items:center;gap:4px">'
+      + '<button class="' + cls + '" onclick="runAgent(\'' + id + '\')" id="btn-' + id + '">' + icon + id.replace(/_/g,' ') + '</button>'
+      + '<button class="a360-info dark" data-agent="' + id + '"></button>'
+      + '</span>';
   }).join('');
+  if (window.A360) window.A360.attachInfoIcons(strip);
 
   // Show existing downstream outputs
   outputsDiv.innerHTML = '';
