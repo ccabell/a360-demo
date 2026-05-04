@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A360 — TCP Builder</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#f5f6f8;--white:#fff;
+  --slate-900:#1a1f2e;--slate-700:#374151;--slate-600:#4b5563;--slate-500:#6b7280;--slate-400:#9ca3af;--slate-300:#d1d5db;--slate-200:#e5e7eb;--slate-100:#f3f4f6;--slate-50:#f9fafb;
+  --teal:#1b4f6b;--teal-light:#2c6f8f;--teal-dark:#143f57;
+  --blue:#2563eb;--blue-bg:#eff6ff;--blue-border:#bfdbfe;
+  --green:#059669;--green-bg:#ecfdf5;--green-border:#a7f3d0;
+  --amber:#d97706;--amber-bg:#fffbeb;--amber-border:#fcd34d;
+  --rose:#dc2626;--rose-bg:#fef2f2;
+  --purple:#7c3aed;--purple-bg:#f5f3ff;--purple-border:#c4b5fd;
+  --shadow:0 1px 3px rgba(0,0,0,.06);
+  --r:8px;--r-sm:6px;
+  --font:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+  --mono:'JetBrains Mono',monospace;
+}
+body{background:var(--bg);color:var(--slate-900);font-family:var(--font);-webkit-font-smoothing:antialiased;font-size:13px;line-height:1.5}
+nav{background:var(--teal);padding:0 24px}
+.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;height:48px;gap:24px}
+.logo{font-weight:800;font-size:15px;color:#fff;letter-spacing:-.02em;margin-right:auto}
+.logo span{color:rgba(255,255,255,.5)}
+.nav-links{display:flex;gap:2px}
+.nav-links a{color:rgba(255,255,255,.65);text-decoration:none;font-size:12px;font-weight:500;padding:6px 12px;border-radius:var(--r-sm);transition:all .12s}
+.nav-links a:hover{color:#fff;background:rgba(255,255,255,.1)}
+.nav-links a.active{color:#fff;background:rgba(255,255,255,.15)}
+
+.page{max-width:1100px;margin:0 auto;padding:20px 24px 48px}
+.page-header{margin-bottom:14px;display:flex;align-items:flex-end;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.page-header h1{font-size:20px;font-weight:800;letter-spacing:-.02em;margin-bottom:2px}
+.page-header .sub{font-size:12px;color:var(--slate-500);max-width:680px;line-height:1.55}
+.preview-btn{
+  font-size:11px;font-weight:700;padding:7px 14px;border-radius:var(--r-sm);
+  background:var(--teal);color:#fff;border:none;cursor:pointer;
+  display:inline-flex;align-items:center;gap:6px;
+}
+.preview-btn:hover{background:var(--teal-dark)}
+.preview-btn .ico{font-size:13px}
+
+/* Status banner */
+.status-banner{
+  background:var(--amber-bg);border:1px solid var(--amber-border);border-radius:var(--r);
+  padding:8px 14px;font-size:11.5px;color:#78350f;margin-bottom:14px;
+  display:flex;align-items:center;gap:10px;
+}
+.status-banner .pill{
+  font-size:9px;font-weight:700;padding:2px 8px;border-radius:4px;
+  background:#92400e;color:#fff;text-transform:uppercase;letter-spacing:.06em;flex-shrink:0;
+}
+
+/* Source toggle */
+.source-toggle{
+  background:var(--white);border:1px solid var(--slate-200);border-radius:var(--r);
+  box-shadow:var(--shadow);margin-bottom:14px;overflow:hidden;
+}
+.st-hdr{padding:8px 14px;background:var(--slate-50);border-bottom:1px solid var(--slate-200);font-size:11px;font-weight:700;color:var(--slate-700);text-transform:uppercase;letter-spacing:.05em}
+.st-body{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.st-cell{padding:12px 14px;border-right:1px solid var(--slate-200);cursor:pointer;transition:all .12s}
+.st-cell:last-child{border-right:none}
+.st-cell.active{background:var(--blue-bg);border-bottom:2px solid var(--blue)}
+.st-cell .lbl{font-size:11px;font-weight:700;color:var(--slate-500);text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px}
+.st-cell.active .lbl{color:var(--blue)}
+.st-cell .desc{font-size:12px;color:var(--slate-600);line-height:1.4}
+
+/* Patient meta bar */
+.patient-bar{display:flex;background:var(--white);border:1px solid var(--slate-200);border-radius:var(--r);box-shadow:var(--shadow);margin-bottom:14px;overflow:hidden}
+.patient-cell{flex:1;padding:10px 14px;border-right:1px solid var(--slate-100)}
+.patient-cell:last-child{border-right:none}
+.patient-cell .lbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--slate-400);margin-bottom:2px}
+.patient-cell .val{font-size:12px;font-weight:700;color:var(--slate-900)}
+.patient-cell .val.mono{font-family:var(--mono)}
+
+/* Section nav (sub-nav) */
+.section-nav{
+  display:flex;gap:2px;background:var(--white);border:1px solid var(--slate-200);border-radius:var(--r);
+  box-shadow:var(--shadow);margin-bottom:14px;overflow:hidden;padding:4px;
+}
+.section-nav a{
+  flex:1;padding:8px 10px;font-size:11px;font-weight:600;color:var(--slate-500);
+  text-decoration:none;text-align:center;border-radius:var(--r-sm);transition:all .12s;
+}
+.section-nav a:hover{background:var(--slate-100);color:var(--slate-700)}
+.section-nav a .num{font-family:var(--mono);font-size:10px;color:var(--slate-400);margin-right:6px}
+
+/* Section card */
+.tc{background:var(--white);border:1px solid var(--slate-200);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden;margin-bottom:14px}
+.tc-hdr{
+  background:var(--teal);color:#fff;padding:9px 14px;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.tc-hdr .ttl-wrap{display:flex;align-items:center;gap:8px}
+.tc-hdr .num{font-family:var(--mono);font-size:10px;background:rgba(255,255,255,.2);padding:2px 7px;border-radius:4px;font-weight:700}
+.tc-hdr .ttl{font-size:13px;font-weight:700}
+.tc-hdr .agent-tag{font-size:10px;color:rgba(255,255,255,.7);font-weight:500}
+.tc-hdr .actions{display:flex;align-items:center;gap:8px}
+.regen-btn{
+  font-size:10px;font-weight:600;padding:4px 10px;border-radius:4px;
+  background:rgba(255,255,255,.18);color:#fff;border:1px solid rgba(255,255,255,.25);
+  cursor:pointer;font-family:var(--font);display:inline-flex;align-items:center;gap:4px;
+}
+.regen-btn:hover{background:rgba(255,255,255,.3)}
+
+/* Chip selector */
+.chip-row{padding:12px 14px;border-bottom:1px solid var(--slate-100)}
+.chip-row:last-child{border-bottom:none}
+.chip-lbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--slate-400);margin-bottom:6px;display:flex;justify-content:space-between;align-items:center}
+.chip-lbl .src{font-family:var(--mono);font-size:9px;color:var(--slate-300)}
+.chips{display:flex;flex-wrap:wrap;gap:5px}
+.chip{
+  font-size:11px;font-weight:600;padding:5px 11px;border-radius:14px;
+  border:1px solid var(--slate-200);background:var(--white);color:var(--slate-600);
+  cursor:pointer;transition:all .12s;user-select:none;
+}
+.chip:hover{border-color:var(--teal-light);color:var(--teal)}
+.chip.selected{background:var(--teal);color:#fff;border-color:var(--teal)}
+.chip.cat-aging{}
+.chip.selected.cat-vascular{background:#7c3aed;border-color:#7c3aed}
+.chip.selected.cat-pigmentation{background:#d97706;border-color:#d97706}
+.chip.selected.cat-aging{background:#0891b2;border-color:#0891b2}
+.chip.selected.cat-skin{background:#059669;border-color:#059669}
+
+/* Goals narrative card */
+.narrative{padding:12px 14px;background:var(--blue-bg);border-top:1px solid var(--slate-100);font-size:13px;line-height:1.6;color:var(--slate-700)}
+.narrative .lbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--blue);margin-bottom:4px}
+.narrative .text{font-style:normal}
+.narrative[contenteditable="true"]{outline:none}
+.narrative[contenteditable="true"]:focus{background:var(--white);border:1px dashed var(--blue);border-radius:var(--r-sm)}
+
+/* Phase tabs */
+.phase-tabs{display:flex;background:var(--slate-50);border-bottom:1px solid var(--slate-200);padding:0 8px}
+.phase-tab{
+  padding:9px 14px;font-size:11px;font-weight:700;color:var(--slate-500);
+  cursor:pointer;border-bottom:2px solid transparent;transition:all .12s;
+  display:flex;align-items:center;gap:6px;
+}
+.phase-tab:hover{color:var(--slate-700)}
+.phase-tab.active{color:var(--teal);border-bottom-color:var(--teal)}
+.phase-tab .count{font-family:var(--mono);font-size:9px;background:var(--slate-200);color:var(--slate-600);padding:1px 6px;border-radius:8px}
+.phase-tab.active .count{background:var(--teal);color:#fff}
+.phase-add{
+  margin-left:auto;padding:9px 12px;font-size:11px;font-weight:600;color:var(--slate-400);
+  cursor:pointer;background:transparent;border:none;font-family:var(--font);
+}
+.phase-add:hover{color:var(--teal)}
+
+/* Treatment cards */
+.tx-list{padding:10px 14px}
+.tx{
+  display:grid;grid-template-columns:1fr auto;gap:14px;align-items:flex-start;
+  padding:10px 12px;background:var(--slate-50);border:1px solid var(--slate-200);
+  border-radius:var(--r-sm);margin-bottom:8px;
+}
+.tx:last-child{margin-bottom:0}
+.tx.recommended{border-left:3px solid var(--teal)}
+.tx-content{min-width:0}
+.tx-name{font-size:13px;font-weight:700;color:var(--slate-900);margin-bottom:2px;display:flex;align-items:center;gap:6px}
+.tx-tag{font-size:9px;font-weight:700;padding:2px 7px;border-radius:3px;text-transform:uppercase;letter-spacing:.04em;background:var(--blue-bg);color:var(--blue)}
+.tx-tag.product{background:var(--purple-bg);color:var(--purple)}
+.tx-tag.service{background:var(--cyan-bg);color:var(--teal)}
+.tx-rationale{font-size:11.5px;color:var(--slate-600);margin-top:2px;line-height:1.45}
+.tx-rationale .src-tag{font-family:var(--mono);font-size:9px;color:var(--slate-400);margin-left:4px}
+.tx-meta{display:flex;gap:14px;margin-top:6px;font-size:10.5px;color:var(--slate-500);font-family:var(--mono)}
+.tx-meta strong{color:var(--slate-700);font-weight:600}
+.tx-pricing{flex-shrink:0;text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:140px}
+.tx-stepper{display:inline-flex;align-items:center;gap:0;background:var(--white);border:1px solid var(--slate-200);border-radius:var(--r-sm);overflow:hidden}
+.tx-stepper button{
+  width:24px;height:24px;border:none;background:var(--white);font-family:var(--mono);font-weight:700;
+  font-size:13px;color:var(--slate-600);cursor:pointer;
+}
+.tx-stepper button:hover{background:var(--slate-100);color:var(--teal)}
+.tx-stepper .qty{font-family:var(--mono);font-size:11px;font-weight:700;width:34px;text-align:center;border-left:1px solid var(--slate-200);border-right:1px solid var(--slate-200);padding:4px 0}
+.tx-unit{font-size:10px;color:var(--slate-400);font-family:var(--mono)}
+.tx-price{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--slate-900)}
+.tx-line-total{font-family:var(--mono);font-size:11px;color:var(--slate-500)}
+
+.tx-actions{margin-top:6px}
+.add-btn{
+  font-size:11px;font-weight:600;padding:7px 12px;border-radius:var(--r-sm);
+  background:var(--blue-bg);color:var(--blue);border:1px dashed var(--blue-border);cursor:pointer;
+  display:inline-flex;align-items:center;gap:5px;width:100%;justify-content:center;
+}
+.add-btn:hover{background:var(--blue);color:#fff;border-style:solid}
+
+/* Education panel */
+.edu-grid{padding:12px 14px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.edu-card{
+  background:var(--slate-50);border:1px solid var(--slate-200);border-radius:var(--r-sm);
+  padding:10px 12px;
+}
+.edu-card .ttl{font-size:11.5px;font-weight:700;color:var(--slate-900);margin-bottom:4px;display:flex;justify-content:space-between;align-items:center}
+.edu-card .ttl .src-tag{font-family:var(--mono);font-size:9px;color:var(--slate-400);font-weight:500}
+.edu-content{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;margin:6px 0}
+.edu-thumb{
+  height:54px;background:linear-gradient(135deg,#dbeafe,#fce7f3);border-radius:4px;
+  display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:9px;
+  color:rgba(0,0,0,.45);font-weight:600;letter-spacing:.04em;text-transform:uppercase;
+}
+.edu-thumb.video{background:linear-gradient(135deg,#fef3c7,#fed7aa)}
+.edu-thumb.pdf{background:linear-gradient(135deg,#e0e7ff,#dbeafe)}
+.edu-instructions{font-size:10.5px;color:var(--slate-600);line-height:1.5;margin-top:6px}
+.edu-instructions strong{color:var(--slate-700);font-size:9px;text-transform:uppercase;letter-spacing:.05em;font-weight:700}
+.edu-instructions ul{margin:3px 0 0 14px;padding:0}
+.edu-instructions li{margin-bottom:2px}
+
+/* Investment summary */
+.invest-grid{display:grid;grid-template-columns:2fr 3fr;gap:0}
+.invest-totals{padding:14px 16px;border-right:1px solid var(--slate-200);background:var(--slate-50)}
+.invest-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;font-size:12px;color:var(--slate-700)}
+.invest-row.subtotal{border-bottom:1px solid var(--slate-200);padding-bottom:8px;margin-bottom:6px}
+.invest-row.total{font-size:15px;font-weight:800;color:var(--slate-900);padding-top:8px;border-top:2px solid var(--slate-300);margin-top:6px}
+.invest-row .v{font-family:var(--mono);font-weight:700}
+.invest-financing{padding:14px 16px}
+.invest-financing .lbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--slate-400);margin-bottom:8px}
+.fin-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.fin-card{
+  background:var(--white);border:1px solid var(--slate-200);border-radius:var(--r-sm);
+  padding:10px 12px;text-align:center;
+}
+.fin-card .term{font-size:10px;color:var(--slate-500);font-weight:600;margin-bottom:2px}
+.fin-card .pay{font-family:var(--mono);font-size:18px;font-weight:800;color:var(--slate-900);line-height:1}
+.fin-card .apr{font-family:var(--mono);font-size:10px;color:var(--slate-400);margin-top:3px}
+.fin-card.recommended{border-color:var(--green);background:var(--green-bg)}
+.fin-card.recommended .pay{color:var(--green)}
+.package-callout{
+  margin:12px 16px;padding:10px 14px;background:var(--purple-bg);border:1px solid var(--purple-border);
+  border-radius:var(--r-sm);display:flex;align-items:center;gap:14px;
+}
+.package-callout .ico{font-size:18px;flex-shrink:0}
+.package-callout .body{flex:1;font-size:11.5px;color:var(--slate-700);line-height:1.4}
+.package-callout strong{color:var(--purple);font-weight:700}
+.package-callout .apply{
+  font-size:10.5px;font-weight:700;padding:6px 12px;border-radius:4px;
+  background:var(--purple);color:#fff;border:none;cursor:pointer;
+}
+.package-callout .apply:hover{filter:brightness(1.1)}
+
+/* Next steps */
+.steps-list{padding:10px 14px}
+.step{
+  display:grid;grid-template-columns:24px 1fr auto;gap:10px;align-items:flex-start;
+  padding:8px 10px;border-bottom:1px solid var(--slate-100);
+}
+.step:last-child{border-bottom:none}
+.step-num{
+  width:22px;height:22px;border-radius:50%;background:var(--teal);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;font-weight:700;flex-shrink:0;
+}
+.step-text{font-size:12px;color:var(--slate-700);line-height:1.5}
+.step-meta{font-family:var(--mono);font-size:10px;color:var(--slate-500);text-align:right;flex-shrink:0;white-space:nowrap;align-self:center}
+
+/* Schedule */
+.schedule{padding:0 14px 14px}
+.schedule-lbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--slate-400);margin-bottom:6px}
+.schedule-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:6px}
+.sched-row{
+  display:flex;justify-content:space-between;align-items:center;
+  background:var(--slate-50);border:1px solid var(--slate-200);border-radius:var(--r-sm);
+  padding:7px 11px;font-size:11.5px;
+}
+.sched-event{color:var(--slate-700);font-weight:500}
+.sched-date{font-family:var(--mono);font-size:10.5px;color:var(--slate-500);font-weight:600}
+
+footer{max-width:1100px;margin:0 auto;padding:14px 24px;border-top:1px solid var(--slate-200);display:flex;justify-content:space-between;align-items:center;gap:14px}
+footer .meta{font-size:11px;color:var(--slate-400);font-family:var(--mono)}
+.footer-actions{display:flex;gap:8px}
+.foot-btn{
+  font-size:11px;font-weight:600;padding:7px 12px;border-radius:var(--r-sm);
+  background:var(--white);color:var(--slate-700);border:1px solid var(--slate-200);cursor:pointer;
+  font-family:var(--font);
+}
+.foot-btn:hover{border-color:var(--teal);color:var(--teal)}
+.foot-btn.primary{background:var(--teal);color:#fff;border-color:var(--teal)}
+.foot-btn.primary:hover{background:var(--teal-dark)}
+
+@media (max-width:780px){
+  .st-body, .invest-grid, .edu-grid, .schedule-grid{grid-template-columns:1fr}
+  .invest-totals{border-right:none;border-bottom:1px solid var(--slate-200)}
+  .fin-cards{grid-template-columns:1fr}
+  .tx{grid-template-columns:1fr}
+  .tx-pricing{align-items:flex-start;text-align:left;min-width:0}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="logo">AESTHETICS<span>360</span></div>
+    <div class="nav-links">
+      <a href="demo-hero.html">Overview</a>
+      <a href="demo-extraction.html">Extraction</a>
+      <a href="demo-extraction-live.html">Live Extraction</a>
+      <a href="demo-agents.html">Agents</a>
+      <a href="demo-tcp-builder.html" class="active">TCP Builder</a>
+      <a href="demo-testing.html">Testing</a>
+      <a href="demo-flywheel.html">Flywheel</a>
+      <a href="demo-products.html">Product Library</a>
+    </div>
+  </div>
+</nav>
+
+<div class="page">
+  <div class="page-header">
+    <div>
+      <h1>TCP Builder</h1>
+      <div class="sub">Build a Treatment & Care Plan in under 2 minutes — from a transcript or from scratch. Five sections, five agents, one document the patient takes home.</div>
+    </div>
+    <button class="preview-btn" onclick="alert('Preview as Patient — renders this plan in the polished printable format. Stub for now; pulls into ComponentsBasedAItcp on production integration.')"><span class="ico">&#9656;</span> Preview as Patient</button>
+  </div>
+
+  <div class="status-banner">
+    <span class="pill">Prototype</span>
+    <span>Concept demo wired to real practice catalog data (Midwest Vein and Laser, 29 catalog items). Agents are designed; live agent calls land in the Pulse build. See the &copy; icons for per-agent details.</span>
+  </div>
+
+  <!-- Source toggle -->
+  <div class="source-toggle">
+    <div class="st-hdr">Input Path</div>
+    <div class="st-body">
+      <div class="st-cell active" id="srcTranscript" onclick="setSource('transcript')">
+        <div class="lbl">From Transcript</div>
+        <div class="desc">Pre-populate from a recorded consultation. Patient context, concerns, and offerings flow in from the extraction pipeline. Provider reviews + adjusts.</div>
+      </div>
+      <div class="st-cell" id="srcManual" onclick="setSource('manual')">
+        <div class="lbl">Manual Entry</div>
+        <div class="desc">Build from scratch — no recording required. Provider selects concerns, anatomy areas, and treatments directly from the practice catalog.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Patient -->
+  <div class="patient-bar">
+    <div class="patient-cell"><div class="lbl">Patient</div><div class="val">Sarah Jenkins</div></div>
+    <div class="patient-cell"><div class="lbl">DOB</div><div class="val mono">1984-03-19</div></div>
+    <div class="patient-cell"><div class="lbl">Provider</div><div class="val">Dr. K. Hammond</div></div>
+    <div class="patient-cell"><div class="lbl">Practice</div><div class="val">Midwest Vein and Laser</div></div>
+    <div class="patient-cell"><div class="lbl">Plan Date</div><div class="val mono" id="planDate">2026-05-04</div></div>
+  </div>
+
+  <!-- Section nav -->
+  <div class="section-nav">
+    <a href="#sec1"><span class="num">1</span>Concerns &amp; Goals</a>
+    <a href="#sec2"><span class="num">2</span>Treatments &amp; Pricing</a>
+    <a href="#sec3"><span class="num">3</span>Education</a>
+    <a href="#sec4"><span class="num">4</span>Investment</a>
+    <a href="#sec5"><span class="num">5</span>Next Steps</a>
+  </div>
+
+  <!-- ─── Section 1: Concerns & Goals ─────────────────────────────────────── -->
+  <div class="tc" id="sec1">
+    <div class="tc-hdr">
+      <div class="ttl-wrap">
+        <span class="num">1</span>
+        <span class="ttl">Concerns &amp; Goals</span>
+        <span class="agent-tag">— Goals Agent</span>
+        <button class="a360-info" data-agent="tcp_goals_agent"></button>
+      </div>
+      <div class="actions">
+        <button class="regen-btn" onclick="alert('Regenerate Goals Agent — drafts a new patient-friendly narrative from the selected concerns and anatomy areas.')">&#8635; Regenerate</button>
+      </div>
+    </div>
+
+    <div class="chip-row">
+      <div class="chip-lbl">
+        <span>Concerns</span>
+        <span class="src">source: gl_concerns · 28 items</span>
+      </div>
+      <div class="chips" id="concernsChips"></div>
+    </div>
+
+    <div class="chip-row">
+      <div class="chip-lbl">
+        <span>Anatomy Areas</span>
+        <span class="src">source: gl_anatomy_areas · 23 items</span>
+      </div>
+      <div class="chips" id="anatomyChips"></div>
+    </div>
+
+    <div class="narrative" id="goalsNarrative" contenteditable="true" spellcheck="false">
+      <div class="lbl">Goals — drafted by Goals Agent · click to edit</div>
+      <div class="text">Sarah wants to eliminate the spider veins on her lower legs that have been bothering her, soften the forehead lines that have become more visible over the past two years, and improve overall skin tone before her sister's wedding in October. She's specifically interested in non-invasive options with predictable recovery.</div>
+    </div>
+  </div>
+
+  <!-- ─── Section 2: Treatments & Pricing ────────────────────────────────── -->
+  <div class="tc" id="sec2">
+    <div class="tc-hdr">
+      <div class="ttl-wrap">
+        <span class="num">2</span>
+        <span class="ttl">Treatments &amp; Pricing</span>
+        <span class="agent-tag">— Recommendation Agent</span>
+        <button class="a360-info" data-agent="tcp_recommendation_agent"></button>
+      </div>
+      <div class="actions">
+        <button class="regen-btn" onclick="alert('Regenerate Recommendation Agent — re-ranks the practice catalog against the current concerns + anatomy + goals.')">&#8635; Regenerate</button>
+      </div>
+    </div>
+
+    <div class="phase-tabs">
+      <div class="phase-tab active" data-phase="0" onclick="switchPhase(0)">Phase 1: Initial Treatment <span class="count" id="phase0Count">3</span></div>
+      <div class="phase-tab" data-phase="1" onclick="switchPhase(1)">Phase 2: Follow-Up <span class="count" id="phase1Count">2</span></div>
+      <button class="phase-add" onclick="alert('Add a new phase — provider can name and reorder phases.')">+ Add Phase</button>
+    </div>
+
+    <div class="tx-list" id="txList"></div>
+  </div>
+
+  <!-- ─── Section 3: Education & Content ─────────────────────────────────── -->
+  <div class="tc" id="sec3">
+    <div class="tc-hdr">
+      <div class="ttl-wrap">
+        <span class="num">3</span>
+        <span class="ttl">Education &amp; Content</span>
+        <span class="agent-tag">— Education Agent</span>
+        <button class="a360-info" data-agent="tcp_education_agent"></button>
+      </div>
+      <div class="actions">
+        <button class="regen-btn" onclick="alert('Regenerate Education Agent — re-curates the content package for each treatment from the global library.')">&#8635; Regenerate</button>
+      </div>
+    </div>
+    <div class="edu-grid" id="eduGrid"></div>
+  </div>
+
+  <!-- ─── Section 4: Investment & Financing ──────────────────────────────── -->
+  <div class="tc" id="sec4">
+    <div class="tc-hdr">
+      <div class="ttl-wrap">
+        <span class="num">4</span>
+        <span class="ttl">Investment &amp; Financing</span>
+        <span class="agent-tag">— Pricing Agent · deterministic</span>
+        <button class="a360-info" data-agent="tcp_pricing_agent"></button>
+      </div>
+    </div>
+
+    <div class="invest-grid">
+      <div class="invest-totals" id="investTotals"></div>
+      <div class="invest-financing">
+        <div class="lbl">Financing Options · default terms</div>
+        <div class="fin-cards" id="finCards"></div>
+      </div>
+    </div>
+
+    <div class="package-callout">
+      <div class="ico">&#127873;</div>
+      <div class="body">
+        <strong>Vein Reset 3-Pack</strong> matches the Phase 1 sclerotherapy schedule. Bundling saves the patient <strong id="pkgSavings">$78</strong> off à la carte pricing.
+        <div style="font-size:10px;color:var(--slate-500);margin-top:2px">source: pl_packages (illustrative — package data populated at integration)</div>
+      </div>
+      <button class="apply" onclick="alert('Apply package — replaces the matching line items with a single bundled line at the package price.')">Apply</button>
+    </div>
+  </div>
+
+  <!-- ─── Section 5: Next Steps ──────────────────────────────────────────── -->
+  <div class="tc" id="sec5">
+    <div class="tc-hdr">
+      <div class="ttl-wrap">
+        <span class="num">5</span>
+        <span class="ttl">Next Steps</span>
+        <span class="agent-tag">— Action Agent</span>
+        <button class="a360-info" data-agent="tcp_action_agent"></button>
+      </div>
+      <div class="actions">
+        <button class="regen-btn" onclick="alert('Regenerate Action Agent — re-derives the next-steps list and follow-up schedule from treatment protocols.')">&#8635; Regenerate</button>
+      </div>
+    </div>
+
+    <div class="steps-list" id="stepsList"></div>
+    <div class="schedule">
+      <div class="schedule-lbl">Follow-up schedule · derived from treatment protocols</div>
+      <div class="schedule-grid" id="scheduleGrid"></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="meta" id="footerMeta">prototype · ready to wire to Pulse + Supabase</div>
+  <div class="footer-actions">
+    <button class="foot-btn" onclick="alert('Save as Template — persist to tcp_templates so it can be reused.')">Save as Template</button>
+    <button class="foot-btn primary" onclick="alert('Save Plan — persist to tcp_plans (JSONB). On production this also triggers submitOfferings() into Pipeline 2.')">Save Plan</button>
+  </div>
+</footer>
+
+<script src="agent-info-panel.js"></script>
+<script>
+// ─── Vocabulary (representative subset of gl_concerns / gl_anatomy_areas) ──
+const CONCERNS = [
+  {id:'fine_lines', label:'Fine lines', cat:'aging', selected:true},
+  {id:'wrinkles', label:'Wrinkles', cat:'aging'},
+  {id:'volume_loss', label:'Volume loss', cat:'aging'},
+  {id:'sagging_skin', label:'Sagging skin', cat:'aging', selected:true},
+  {id:'spider_veins', label:'Spider veins', cat:'vascular', selected:true},
+  {id:'varicose_veins', label:'Varicose veins', cat:'vascular'},
+  {id:'rosacea', label:'Rosacea / redness', cat:'vascular'},
+  {id:'sun_damage', label:'Sun damage', cat:'pigmentation', selected:true},
+  {id:'melasma', label:'Melasma', cat:'pigmentation'},
+  {id:'age_spots', label:'Age spots', cat:'pigmentation'},
+  {id:'uneven_texture', label:'Uneven texture', cat:'skin'},
+  {id:'large_pores', label:'Large pores', cat:'skin'},
+  {id:'dull_skin', label:'Dull skin tone', cat:'skin'},
+  {id:'unwanted_hair', label:'Unwanted hair', cat:'hair'},
+];
+
+const ANATOMY = [
+  {id:'forehead', label:'Forehead', cat:'face', selected:true},
+  {id:'glabella', label:'Glabella', cat:'face', selected:true},
+  {id:'crows_feet', label:'Crow\'s feet', cat:'face'},
+  {id:'cheeks', label:'Cheeks', cat:'face'},
+  {id:'jawline', label:'Jawline', cat:'face'},
+  {id:'lips', label:'Lips', cat:'face'},
+  {id:'lower_legs', label:'Lower legs', cat:'body', selected:true},
+  {id:'thighs', label:'Thighs', cat:'body'},
+  {id:'décolletage', label:'Décolletage', cat:'body'},
+  {id:'hands', label:'Hands', cat:'body'},
+];
+
+// ─── Treatments — pulled from the Midwest Vein catalog ────────────────────
+// Phase 0 = Initial; Phase 1 = Follow-Up. Real prices from the XLSX provided.
+const TREATMENTS = [
+  // Phase 0
+  {phase:0, name:'Visual Sclerotherapy', type:'service', tag:'service',
+    rationale:'Primary indication for spider veins. 1 of 2 FDA-approved solutions; treated veins reabsorbed over 6 weeks.',
+    src:'gl_services + pl_services · concern: spider_veins · area: lower_legs',
+    unitPrice:325, qty:3, unit:'session', recommended:true},
+  {phase:0, name:'Botox Cosmetic', type:'product', tag:'product',
+    rationale:'Targets dynamic forehead + glabellar lines. Patient mentioned the wedding in October — onset 7-14 days, peak at 4 weeks.',
+    src:'gl_products · concern: fine_lines · area: forehead, glabella',
+    unitPrice:12, qty:30, unit:'unit', recommended:true},
+  {phase:0, name:'Broad Band Light (Photo-rejuvenation)', type:'service', tag:'service',
+    rationale:'Targets sun damage + uneven tone. Pairs well with sclerotherapy timeline.',
+    src:'gl_services · concern: sun_damage · area: face',
+    unitPrice:350, qty:1, unit:'session', recommended:true},
+  // Phase 1
+  {phase:1, name:'Sclerotherapy follow-up', type:'service', tag:'service',
+    rationale:'Average 3-5 sessions for full clearance. Spaced ~6 weeks apart.',
+    src:'derived from treatment protocol: min_retreatment_interval=42d',
+    unitPrice:325, qty:2, unit:'session'},
+  {phase:1, name:'Compression hose (thigh-highs)', type:'product', tag:'product',
+    rationale:'Required wear for 3 days post-sclerotherapy. Bundle into Phase 1 for compliance.',
+    src:'gl_products · service-bundled item',
+    unitPrice:75, qty:1, unit:'pair'},
+];
+
+// ─── Education content per treatment (placeholder structure) ──────────────
+const EDU_BY_TREATMENT = {
+  'Visual Sclerotherapy': {
+    photos:['Before/after — 3 sessions','Before/after — 5 sessions'],
+    videos:['Sclerotherapy procedure walkthrough'],
+    pdfs:['Patient brochure — Vein Treatment'],
+    pre:['Avoid aspirin / NSAIDs 48h before','Wear loose pants','No tan / self-tanner on legs'],
+    post:['Wear compression hose 3 full days','Walk 30+ min daily for 1 week','Avoid hot baths / sauna 7 days'],
+  },
+  'Botox Cosmetic': {
+    photos:['Forehead — week 1','Forehead — week 4'],
+    videos:['Botox: how it works'],
+    pdfs:['Prescribing information','Patient consent form'],
+    pre:['Avoid blood thinners 24h prior','Arrive without makeup','Note any prior reactions'],
+    post:['Stay upright 4h','No exercise 24h','No facial massage 24h','Onset 7-14 days, peak ~4 weeks'],
+  },
+  'Broad Band Light (Photo-rejuvenation)': {
+    photos:['BBL — single session','BBL — series of 3'],
+    videos:['BBL treatment overview'],
+    pdfs:['BBL aftercare guide'],
+    pre:['No active tan','Discontinue retinoids 5 days before','SPF 50+ daily for 2 weeks before'],
+    post:['Cool compresses for 24h','SPF 50+ daily for 2 weeks','Mild flaking / darkening of spots is expected'],
+  },
+};
+
+// ─── Render: chips ─────────────────────────────────────────────────────────
+function renderChips(arr, elId){
+  const el = document.getElementById(elId);
+  el.innerHTML = arr.map(c =>
+    `<button class="chip ${c.selected?'selected':''} cat-${c.cat}" data-id="${c.id}">${c.label}</button>`
+  ).join('');
+  el.querySelectorAll('.chip').forEach(btn => {
+    btn.addEventListener('click', () => {
+      btn.classList.toggle('selected');
+    });
+  });
+}
+renderChips(CONCERNS, 'concernsChips');
+renderChips(ANATOMY, 'anatomyChips');
+
+// ─── Render: treatments + pricing ──────────────────────────────────────────
+let activePhase = 0;
+
+function renderTreatments(){
+  const list = document.getElementById('txList');
+  const phaseRows = TREATMENTS.filter(t => t.phase === activePhase);
+  list.innerHTML = phaseRows.map((t, i) => {
+    const lineTotal = (t.unitPrice * t.qty);
+    return `<div class="tx ${t.recommended?'recommended':''}" data-idx="${TREATMENTS.indexOf(t)}">
+      <div class="tx-content">
+        <div class="tx-name">
+          ${t.name}
+          <span class="tx-tag ${t.tag}">${t.tag}</span>
+          ${t.recommended ? '<span class="tx-tag" style="background:var(--green-bg);color:var(--green)">recommended</span>' : ''}
+        </div>
+        <div class="tx-rationale">${t.rationale}<span class="src-tag">· ${t.src}</span></div>
+        <div class="tx-meta">
+          <span><strong>${t.qty}</strong> ${t.unit}${t.qty>1?'s':''}</span>
+          <span><strong>$${t.unitPrice}</strong> / ${t.unit}</span>
+        </div>
+      </div>
+      <div class="tx-pricing">
+        <div class="tx-stepper">
+          <button onclick="bumpQty(${TREATMENTS.indexOf(t)},-1)">&minus;</button>
+          <span class="qty">${t.qty}</span>
+          <button onclick="bumpQty(${TREATMENTS.indexOf(t)},1)">+</button>
+        </div>
+        <div class="tx-line-total">${t.qty} × $${t.unitPrice}</div>
+        <div class="tx-price">$${lineTotal.toLocaleString()}</div>
+      </div>
+    </div>`;
+  }).join('') + `
+    <div style="margin-top:10px"><button class="add-btn" onclick="alert('Search practice catalog — wired to Supabase pl_products / pl_services with COALESCE on Global Library.')">+ Add treatment from practice catalog</button></div>
+  `;
+  document.getElementById('phase0Count').textContent = TREATMENTS.filter(t=>t.phase===0).length;
+  document.getElementById('phase1Count').textContent = TREATMENTS.filter(t=>t.phase===1).length;
+  if (window.A360) window.A360.attachInfoIcons(list);
+}
+
+function switchPhase(p){
+  activePhase = p;
+  document.querySelectorAll('.phase-tab').forEach(el => el.classList.toggle('active', parseInt(el.dataset.phase) === p));
+  renderTreatments();
+}
+
+function bumpQty(idx, delta){
+  TREATMENTS[idx].qty = Math.max(1, TREATMENTS[idx].qty + delta);
+  renderTreatments();
+  renderInvestment();
+  renderEducation();
+}
+
+renderTreatments();
+
+// ─── Render: education ─────────────────────────────────────────────────────
+function renderEducation(){
+  const el = document.getElementById('eduGrid');
+  const uniqueTreatments = [...new Set(TREATMENTS.map(t => t.name))];
+  el.innerHTML = uniqueTreatments.map(name => {
+    const e = EDU_BY_TREATMENT[name];
+    if (!e) return '';
+    const photos = (e.photos||[]).map(p => `<div class="edu-thumb">B/A · ${p}</div>`).join('');
+    const videos = (e.videos||[]).map(v => `<div class="edu-thumb video">▶ ${v}</div>`).join('');
+    const pdfs = (e.pdfs||[]).map(p => `<div class="edu-thumb pdf">PDF · ${p}</div>`).join('');
+    const pre = (e.pre||[]).map(s => `<li>${s}</li>`).join('');
+    const post = (e.post||[]).map(s => `<li>${s}</li>`).join('');
+    return `<div class="edu-card">
+      <div class="ttl">${name}<span class="src-tag">gl_product_content / gl_service_content</span></div>
+      <div class="edu-content">${photos}${videos}${pdfs}</div>
+      <div class="edu-instructions">
+        <strong>Pre-procedure</strong>
+        <ul>${pre}</ul>
+      </div>
+      <div class="edu-instructions" style="margin-top:6px">
+        <strong>Post-procedure</strong>
+        <ul>${post}</ul>
+      </div>
+    </div>`;
+  }).join('');
+}
+renderEducation();
+
+// ─── Render: investment & financing (deterministic) ───────────────────────
+function calcFinancing(amount, months, apr){
+  if (apr === 0) return amount / months;
+  const r = (apr/100) / 12;
+  return amount * (r / (1 - Math.pow(1 + r, -months)));
+}
+
+function renderInvestment(){
+  // line totals
+  const phase0 = TREATMENTS.filter(t => t.phase === 0).reduce((s,t) => s + t.unitPrice*t.qty, 0);
+  const phase1 = TREATMENTS.filter(t => t.phase === 1).reduce((s,t) => s + t.unitPrice*t.qty, 0);
+  const total = phase0 + phase1;
+
+  document.getElementById('investTotals').innerHTML = `
+    <div class="invest-row"><span>Phase 1 — Initial Treatment</span><span class="v">$${phase0.toLocaleString()}</span></div>
+    <div class="invest-row subtotal"><span>Phase 2 — Follow-Up</span><span class="v">$${phase1.toLocaleString()}</span></div>
+    <div class="invest-row"><span>Subtotal</span><span class="v">$${total.toLocaleString()}</span></div>
+    <div class="invest-row total"><span>Total Investment</span><span class="v">$${total.toLocaleString()}</span></div>
+  `;
+
+  const terms = [
+    {months:6,  apr:0,    rec:false, label:'6 months'},
+    {months:12, apr:7.99, rec:true,  label:'12 months'},
+    {months:24, apr:9.99, rec:false, label:'24 months'},
+  ];
+  document.getElementById('finCards').innerHTML = terms.map(t => {
+    const pay = calcFinancing(total, t.months, t.apr);
+    return `<div class="fin-card ${t.rec?'recommended':''}">
+      <div class="term">${t.label}</div>
+      <div class="pay">$${pay.toFixed(0)}<span style="font-size:10px;color:var(--slate-400);font-weight:600">/mo</span></div>
+      <div class="apr">${t.apr.toFixed(2)}% APR</div>
+    </div>`;
+  }).join('');
+
+  // package savings — rough mock: claim $78 off Phase 1 sclerotherapy
+  document.getElementById('pkgSavings').textContent = '$' + 78;
+}
+renderInvestment();
+
+// ─── Render: next steps + schedule ─────────────────────────────────────────
+const STEPS = [
+  {text:'Schedule first sclerotherapy session within 2 weeks. Coordinate with the patient\'s travel calendar — first session needs 6 weeks lead time before the wedding.', meta:'within 14d'},
+  {text:'Send pre-procedure prep packet (avoid NSAIDs 48h prior, no self-tanner on legs).', meta:'before session 1'},
+  {text:'Order compression hose (thigh-high). Provide at first sclerotherapy visit.', meta:'before session 1'},
+  {text:'Schedule Botox visit alongside session 2 to consolidate trips.', meta:'session 2'},
+  {text:'BBL Photo-rejuvenation booked for week 4 — stop retinoids 5 days prior.', meta:'wk 4'},
+];
+
+document.getElementById('stepsList').innerHTML = STEPS.map((s,i) => `
+  <div class="step">
+    <div class="step-num">${i+1}</div>
+    <div class="step-text">${s.text}</div>
+    <div class="step-meta">${s.meta}</div>
+  </div>
+`).join('');
+
+const SCHEDULE = [
+  {event:'Sclerotherapy session 1', date:'2026-05-18'},
+  {event:'Sclerotherapy session 2 + Botox', date:'2026-06-29'},
+  {event:'Sclerotherapy session 3', date:'2026-08-10'},
+  {event:'BBL Photo-rejuvenation',   date:'2026-06-01'},
+  {event:'Sclerotherapy follow-up 1', date:'2026-09-21'},
+  {event:'Sclerotherapy follow-up 2', date:'2026-11-02'},
+];
+
+document.getElementById('scheduleGrid').innerHTML = SCHEDULE.map(s => `
+  <div class="sched-row">
+    <span class="sched-event">${s.event}</span>
+    <span class="sched-date">${s.date}</span>
+  </div>
+`).join('');
+
+// ─── Source toggle ─────────────────────────────────────────────────────────
+function setSource(which){
+  document.getElementById('srcTranscript').classList.toggle('active', which==='transcript');
+  document.getElementById('srcManual').classList.toggle('active', which==='manual');
+}
+</script>
+</body>
+</html>
