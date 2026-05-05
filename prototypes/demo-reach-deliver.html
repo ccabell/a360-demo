@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script src="auth.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>A360 Reach — Delivery Options</title>
@@ -229,7 +230,7 @@ footer{max-width:1100px;margin:0 auto;padding:14px 24px;border-top:1px solid var
     <!-- LEFT: Generate Complete Campaign -->
     <div class="dc">
       <div class="dc-hdr full">
-        <span class="badge">Option 1</span>
+        <span class="badge">Option 1 <button class="a360-info dark" data-agent="reach_compliance_validator"></button></span>
         <div class="h">Generate Complete Campaign</div>
         <div class="s">Reach writes everything · staff approves · GHL delivers</div>
       </div>
@@ -259,7 +260,7 @@ footer{max-width:1100px;margin:0 auto;padding:14px 24px;border-top:1px solid var
     <!-- RIGHT: Push to CRM -->
     <div class="dc">
       <div class="dc-hdr crm">
-        <span class="badge">Option 2</span>
+        <span class="badge">Option 2 <button class="a360-info dark" data-agent="reach_crm_pusher"></button></span>
         <div class="h">Push Intelligence to CRM</div>
         <div class="s">Reach sets fields · GHL templates handle messaging</div>
       </div>
@@ -364,6 +365,7 @@ footer{max-width:1100px;margin:0 auto;padding:14px 24px;border-top:1px solid var
   <span>reach prototype · screen 5 of 5 · two delivery paths · multi-channel summary</span>
   <span><a href="demo-reach-sms.html" style="color:var(--slate-500);text-decoration:none">← SMS</a> · <a href="demo-reach.html" style="color:var(--reach-accent);font-weight:700;text-decoration:none">Restart →</a></span>
 </footer>
+<script src="agent-info-panel.js"></script>
 
 </body>
 </html>

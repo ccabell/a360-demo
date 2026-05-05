@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script src="auth.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>A360 Reach — Campaign Strategy</title>
@@ -196,7 +197,7 @@ footer{max-width:1100px;margin:0 auto;padding:14px 24px;border-top:1px solid var
 
   <!-- HERO: campaign type + reason -->
   <div class="hero">
-    <div class="hero-row1">Campaign type</div>
+    <div class="hero-row1">Campaign type <button class="a360-info" data-agent="reach_strategy_agent" style="background:rgba(255,255,255,.18);color:#fff;border-color:rgba(255,255,255,.3)"></button></div>
     <div class="hero-type">VALUE_REINFORCEMENT <span class="hero-conf">conf 0.88</span></div>
     <div class="hero-reason">"Unresolved price objection with medium-high intent and event-driven urgency. Patient is research-oriented — needs to see the math, then financing, then results, then timeline. Don't push; build conviction."</div>
     <div class="hero-stats">
@@ -264,7 +265,7 @@ footer{max-width:1100px;margin:0 auto;padding:14px 24px;border-top:1px solid var
 
   <!-- 9 Campaign Types — agent has range -->
   <div class="tc">
-    <div class="tc-hdr reach"><span>Why this campaign type · the 9 the agent picks from</span><span class="count">decision tree</span></div>
+    <div class="tc-hdr reach"><span>Why this campaign type · the 9 the agent picks from <button class="a360-info" data-agent="reach_strategy_agent"></button></span><span class="count">decision tree</span></div>
     <div style="padding:14px 18px">
       <div style="font-size:12px;color:var(--slate-600);margin-bottom:12px;line-height:1.55">The agent reads the consultation signals and selects from <strong>9 campaign archetypes</strong>. Sarah's unresolved price objection + medium-high intent + event urgency → <span style="background:var(--reach-bg);padding:2px 6px;border-radius:4px;font-family:var(--mono);font-weight:700;color:var(--reach-accent)">VALUE_REINFORCEMENT</span>. Different signals → different campaigns. No two patients get the same plan.</div>
 
@@ -316,7 +317,7 @@ footer{max-width:1100px;margin:0 auto;padding:14px 24px;border-top:1px solid var
 
   <!-- Touchpoint timeline -->
   <div class="tc">
-    <div class="tc-hdr reach"><span>Multi-Channel Touchpoint Schedule</span><span class="count">5 email · 3 SMS · ongoing RCS</span></div>
+    <div class="tc-hdr reach"><span>Multi-Channel Touchpoint Schedule <button class="a360-info" data-agent="reach_strategy_agent"></button></span><span class="count">5 email · 3 SMS · ongoing RCS</span></div>
     <div class="timeline">
       <div class="tl-row">
         <div class="tl-day">Day 1</div>
@@ -412,6 +413,7 @@ footer{max-width:1100px;margin:0 auto;padding:14px 24px;border-top:1px solid var
   <span>reach prototype · screen 2 of 5 · all decisions grounded in extraction signals</span>
   <span><a href="demo-reach.html" style="color:var(--slate-500);text-decoration:none">← Summary</a> · <a href="demo-reach-email.html" style="color:var(--reach-accent);font-weight:700;text-decoration:none">Email →</a></span>
 </footer>
+<script src="agent-info-panel.js"></script>
 
 </body>
 </html>

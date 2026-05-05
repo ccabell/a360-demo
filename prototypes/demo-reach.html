@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script src="auth.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>A360 Reach — Consultation Summary</title>
@@ -227,7 +228,7 @@ footer{max-width:1100px;margin:0 auto;padding:14px 24px;border-top:1px solid var
     <div>
       <!-- Goal -->
       <div class="tc">
-        <div class="tc-hdr"><span>Primary Goal</span></div>
+        <div class="tc-hdr"><span>Primary Goal <button class="a360-info" data-agent="reach_signal_aggregator"></button></span></div>
         <div class="goal-row">
           <div class="goal-text">Look refreshed for daughter's wedding</div>
           <div class="goal-quote">"I want to look refreshed for my daughter's wedding in August. Nothing dramatic — natural results that don't scream that I had work done."</div>
@@ -246,7 +247,7 @@ footer{max-width:1100px;margin:0 auto;padding:14px 24px;border-top:1px solid var
 
       <!-- Treatments -->
       <div class="tc">
-        <div class="tc-hdr"><span>Treatments Discussed</span><span class="count">3</span></div>
+        <div class="tc-hdr"><span>Treatments Discussed <button class="a360-info" data-agent="p1_extraction"></button></span><span class="count">3</span></div>
         <div class="off-row">
           <span class="off-chip chip-botox">Botox</span>
           <div class="off-detail">Forehead · 40 units<span class="quote">"I've been thinking about this for a while"</span></div>
@@ -269,7 +270,7 @@ footer{max-width:1100px;margin:0 auto;padding:14px 24px;border-top:1px solid var
 
       <!-- Objections + hesitations -->
       <div class="tc">
-        <div class="tc-hdr"><span>Objections &amp; Hesitations</span><span class="count">3</span></div>
+        <div class="tc-hdr"><span>Objections &amp; Hesitations <button class="a360-info" data-agent="p2_extraction"></button></span><span class="count">3</span></div>
         <div class="li">
           <div class="li-icon icon-unresolve">!</div>
           <div class="li-content">
@@ -297,7 +298,7 @@ footer{max-width:1100px;margin:0 auto;padding:14px 24px;border-top:1px solid var
     <!-- RIGHT — Signal Summary + Care Plan -->
     <div>
       <div class="tc">
-        <div class="tc-hdr reach"><span>Campaign Signals</span></div>
+        <div class="tc-hdr reach"><span>Campaign Signals <button class="a360-info" data-agent="reach_signal_aggregator"></button></span></div>
         <div class="signal-row">
           <div class="signal-lbl">Intent score</div>
           <div class="signal-bar"><div class="signal-fill" style="width:72%;background:var(--reach-accent)"></div></div>
@@ -335,7 +336,7 @@ footer{max-width:1100px;margin:0 auto;padding:14px 24px;border-top:1px solid var
 
       <!-- Care plan -->
       <div class="tc">
-        <div class="tc-hdr"><span>Care Plan</span><span class="count">Available</span></div>
+        <div class="tc-hdr"><span>Care Plan <button class="a360-info" data-agent="tcp_pricing_agent"></button></span><span class="count">Available</span></div>
         <div class="cp-pkg">
           <div class="cp-name">Refresh Package <span class="cp-tag">recommended</span></div>
           <div class="cp-row"><span>Package price</span><strong>$1,200</strong></div>
@@ -353,7 +354,7 @@ footer{max-width:1100px;margin:0 auto;padding:14px 24px;border-top:1px solid var
 
       <!-- Available content -->
       <div class="tc">
-        <div class="tc-hdr"><span>Available Education Content</span><span class="count">5</span></div>
+        <div class="tc-hdr"><span>Available Education Content <button class="a360-info" data-agent="reach_education_curator"></button></span><span class="count">5</span></div>
         <div class="li" style="padding:8px 14px"><span style="font-family:var(--mono);font-size:9px;color:var(--blue);font-weight:700">ART</span><div class="li-content"><div class="li-statement" style="font-size:11.5px;font-weight:600">Understanding Botox: Results Timeline</div></div></div>
         <div class="li" style="padding:8px 14px"><span style="font-family:var(--mono);font-size:9px;color:var(--rose);font-weight:700">PDF</span><div class="li-content"><div class="li-statement" style="font-size:11.5px;font-weight:600">Refresh Package Treatment Guide</div></div></div>
         <div class="li" style="padding:8px 14px"><span style="font-family:var(--mono);font-size:9px;color:var(--purple);font-weight:700">GAL</span><div class="li-content"><div class="li-statement" style="font-size:11.5px;font-weight:600">Patient Stories: Natural-Looking Results</div></div></div>
@@ -377,6 +378,7 @@ footer{max-width:1100px;margin:0 auto;padding:14px 24px;border-top:1px solid var
   <span>reach prototype · screen 1 of 5 · mock data only</span>
   <a href="demo-reach-strategy.html" style="color:var(--reach-accent);font-weight:700;text-decoration:none">Strategy →</a>
 </footer>
+<script src="agent-info-panel.js"></script>
 
 </body>
 </html>

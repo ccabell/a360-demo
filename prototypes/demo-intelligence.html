@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script src="auth.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>A360 — Practice Intelligence</title>
@@ -146,7 +147,7 @@ footer .meta{font-size:11px;color:var(--slate-400);font-family:var(--mono)}
 
     <!-- Opportunity Pipeline -->
     <div class="tc">
-      <div class="tc-hdr">Opportunity Pipeline <span class="count">335 total</span></div>
+      <div class="tc-hdr"><span>Opportunity Pipeline <button class="a360-info" data-agent="opportunities_agent"></button></span><span class="count">335 total</span></div>
       <div class="donut-row">
         <div class="donut-item">
           <div class="donut-val" style="color:var(--amber)">313</div>
@@ -174,7 +175,7 @@ footer .meta{font-size:11px;color:var(--slate-400);font-family:var(--mono)}
 
     <!-- Disposition Breakdown -->
     <div class="tc">
-      <div class="tc-hdr">Offering Dispositions (All Consultations) <span class="count">335</span></div>
+      <div class="tc-hdr"><span>Offering Dispositions (All Consultations) <button class="a360-info" data-agent="p1_extraction"></button></span><span class="count">335</span></div>
       <div style="padding:14px">
         <div class="bar-row">
           <div class="bar-label">Discussed</div>
@@ -202,7 +203,7 @@ footer .meta{font-size:11px;color:var(--slate-400);font-family:var(--mono)}
 
     <!-- Top Products -->
     <div class="tc grid-full">
-      <div class="tc-hdr">Top Products & Services in Consultations <span class="count">by frequency across 122 transcripts</span></div>
+      <div class="tc-hdr"><span>Top Products & Services in Consultations <button class="a360-info" data-agent="p1_extraction"></button></span><span class="count">by frequency across 122 transcripts</span></div>
       <div class="t-header" style="grid-template-columns:2fr 1fr 1fr 1fr">
         <div>Product / Service</div>
         <div style="text-align:center">Mentions</div>
@@ -261,7 +262,7 @@ footer .meta{font-size:11px;color:var(--slate-400);font-family:var(--mono)}
 
     <!-- Consultation Types -->
     <div class="tc">
-      <div class="tc-hdr">Consultation Type Distribution <span class="count">122</span></div>
+      <div class="tc-hdr"><span>Consultation Type Distribution <button class="a360-info" data-agent="p1_extraction"></button></span><span class="count">122</span></div>
       <div style="padding:14px">
         <div class="bar-row">
           <div class="bar-label">Treatment Visit</div>
@@ -307,7 +308,7 @@ footer .meta{font-size:11px;color:var(--slate-400);font-family:var(--mono)}
 
     <!-- Revenue Leak Summary -->
     <div class="tc grid-full">
-      <div class="tc-hdr">Revenue Leak Detection <span class="count">5 leak categories</span></div>
+      <div class="tc-hdr"><span>Revenue Leak Detection <button class="a360-info" data-agent="opportunities_agent"></button></span><span class="count">5 leak categories</span></div>
       <div class="t-header" style="grid-template-columns:2fr 1fr 2fr 1fr">
         <div>Leak Type</div>
         <div style="text-align:center">Detection Signal</div>
@@ -353,6 +354,7 @@ footer .meta{font-size:11px;color:var(--slate-400);font-family:var(--mono)}
   <div class="meta">aggregated across 122 transcripts &middot; lumiere aesthetics &middot; 335 opportunities</div>
   <a href="demo-products.html" class="next-link">Product Library &rarr;</a>
 </footer>
+<script src="agent-info-panel.js"></script>
 
 </body>
 </html>

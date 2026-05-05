@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script src="auth.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>A360 Reach — SMS Campaign</title>
@@ -252,7 +253,7 @@ footer{max-width:1100px;margin:0 auto;padding:14px 24px;border-top:1px solid var
     <!-- LEFT: STANDARD SMS -->
     <div class="split-col standard">
       <div class="col-hdr">
-        <div class="badge standard">Standard SMS · One-way</div>
+        <div class="badge standard">Standard SMS · One-way <button class="a360-info dark" data-agent="reach_sms_generator"></button></div>
         <div class="h">Broadcast Model</div>
         <div class="s">3 messages over 21 days · sent on a schedule</div>
       </div>
@@ -310,7 +311,7 @@ footer{max-width:1100px;margin:0 auto;padding:14px 24px;border-top:1px solid var
     <!-- RIGHT: CONVERSATIONAL RCS -->
     <div class="split-col rcs">
       <div class="col-hdr">
-        <div class="badge rcs">Conversational RCS · Two-way</div>
+        <div class="badge rcs">Conversational RCS · Two-way <button class="a360-info dark" data-agent="reach_rcs_orchestrator"></button></div>
         <div class="h">Powered by OrchardLink</div>
         <div class="s">Always-on AI · full consultation context · quick-reply CTAs</div>
       </div>
@@ -433,6 +434,7 @@ footer{max-width:1100px;margin:0 auto;padding:14px 24px;border-top:1px solid var
   <span>reach prototype · screen 4 of 5 · standard sms vs conversational rcs comparison</span>
   <span><a href="demo-reach-email.html" style="color:var(--slate-500);text-decoration:none">← Email</a> · <a href="demo-reach-deliver.html" style="color:var(--reach-accent);font-weight:700;text-decoration:none">Deliver →</a></span>
 </footer>
+<script src="agent-info-panel.js"></script>
 
 </body>
 </html>

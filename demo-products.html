@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script src="auth.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>A360 — Product Library</title>
@@ -125,7 +126,7 @@ footer .meta{font-size:11px;color:var(--slate-400);font-family:var(--mono)}
 
   <!-- Product Deep Dive: Morpheus8 -->
   <div class="tc grid-full" style="margin-bottom:14px">
-    <div class="tc-hdr">Product Deep Dive <span class="count">from Global Library</span></div>
+    <div class="tc-hdr"><span>Product Deep Dive <button class="a360-info" data-agent="p1_extraction"></button></span><span class="count">from Global Library</span></div>
     <div class="product-hero">
       <div class="product-logo"><img src="https://wvpgmawrizwkmvfnwqfl.supabase.co/storage/v1/object/public/gl-content/logos/inmode.png" alt="InMode"></div>
       <div class="product-info">
@@ -158,7 +159,7 @@ footer .meta{font-size:11px;color:var(--slate-400);font-family:var(--mono)}
   <div class="grid">
     <!-- Patient-Language Aliases -->
     <div class="tc">
-      <div class="tc-hdr">Patient-Language Aliases <span class="count">9</span></div>
+      <div class="tc-hdr"><span>Patient-Language Aliases <button class="a360-info" data-agent="catalog_validation"></button></span><span class="count">9</span></div>
       <div class="alias-tags">
         <span class="alias">morpheus</span>
         <span class="alias">morpheus 8</span>
@@ -175,7 +176,7 @@ footer .meta{font-size:11px;color:var(--slate-400);font-family:var(--mono)}
 
     <!-- Common Objections -->
     <div class="tc">
-      <div class="tc-hdr">Common Objections &amp; Responses <span class="count">4</span></div>
+      <div class="tc-hdr"><span>Common Objections &amp; Responses <button class="a360-info" data-agent="p2_extraction"></button></span><span class="count">4</span></div>
       <div style="padding:12px 14px">
         <div class="objection">
           <div class="obj-q">"It's expensive — why not just use a dermaroller at home?"</div>
@@ -198,7 +199,7 @@ footer .meta{font-size:11px;color:var(--slate-400);font-family:var(--mono)}
 
     <!-- Sales Talking Points -->
     <div class="tc">
-      <div class="tc-hdr">Sales Talking Points <span class="count">6</span></div>
+      <div class="tc-hdr"><span>Sales Talking Points <button class="a360-info" data-agent="cross_sell_guidance_v3"></button></span><span class="count">6</span></div>
       <div style="padding:10px 14px">
         <div class="tp"><div class="tp-dot"></div>Treats face, neck, AND body — versatile single-device solution</div>
         <div class="tp"><div class="tp-dot"></div>Gold-coated needles minimize post-inflammatory hyperpigmentation — safe for all skin tones</div>
@@ -211,7 +212,7 @@ footer .meta{font-size:11px;color:var(--slate-400);font-family:var(--mono)}
 
     <!-- Data Sources -->
     <div class="tc">
-      <div class="tc-hdr">Data Sources <span class="count">7 sources</span></div>
+      <div class="tc-hdr"><span>Data Sources <button class="a360-info" data-agent="p1_extraction"></button></span><span class="count">7 sources</span></div>
       <div style="padding:12px 14px">
         <div class="ds-row"><div class="ds-dot"></div>InMode official product documentation</div>
         <div class="ds-row"><div class="ds-dot"></div>FDA 510(k) clearance database</div>
@@ -258,6 +259,7 @@ footer .meta{font-size:11px;color:var(--slate-400);font-family:var(--mono)}
 <footer>
   <div class="meta">gl_products: 324 &middot; gl_concerns: 39 &middot; gl_product_relationships: 348 &middot; supabase:wvpgmawrizwkmvfnwqfl</div>
 </footer>
+<script src="agent-info-panel.js"></script>
 
 </body>
 </html>
