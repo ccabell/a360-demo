@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A360 Reach — Delivery Options</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#f5f6f8;--white:#fff;
+  --slate-900:#1a1f2e;--slate-700:#374151;--slate-600:#4b5563;--slate-500:#6b7280;--slate-400:#9ca3af;--slate-300:#d1d5db;--slate-200:#e5e7eb;--slate-100:#f3f4f6;--slate-50:#f9fafb;
+  --teal:#1b4f6b;--teal-light:#2c6f8f;
+  --blue:#2563eb;--blue-bg:#eff6ff;
+  --green:#059669;--green-bg:#ecfdf5;--green-border:#a7f3d0;
+  --amber:#d97706;--amber-bg:#fffbeb;
+  --rose:#dc2626;--rose-bg:#fef2f2;
+  --purple:#7c3aed;--purple-bg:#f5f3ff;--purple-border:#c4b5fd;
+  --shadow:0 1px 3px rgba(0,0,0,.06);
+  --r:8px;--r-sm:6px;
+  --font:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+  --mono:'JetBrains Mono',monospace;
+  --reach-accent:#7c3aed;
+  --reach-bg:#faf8ff;
+}
+body{background:var(--bg);color:var(--slate-900);font-family:var(--font);-webkit-font-smoothing:antialiased;font-size:13px;line-height:1.5}
+nav{background:var(--teal);padding:0 24px}
+.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;height:48px;gap:24px}
+.logo{font-weight:800;font-size:15px;color:#fff;letter-spacing:-.02em;margin-right:auto}
+.logo span{color:rgba(255,255,255,.5)}
+.nav-links{display:flex;gap:2px}
+.nav-links a{color:rgba(255,255,255,.65);text-decoration:none;font-size:12px;font-weight:500;padding:6px 12px;border-radius:var(--r-sm);transition:all .12s}
+.nav-links a:hover{color:#fff;background:rgba(255,255,255,.1)}
+.nav-links a.active{color:#fff;background:rgba(255,255,255,.15)}
+
+.reach-bar{background:var(--reach-accent);padding:0 24px}
+.reach-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;height:38px;gap:20px;color:#fff}
+.reach-brand{font-weight:800;font-size:13px;letter-spacing:.02em}
+.reach-brand .pill{font-size:9px;background:rgba(255,255,255,.2);padding:2px 8px;border-radius:10px;margin-left:6px;text-transform:uppercase;letter-spacing:.05em;font-weight:700}
+.reach-tagline{font-size:11px;color:rgba(255,255,255,.85);font-weight:500;margin-right:auto}
+.reach-steps{display:flex;gap:0;font-size:11px}
+.reach-steps a{color:rgba(255,255,255,.6);text-decoration:none;padding:6px 12px;font-weight:600;display:flex;align-items:center;gap:6px;transition:color .12s;border-radius:var(--r-sm)}
+.reach-steps a:hover{color:#fff;background:rgba(255,255,255,.1)}
+.reach-steps a.active{color:#fff;background:rgba(255,255,255,.2)}
+.reach-steps a .num{font-family:var(--mono);font-size:9px;background:rgba(255,255,255,.18);padding:1px 6px;border-radius:8px;font-weight:700}
+
+.page{max-width:1100px;margin:0 auto;padding:18px 24px 48px}
+
+.patient-bar{display:flex;background:var(--white);border:1px solid var(--slate-200);border-radius:var(--r);box-shadow:var(--shadow);margin-bottom:14px;overflow:hidden}
+.patient-cell{flex:1;padding:9px 14px;border-right:1px solid var(--slate-100)}
+.patient-cell:last-child{border-right:none}
+.patient-cell .lbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--slate-400);margin-bottom:2px}
+.patient-cell .val{font-size:12px;font-weight:700;color:var(--slate-900)}
+.patient-cell .val.mono{font-family:var(--mono)}
+.patient-cell.highlight{background:var(--reach-bg)}
+
+.ph{margin-bottom:14px}
+.ph h1{font-size:20px;font-weight:800;letter-spacing:-.02em;margin-bottom:2px}
+.ph .sub{font-size:12px;color:var(--slate-500);max-width:760px;line-height:1.55}
+
+/* Two-column delivery */
+.delivery-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px}
+.dc{
+  background:var(--white);border:1px solid var(--slate-200);border-radius:var(--r);
+  box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column;
+}
+.dc-hdr{padding:14px 18px;color:#fff;border-bottom:1px solid rgba(255,255,255,.18)}
+.dc-hdr.full{background:linear-gradient(135deg, var(--blue) 0%, #1d4ed8 100%)}
+.dc-hdr.crm{background:linear-gradient(135deg, var(--reach-accent) 0%, #5b21b6 100%)}
+.dc-hdr .badge{
+  display:inline-block;font-size:9.5px;font-weight:700;padding:3px 10px;border-radius:10px;
+  background:rgba(255,255,255,.2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;
+}
+.dc-hdr .h{font-size:18px;font-weight:800;letter-spacing:-.02em;margin-bottom:3px}
+.dc-hdr .s{font-size:12px;color:rgba(255,255,255,.85);font-weight:500}
+
+.dc-body{flex:1;padding:14px 18px}
+.dc-body .lead{font-size:12.5px;color:var(--slate-700);line-height:1.55;margin-bottom:12px}
+
+.dc-checklist{list-style:none;padding:0;margin:0 0 14px}
+.dc-checklist li{
+  padding:6px 0;font-size:12.5px;color:var(--slate-700);
+  display:flex;align-items:flex-start;gap:8px;
+  border-bottom:1px solid var(--slate-100);
+}
+.dc-checklist li:last-child{border-bottom:none}
+.dc-checklist li .check{
+  width:18px;height:18px;border-radius:50%;background:var(--green-bg);
+  display:flex;align-items:center;justify-content:center;color:var(--green);
+  font-weight:800;flex-shrink:0;font-family:var(--mono);font-size:11px;margin-top:1px;
+}
+.dc-checklist li strong{color:var(--slate-900);font-weight:700}
+
+.dc-info{
+  background:var(--slate-50);padding:8px 12px;border-radius:var(--r-sm);
+  margin-bottom:12px;font-size:11.5px;color:var(--slate-600);line-height:1.5;
+}
+.dc-info .lbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--slate-400);margin-bottom:3px}
+.dc-info strong{color:var(--slate-900);font-weight:700}
+
+/* Field map for CRM push */
+.fm{
+  background:#0f172a;color:#cbd5e1;border-radius:var(--r-sm);
+  padding:14px 16px;font-family:var(--mono);font-size:11px;line-height:1.6;
+  margin-bottom:12px;overflow-x:auto;
+}
+.fm .fk{color:#a78bfa;font-weight:700}
+.fm .fv{color:#34d399}
+.fm .fc{color:#64748b;font-style:italic}
+
+/* Workflow card */
+.wf-card{
+  border:1px solid var(--slate-200);border-radius:var(--r-sm);
+  background:var(--white);padding:10px 14px;margin-bottom:12px;
+}
+.wf-row{display:flex;justify-content:space-between;font-size:11.5px;color:var(--slate-600);padding:3px 0}
+.wf-row strong{color:var(--slate-900);font-family:var(--mono);font-weight:700;font-size:11px}
+
+.dc-cta{
+  margin:0 18px 18px;padding:11px 14px;border-radius:var(--r-sm);
+  background:var(--slate-900);color:#fff;font-weight:800;font-size:13px;
+  text-align:center;text-decoration:none;cursor:pointer;border:none;
+  display:flex;align-items:center;justify-content:center;gap:8px;letter-spacing:.01em;
+}
+.dc-cta.full{background:linear-gradient(90deg, var(--blue) 0%, #1d4ed8 100%)}
+.dc-cta.crm{background:linear-gradient(90deg, var(--reach-accent) 0%, #5b21b6 100%)}
+.dc-cta:hover{filter:brightness(1.1)}
+.dc-cta .arrow{font-size:14px}
+
+/* Channel summary */
+.ch-summary{
+  background:var(--white);border:1px solid var(--slate-200);border-radius:var(--r);
+  box-shadow:var(--shadow);overflow:hidden;
+}
+.ch-hdr{
+  background:linear-gradient(90deg, var(--teal) 0%, var(--reach-accent) 100%);
+  color:#fff;padding:12px 18px;
+}
+.ch-hdr .h{font-size:15px;font-weight:800;letter-spacing:-.01em}
+.ch-hdr .s{font-size:11.5px;color:rgba(255,255,255,.85);margin-top:1px}
+
+.ch-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0}
+.ch-col{padding:16px 18px;border-right:1px solid var(--slate-200)}
+.ch-col:last-child{border-right:none}
+.ch-col .icon{font-size:24px;margin-bottom:6px}
+.ch-col .ttl{font-size:14px;font-weight:800;letter-spacing:-.01em;margin-bottom:1px}
+.ch-col .ttl-tag{font-size:9px;font-weight:700;padding:2px 7px;border-radius:3px;text-transform:uppercase;letter-spacing:.05em;margin-left:6px}
+.tag-blue{background:var(--blue-bg);color:var(--blue)}
+.tag-green{background:var(--green-bg);color:var(--green)}
+.tag-purple{background:var(--purple-bg);color:var(--purple)}
+.ch-col .ct{font-family:var(--mono);font-size:11px;color:var(--slate-500);margin-bottom:8px}
+.ch-best{
+  background:var(--slate-50);padding:8px 10px;border-radius:var(--r-sm);
+  font-size:11.5px;line-height:1.55;color:var(--slate-700);
+}
+.ch-best .lbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--slate-400);margin-bottom:3px}
+
+/* Final CTAs */
+.bottom-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.return-card{
+  background:var(--white);border:1px solid var(--slate-200);border-radius:var(--r);
+  box-shadow:var(--shadow);padding:14px 18px;display:flex;align-items:center;gap:14px;
+  text-decoration:none;color:inherit;transition:all .12s;
+}
+.return-card:hover{border-color:var(--reach-accent);box-shadow:0 4px 12px rgba(124,58,237,.12)}
+.return-icon{font-size:24px;flex-shrink:0}
+.return-text{flex:1}
+.return-text .h{font-size:13px;font-weight:800;letter-spacing:-.01em}
+.return-text .s{font-size:11px;color:var(--slate-500);margin-top:1px}
+
+footer{max-width:1100px;margin:0 auto;padding:14px 24px;border-top:1px solid var(--slate-200);display:flex;justify-content:space-between;align-items:center;color:var(--slate-400);font-size:11px;font-family:var(--mono)}
+
+@media (max-width:780px){
+  .delivery-grid, .ch-grid, .bottom-row{grid-template-columns:1fr}
+  .ch-col{border-right:none;border-bottom:1px solid var(--slate-200)}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="logo">AESTHETICS<span>360</span></div>
+    <div class="nav-links">
+      <a href="demo-hero.html">Overview</a>
+      <a href="demo-extraction.html">Extraction</a>
+      <a href="demo-extraction-live.html">Live Extraction</a>
+      <a href="demo-agents.html">Agents</a>
+      <a href="demo-tcp-builder.html">TCP Builder</a>
+      <a href="demo-reach.html" class="active">Reach</a>
+      <a href="demo-testing.html">Testing</a>
+      <a href="demo-flywheel.html">Flywheel</a>
+      <a href="demo-products.html">Product Library</a>
+    </div>
+  </div>
+</nav>
+
+<div class="reach-bar">
+  <div class="reach-inner">
+    <div class="reach-brand">A360 REACH<span class="pill">prototype</span></div>
+    <div class="reach-tagline">Delivery Options — full content generation or CRM signal push</div>
+    <div class="reach-steps">
+      <a href="demo-reach.html"><span class="num">1</span>Summary</a>
+      <a href="demo-reach-strategy.html"><span class="num">2</span>Strategy</a>
+      <a href="demo-reach-email.html"><span class="num">3</span>Email</a>
+      <a href="demo-reach-sms.html"><span class="num">4</span>SMS</a>
+      <a href="demo-reach-deliver.html" class="active"><span class="num">5</span>Deliver</a>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+  <div class="patient-bar">
+    <div class="patient-cell"><div class="lbl">Patient</div><div class="val">Sarah Mitchell</div></div>
+    <div class="patient-cell"><div class="lbl">Provider</div><div class="val">Dr. Emily Chen</div></div>
+    <div class="patient-cell"><div class="lbl">Practice</div><div class="val">Glow Aesthetics</div></div>
+    <div class="patient-cell"><div class="lbl">Campaign</div><div class="val mono">VALUE_REINFORCEMENT</div></div>
+    <div class="patient-cell highlight"><div class="lbl">Wedding</div><div class="val mono">Aug 15 · 108d</div></div>
+  </div>
+
+  <div class="ph">
+    <h1>Delivery Options</h1>
+    <div class="sub">Two ways to ship a Reach campaign. <strong>Generate Complete Campaign</strong> writes every email and SMS for staff review before send. <strong>Push to CRM</strong> sends the structured signals to GHL templates, letting the practice's existing automation system handle the messaging. Most practices use both — full content for high-intent patients, CRM push for the long tail.</div>
+  </div>
+
+  <!-- 2-column delivery -->
+  <div class="delivery-grid">
+
+    <!-- LEFT: Generate Complete Campaign -->
+    <div class="dc">
+      <div class="dc-hdr full">
+        <span class="badge">Option 1</span>
+        <div class="h">Generate Complete Campaign</div>
+        <div class="s">Reach writes everything · staff approves · GHL delivers</div>
+      </div>
+      <div class="dc-body">
+        <p class="lead">Reach generates fully-written, ready-to-send content. The practice gets a single review surface where they approve or edit before anything goes out. Best for high-intent patients where personalization depth matters most.</p>
+        <ul class="dc-checklist">
+          <li><span class="check">✓</span><span><strong>5 Email messages</strong> — subject lines, A/B variants, full body, CTA, education links</span></li>
+          <li><span class="check">✓</span><span><strong>3 SMS messages</strong> — standard, character-conscious, opt-out compliant</span></li>
+          <li><span class="check">✓</span><span><strong>Conversational SMS script</strong> — full OrchardLink RCS branching tree with quick-reply CTAs</span></li>
+          <li><span class="check">✓</span><span><strong>Send schedule</strong> — exact dates, time-of-day optimized per patient timezone</span></li>
+          <li><span class="check">✓</span><span><strong>A/B subject line variants</strong> — 2-3 alternates per email for testing</span></li>
+          <li><span class="check">✓</span><span><strong>Education content links</strong> — pulled from practice library</span></li>
+          <li><span class="check">✓</span><span><strong>Compliance checks</strong> — no medical claims, opt-out present, HIPAA-safe</span></li>
+        </ul>
+        <div class="dc-info">
+          <div class="lbl">Staff Review</div>
+          Required before sending · estimated <strong>2 minutes per campaign</strong> for approve-or-edit
+        </div>
+        <div class="dc-info">
+          <div class="lbl">Delivery</div>
+          Approved content posted into <strong>GoHighLevel</strong> as a one-time workflow with the schedule baked in
+        </div>
+      </div>
+      <a href="#" class="dc-cta full">Review &amp; Approve Campaign <span class="arrow">→</span></a>
+    </div>
+
+    <!-- RIGHT: Push to CRM -->
+    <div class="dc">
+      <div class="dc-hdr crm">
+        <span class="badge">Option 2</span>
+        <div class="h">Push Intelligence to CRM</div>
+        <div class="s">Reach sets fields · GHL templates handle messaging</div>
+      </div>
+      <div class="dc-body">
+        <p class="lead">Reach pushes structured contact-field data to GoHighLevel. The practice's existing templates and workflows fire on those fields — the practice keeps using the system they know, but every message is now consultation-aware. Best for the long tail and for practices that prefer to own their messaging.</p>
+
+        <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--slate-400);margin-bottom:5px">Contact fields synced</div>
+        <div class="fm">
+<span class="fc"># A360 → GHL contact fields</span>
+<span class="fk">A360_Campaign_Type</span>:        <span class="fv">"VALUE_REINFORCEMENT"</span>
+<span class="fk">A360_Intent_Strength</span>:      <span class="fv">72</span>
+<span class="fk">A360_Buy_Signal</span>:            <span class="fv">62</span>
+<span class="fk">A360_Primary_Treatment</span>:     <span class="fv">"Botox"</span>
+<span class="fk">A360_Secondary_Treatment</span>:   <span class="fv">"Juvederm Voluma"</span>
+<span class="fk">A360_Primary_Objection</span>:     <span class="fv">"price"</span>
+<span class="fk">A360_Objection_Resolved</span>:    <span class="fv">false</span>
+<span class="fk">A360_Event_Type</span>:            <span class="fv">"wedding"</span>
+<span class="fk">A360_Event_Date</span>:            <span class="fv">"2026-08-15"</span>
+<span class="fk">A360_Days_To_Event</span>:         <span class="fv">108</span>
+<span class="fk">A360_Package_Name</span>:          <span class="fv">"Refresh Package"</span>
+<span class="fk">A360_Package_Value</span>:         <span class="fv">1200</span>
+<span class="fk">A360_Package_Savings</span>:       <span class="fv">200</span>
+<span class="fk">A360_Financing_Monthly</span>:     <span class="fv">100</span>
+<span class="fk">A360_Recommended_Sequence</span>:  <span class="fv">"value_reinforcement_5"</span>
+        </div>
+
+        <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--slate-400);margin-bottom:5px;margin-top:10px">CRM Workflow Triggered</div>
+        <div class="wf-card">
+          <div class="wf-row"><span>Sequence</span><strong>"Value Reinforcement — Event Driven"</strong></div>
+          <div class="wf-row"><span>Template Set</span><strong>Practice-customized</strong></div>
+          <div class="wf-row"><span>Timing</span><strong>Auto · per A360_Days_To_Event</strong></div>
+          <div class="wf-row"><span>Channels</span><strong>Email + SMS + RCS</strong></div>
+        </div>
+
+        <div class="dc-info">
+          <div class="lbl">Staff Review</div>
+          Templates pre-approved · <strong>no per-campaign review needed</strong>. Templates can be revised any time.
+        </div>
+      </div>
+      <a href="#" class="dc-cta crm">Push to GoHighLevel <span class="arrow">→</span></a>
+    </div>
+
+  </div>
+
+  <!-- Channel summary -->
+  <div class="ch-summary">
+    <div class="ch-hdr">
+      <div class="h">Multi-Channel Reach</div>
+      <div class="s">Three channels working together · each best at a different job</div>
+    </div>
+    <div class="ch-grid">
+      <div class="ch-col">
+        <div class="icon">✉️</div>
+        <div class="ttl">Email <span class="ttl-tag tag-blue">5 msgs</span></div>
+        <div class="ct">21 days · personalized</div>
+        <div class="ch-best">
+          <div class="lbl">Best for</div>
+          Detail. Pricing math. Education links. The full story behind a treatment plan. Patients read on their schedule.
+        </div>
+      </div>
+      <div class="ch-col">
+        <div class="icon">💬</div>
+        <div class="ttl">SMS <span class="ttl-tag tag-green">3 msgs</span></div>
+        <div class="ct">21 days · personal tone</div>
+        <div class="ch-best">
+          <div class="lbl">Best for</div>
+          Quick nudges. Timing windows. Personal check-ins. Higher open rate than email; useful for re-prompting after a long email.
+        </div>
+      </div>
+      <div class="ch-col">
+        <div class="icon">🤖</div>
+        <div class="ttl">Conversational RCS <span class="ttl-tag tag-purple">always-on</span></div>
+        <div class="ct">AI · full consult context</div>
+        <div class="ch-best">
+          <div class="lbl">Best for</div>
+          Real-time Q&amp;A. Scheduling. Objection handling without staff time. Patient asks "how long does Botox last" → answer in 8 seconds with their wedding date factored in.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom navigation -->
+  <div class="bottom-row">
+    <a href="demo-reach.html" class="return-card">
+      <div class="return-icon">↺</div>
+      <div class="return-text">
+        <div class="h">Back to consultation summary</div>
+        <div class="s">Re-walk the demo from the top</div>
+      </div>
+    </a>
+    <a href="demo-tcp-builder.html" class="return-card">
+      <div class="return-icon">📋</div>
+      <div class="return-text">
+        <div class="h">See the TCP this campaign feeds from</div>
+        <div class="s">Treatment plan + pricing + financing — the source for every personalization hook</div>
+      </div>
+    </a>
+  </div>
+</div>
+
+<footer>
+  <span>reach prototype · screen 5 of 5 · two delivery paths · multi-channel summary</span>
+  <span><a href="demo-reach-sms.html" style="color:var(--slate-500);text-decoration:none">← SMS</a> · <a href="demo-reach.html" style="color:var(--reach-accent);font-weight:700;text-decoration:none">Restart →</a></span>
+</footer>
+
+</body>
+</html>
