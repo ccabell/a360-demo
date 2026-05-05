@@ -35,6 +35,8 @@ The prototype's job is to render curated examples beautifully. Mid-Stream's job 
 | 7 | [07-MIDSTREAM-EVALUATION.md](07-MIDSTREAM-EVALUATION.md) | Read-only audit of `C:\Users\Chris\repos\Mid_Stream`. Verifies the broken-endpoint diagnosis (most claims wrong) and produces Manus-ready cleanup instructions. | **Done — review §6** |
 | 8 | [08-AGENT-BUILDER.md](08-AGENT-BUILDER.md) | Architectural rationale for unifying agents + prompts + coaching into one Mid-Stream surface. Phasing strategy. Backend (Prompt Runner) extensions. | Active |
 | 9 | [09-AGENT-MANAGER-MANUS-REQUIREMENTS.md](09-AGENT-MANAGER-MANUS-REQUIREMENTS.md) | **Manus-ready spec.** Self-contained PRD: 21 numbered requirements, 7 backend dependencies, acceptance criteria, deliberately scoped. Pasteable into Manus. | **Ready for handoff** |
+| 10 | [10-EVAL-FRAMEWORK-REQUIREMENTS.md](10-EVAL-FRAMEWORK-REQUIREMENTS.md) | **Real LLM-as-judge eval suite.** Audit found 1,636 lines of working DeepEval code in Prompt Runner — extends rather than rebuilds. 13 new `/eval/*` endpoints, 4-tab Eval Lab UI in Mid-Stream, custom rubric authoring, trend tracking, batch comparison. Pasteable into Manus + actionable for Claude Code. | **Ready for handoff** |
+| 11 | [11-CONTENT-DELIVERY-AGENTS.md](11-CONTENT-DELIVERY-AGENTS.md) | Patient education + marketing agents and clinical context agent for clinicians. 4 agent types, 3 new GL tables, render-to-anywhere `ContentPack` schema. Includes a clinical contraindication safety case (deterministic step before LLM step). | **Ready** — gated on workstream 09 + GL content seed |
 
 Net: 2 active workstreams (01 + 04 + 06) and one structural framework (06) that supersedes most of what 02/03/05 were trying to do.
 
