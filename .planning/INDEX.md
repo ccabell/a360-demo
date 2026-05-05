@@ -32,6 +32,7 @@ The prototype's job is to render curated examples beautifully. Mid-Stream's job 
 | 4 | 04-TCP-CONTENT.md *(not yet written)* | Real marketing + education content visible in TCP Builder (videos, PDFs, B/A photos, email templates) | Active — write next |
 | 5 | 05-END-TO-END.md *(not written)* | ~~Stitch prototype pages into a journey~~ | Reframed — see workstream 06 §7 |
 | 6 | [06-MIDSTREAM-INTEGRATION.md](06-MIDSTREAM-INTEGRATION.md) | Mid-Stream as ops tool; snapshot-to-prototype workflow; Mid-Stream evaluation; broken-endpoint repair plan | **Active — primary** |
+| 7 | [07-MIDSTREAM-EVALUATION.md](07-MIDSTREAM-EVALUATION.md) | Read-only audit of `C:\Users\Chris\repos\Mid_Stream`. Verifies the broken-endpoint diagnosis (most claims wrong) and produces Manus-ready cleanup instructions. | **Done — review §6** |
 
 Net: 2 active workstreams (01 + 04 + 06) and one structural framework (06) that supersedes most of what 02/03/05 were trying to do.
 
