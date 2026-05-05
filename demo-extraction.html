@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script src="auth.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>A360 — Extraction Intelligence</title>
@@ -183,7 +184,7 @@ nav{background:var(--teal);padding:0 24px}
   <div class="grid">
     <!-- Goals -->
     <div class="tc">
-      <div class="tc-hdr">Patient Goals <span class="count">3</span></div>
+      <div class="tc-hdr"><span>Patient Goals <button class="a360-info" data-agent="p1_extraction"></button></span><span class="count">3</span></div>
       <div class="tc-body">
         <div class="goal-row"><div class="goal-text">Look refreshed and youthful for vacation</div><div class="goal-ev">"And you wanna look good in your photos."</div></div>
         <div class="goal-row"><div class="goal-text">Improve skin texture</div><div class="goal-ev">"I'm gonna micro needle my whole face after you. Texture issues."</div></div>
@@ -193,7 +194,7 @@ nav{background:var(--teal);padding:0 24px}
 
     <!-- Concerns -->
     <div class="tc">
-      <div class="tc-hdr">Concerns &amp; Risks <span class="count">6</span></div>
+      <div class="tc-hdr"><span>Concerns &amp; Risks <button class="a360-info" data-agent="p1_extraction"></button></span><span class="count">6</span></div>
       <div class="tc-body">
         <div class="li"><div class="dot" style="background:var(--rose)"></div>Bruising risk with Botox injection before vacation</div>
         <div class="li"><div class="dot" style="background:var(--rose)"></div>Botox resistance from early retreatment</div>
@@ -206,7 +207,7 @@ nav{background:var(--teal);padding:0 24px}
 
     <!-- Offerings -->
     <div class="tc grid-full">
-      <div class="tc-hdr">Offerings Discussed <span class="count">9 products/services</span></div>
+      <div class="tc-hdr"><span>Offerings Discussed <button class="a360-info" data-agent="p1_extraction"></button></span><span class="count">9 products/services</span></div>
       <div class="tc-body">
         <div class="off-row"><div class="off-content"><div class="off-name">Botox (forehead/glabella)</div><div class="off-quote">"I'm gonna just take care of the lateral canthus line. Just a little tiny bit here."</div></div><div class="disp disp-performed">Performed</div></div>
         <div class="off-row"><div class="off-content"><div class="off-name">Botox (brow area)</div><div class="off-quote">"Why don't we do just 2 yeah. Just a little bit here. I won't give you a brow lift injection."</div></div><div class="disp disp-performed">Performed</div></div>
@@ -222,7 +223,7 @@ nav{background:var(--teal);padding:0 24px}
 
     <!-- Hesitations -->
     <div class="tc">
-      <div class="tc-hdr">Hesitations &amp; Objections <span class="count">4</span></div>
+      <div class="tc-hdr"><span>Hesitations &amp; Objections <button class="a360-info" data-agent="p2_extraction"></button></span><span class="count">4</span></div>
       <div class="tc-body">
         <div style="padding:8px 14px 2px"><div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--amber)">Hesitations</div></div>
         <div class="li"><div class="dot" style="background:var(--amber)"></div>Prior lip flip showed no noticeable difference</div>
@@ -235,7 +236,7 @@ nav{background:var(--teal);padding:0 24px}
 
     <!-- Next Steps -->
     <div class="tc">
-      <div class="tc-hdr">Next Steps <span class="count">3</span></div>
+      <div class="tc-hdr"><span>Next Steps <button class="a360-info" data-agent="p2_extraction"></button></span><span class="count">3</span></div>
       <div class="tc-body">
         <div class="ns"><div class="ns-action">Full Botox Retreatment</div><div class="ns-detail">Forehead, glabella, crow's feet &mdash; ~1 month out after vacation</div></div>
         <div class="ns"><div class="ns-action">Post-Treatment Aftercare</div><div class="ns-detail">Avoid alcohol, bruise cream, microneedling recovery protocol</div></div>
@@ -268,7 +269,7 @@ nav{background:var(--teal);padding:0 24px}
 
     <!-- Checklist -->
     <div class="tc grid-full">
-      <div class="tc-hdr">Visit Checklist <span class="count">12 / 15 completed</span></div>
+      <div class="tc-hdr"><span>Visit Checklist <button class="a360-info" data-agent="p2_extraction"></button></span><span class="count">12 / 15 completed</span></div>
       <div class="chk-grid">
         <div class="chk"><span class="chk-icon" style="color:var(--green)">&#10003;</span> Greeted patient</div>
         <div class="chk"><span class="chk-icon" style="color:var(--green)">&#10003;</span> Reviewed treatment history</div>
@@ -384,5 +385,6 @@ var TRANSCRIPT_HTML = `
 <div class="t-line"><span class="speaker sp-0">Speaker 0</span>You go have fun. Be on your worst behavior. You look hot.</div>
 `;
 </script>
+<script src="agent-info-panel.js"></script>
 </body>
 </html>
