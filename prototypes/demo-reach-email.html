@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A360 Reach — Email Campaign</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#f5f6f8;--white:#fff;
+  --slate-900:#1a1f2e;--slate-700:#374151;--slate-600:#4b5563;--slate-500:#6b7280;--slate-400:#9ca3af;--slate-300:#d1d5db;--slate-200:#e5e7eb;--slate-100:#f3f4f6;--slate-50:#f9fafb;
+  --teal:#1b4f6b;--teal-light:#2c6f8f;
+  --blue:#2563eb;--blue-bg:#eff6ff;--blue-50:#dbeafe;
+  --green:#059669;--green-bg:#ecfdf5;--green-border:#a7f3d0;
+  --amber:#d97706;--amber-bg:#fffbeb;--amber-border:#fcd34d;
+  --rose:#dc2626;--rose-bg:#fef2f2;
+  --purple:#7c3aed;--purple-bg:#f5f3ff;--purple-border:#c4b5fd;
+  --shadow:0 1px 3px rgba(0,0,0,.06);
+  --r:8px;--r-sm:6px;
+  --font:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+  --mono:'JetBrains Mono',monospace;
+  --reach-accent:#7c3aed;
+  --reach-bg:#faf8ff;
+  --hl-bg:#fef9c3;
+  --hl-border:#fde047;
+}
+body{background:var(--bg);color:var(--slate-900);font-family:var(--font);-webkit-font-smoothing:antialiased;font-size:13px;line-height:1.5}
+nav{background:var(--teal);padding:0 24px}
+.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;height:48px;gap:24px}
+.logo{font-weight:800;font-size:15px;color:#fff;letter-spacing:-.02em;margin-right:auto}
+.logo span{color:rgba(255,255,255,.5)}
+.nav-links{display:flex;gap:2px}
+.nav-links a{color:rgba(255,255,255,.65);text-decoration:none;font-size:12px;font-weight:500;padding:6px 12px;border-radius:var(--r-sm);transition:all .12s}
+.nav-links a:hover{color:#fff;background:rgba(255,255,255,.1)}
+.nav-links a.active{color:#fff;background:rgba(255,255,255,.15)}
+
+.reach-bar{background:var(--reach-accent);padding:0 24px}
+.reach-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;height:38px;gap:20px;color:#fff}
+.reach-brand{font-weight:800;font-size:13px;letter-spacing:.02em}
+.reach-brand .pill{font-size:9px;background:rgba(255,255,255,.2);padding:2px 8px;border-radius:10px;margin-left:6px;text-transform:uppercase;letter-spacing:.05em;font-weight:700}
+.reach-tagline{font-size:11px;color:rgba(255,255,255,.85);font-weight:500;margin-right:auto}
+.reach-steps{display:flex;gap:0;font-size:11px}
+.reach-steps a{color:rgba(255,255,255,.6);text-decoration:none;padding:6px 12px;font-weight:600;display:flex;align-items:center;gap:6px;transition:color .12s;border-radius:var(--r-sm)}
+.reach-steps a:hover{color:#fff;background:rgba(255,255,255,.1)}
+.reach-steps a.active{color:#fff;background:rgba(255,255,255,.2)}
+.reach-steps a .num{font-family:var(--mono);font-size:9px;background:rgba(255,255,255,.18);padding:1px 6px;border-radius:8px;font-weight:700}
+
+.page{max-width:1100px;margin:0 auto;padding:18px 24px 48px}
+
+.patient-bar{display:flex;background:var(--white);border:1px solid var(--slate-200);border-radius:var(--r);box-shadow:var(--shadow);margin-bottom:14px;overflow:hidden}
+.patient-cell{flex:1;padding:9px 14px;border-right:1px solid var(--slate-100)}
+.patient-cell:last-child{border-right:none}
+.patient-cell .lbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--slate-400);margin-bottom:2px}
+.patient-cell .val{font-size:12px;font-weight:700;color:var(--slate-900)}
+.patient-cell .val.mono{font-family:var(--mono)}
+.patient-cell.highlight{background:var(--reach-bg)}
+
+.ph{margin-bottom:14px;display:flex;align-items:flex-end;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.ph h1{font-size:20px;font-weight:800;letter-spacing:-.02em;margin-bottom:2px}
+.ph .sub{font-size:12px;color:var(--slate-500);max-width:680px;line-height:1.55}
+
+/* Legend */
+.legend{display:flex;align-items:center;gap:14px;font-size:11px;color:var(--slate-500);font-weight:600}
+.legend-pill{padding:2px 7px;border-radius:3px;font-family:var(--font);font-size:10px;font-weight:600;color:var(--slate-700);background:var(--hl-bg);border:1px solid var(--hl-border)}
+
+/* Email card */
+.email-card{
+  background:var(--white);border:1px solid var(--slate-200);border-radius:var(--r);
+  box-shadow:var(--shadow);margin-bottom:18px;overflow:hidden;
+}
+.ec-meta{
+  background:var(--blue-bg);padding:10px 16px;
+  display:flex;justify-content:space-between;align-items:center;
+  border-bottom:1px solid #bfdbfe;
+}
+.ec-meta .left{display:flex;align-items:center;gap:14px}
+.ec-meta .num{font-family:var(--mono);font-size:11px;font-weight:800;background:var(--blue);color:#fff;padding:3px 10px;border-radius:12px;letter-spacing:.04em}
+.ec-meta .when{font-family:var(--mono);font-size:11px;color:var(--blue);font-weight:700}
+.ec-meta .purpose{font-size:11.5px;color:var(--slate-700);font-style:italic}
+.ec-meta.showstopper{background:linear-gradient(90deg, #fef3c7 0%, var(--blue-bg) 100%);border-bottom-color:var(--amber-border)}
+.ec-meta.showstopper .num{background:var(--amber)}
+.ec-meta.showstopper .when{color:var(--amber)}
+
+.ec-subject{padding:12px 16px;border-bottom:1px solid var(--slate-100);font-family:var(--font)}
+.ec-subj-row{display:flex;gap:10px;font-size:11.5px;padding:2px 0}
+.ec-subj-row .lbl{font-size:10px;font-weight:700;color:var(--slate-400);text-transform:uppercase;letter-spacing:.05em;width:60px;flex-shrink:0}
+.ec-subj-row .val{font-weight:700;color:var(--slate-900)}
+.ec-subj-row.alt .val{font-weight:500;color:var(--slate-500)}
+
+.ec-body{padding:18px 22px;font-size:13.5px;line-height:1.65;color:var(--slate-700);font-family:'Georgia',serif;background:var(--white)}
+.ec-body p{margin:0 0 12px;font-family:'Georgia',serif}
+.ec-body p:last-of-type{margin-bottom:0}
+
+/* Personalization highlight */
+.hl{
+  background:var(--hl-bg);border-bottom:1px solid var(--hl-border);
+  padding:0 3px;border-radius:2px;font-weight:600;
+  position:relative;cursor:help;
+}
+.hl:hover::after{
+  content:attr(data-from);
+  position:absolute;bottom:calc(100% + 4px);left:0;
+  background:var(--slate-900);color:#fff;font-family:var(--font);
+  font-size:10px;font-weight:600;padding:4px 8px;border-radius:4px;
+  white-space:nowrap;z-index:10;letter-spacing:.02em;
+}
+.hl:hover::before{
+  content:'';position:absolute;bottom:calc(100% - 1px);left:8px;
+  border:4px solid transparent;border-top-color:var(--slate-900);z-index:10;
+}
+
+.ec-cta{
+  display:inline-block;background:var(--blue);color:#fff;
+  padding:10px 22px;border-radius:var(--r-sm);font-family:var(--font);
+  font-size:13px;font-weight:700;text-decoration:none;margin:8px 0;
+}
+.ec-signature{margin-top:14px;font-style:italic;color:var(--slate-600);font-size:12.5px;font-family:'Georgia',serif}
+.ec-signature .name{font-style:normal;font-weight:700;color:var(--slate-900);font-family:'Georgia',serif}
+.ec-signature .practice{display:block;font-size:11px;color:var(--slate-500);margin-top:2px;font-style:normal;font-family:var(--font)}
+
+.ec-meta-bottom{padding:10px 16px;background:var(--slate-50);border-top:1px solid var(--slate-100);display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.ec-section{font-size:10px}
+.ec-section .h{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--slate-400);margin-bottom:5px}
+.ec-hooks{display:flex;flex-wrap:wrap;gap:4px}
+.ec-hook{font-size:9.5px;font-weight:700;padding:2px 7px;border-radius:3px;background:var(--hl-bg);border:1px solid var(--hl-border);color:var(--slate-700);font-family:var(--mono)}
+.ec-flags{display:grid;grid-template-columns:1fr 1fr;gap:3px 10px;font-size:10.5px;color:var(--slate-600)}
+.ec-flag{display:flex;gap:5px;align-items:center}
+.ec-flag.on{color:var(--green);font-weight:700}
+
+/* Education content */
+.edu-block{
+  padding:10px 16px;background:var(--reach-bg);border-top:1px solid var(--purple-border);
+}
+.edu-block .h{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--reach-accent);margin-bottom:6px}
+.edu-list{display:flex;flex-direction:column;gap:4px}
+.edu-link{
+  display:flex;align-items:center;gap:8px;padding:5px 8px;
+  font-size:11.5px;color:var(--slate-700);text-decoration:none;
+  border-radius:var(--r-sm);transition:background .1s;
+}
+.edu-link:hover{background:rgba(255,255,255,.6)}
+.edu-tag{font-family:var(--mono);font-size:8.5px;font-weight:700;padding:2px 5px;border-radius:3px;text-transform:uppercase;letter-spacing:.04em;flex-shrink:0}
+.edu-tag.art{background:var(--blue-bg);color:var(--blue)}
+.edu-tag.pdf{background:var(--rose-bg);color:var(--rose)}
+.edu-tag.gal{background:var(--purple-bg);color:var(--purple)}
+.edu-tag.chk{background:var(--green-bg);color:var(--green)}
+
+/* Bottom CTAs */
+.cta-strip{
+  display:flex;align-items:center;gap:14px;padding:14px 18px;
+  background:var(--white);border:1px solid var(--slate-200);
+  border-radius:var(--r);box-shadow:var(--shadow);margin-top:14px;
+  background:linear-gradient(135deg, var(--reach-bg) 0%, #f3e8ff 100%);
+  border-color:var(--purple-border);
+}
+.cta-text{flex:1}
+.cta-text .h{font-size:14px;font-weight:800;letter-spacing:-.01em;color:var(--slate-900);margin-bottom:1px}
+.cta-text .s{font-size:11.5px;color:var(--slate-600)}
+.cta-btn{font-size:13px;font-weight:800;padding:10px 22px;border-radius:var(--r-sm);background:var(--reach-accent);color:#fff;border:none;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+.cta-btn:hover{filter:brightness(1.1)}
+
+footer{max-width:1100px;margin:0 auto;padding:14px 24px;border-top:1px solid var(--slate-200);display:flex;justify-content:space-between;align-items:center;color:var(--slate-400);font-size:11px;font-family:var(--mono)}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="logo">AESTHETICS<span>360</span></div>
+    <div class="nav-links">
+      <a href="demo-hero.html">Overview</a>
+      <a href="demo-extraction.html">Extraction</a>
+      <a href="demo-extraction-live.html">Live Extraction</a>
+      <a href="demo-agents.html">Agents</a>
+      <a href="demo-tcp-builder.html">TCP Builder</a>
+      <a href="demo-reach.html" class="active">Reach</a>
+      <a href="demo-testing.html">Testing</a>
+      <a href="demo-flywheel.html">Flywheel</a>
+      <a href="demo-products.html">Product Library</a>
+    </div>
+  </div>
+</nav>
+
+<div class="reach-bar">
+  <div class="reach-inner">
+    <div class="reach-brand">A360 REACH<span class="pill">prototype</span></div>
+    <div class="reach-tagline">Email Campaign — 5 messages, every personalization hook from the consultation</div>
+    <div class="reach-steps">
+      <a href="demo-reach.html"><span class="num">1</span>Summary</a>
+      <a href="demo-reach-strategy.html"><span class="num">2</span>Strategy</a>
+      <a href="demo-reach-email.html" class="active"><span class="num">3</span>Email</a>
+      <a href="demo-reach-sms.html"><span class="num">4</span>SMS</a>
+      <a href="demo-reach-deliver.html"><span class="num">5</span>Deliver</a>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+  <div class="patient-bar">
+    <div class="patient-cell"><div class="lbl">Patient</div><div class="val">Sarah Mitchell</div></div>
+    <div class="patient-cell"><div class="lbl">Provider</div><div class="val">Dr. Emily Chen</div></div>
+    <div class="patient-cell"><div class="lbl">Practice</div><div class="val">Glow Aesthetics</div></div>
+    <div class="patient-cell"><div class="lbl">Campaign</div><div class="val mono">VALUE_REINFORCEMENT</div></div>
+    <div class="patient-cell highlight"><div class="lbl">Wedding</div><div class="val mono">Aug 15 · 108d</div></div>
+  </div>
+
+  <div class="ph">
+    <div>
+      <h1>Email Campaign · 5 messages</h1>
+      <div class="sub">Every <span class="legend-pill">highlighted phrase</span> below came from the consultation extraction. Hover any highlight to see which signal it pulled from. The 21-day sequence interleaves with the SMS campaign — see Screen 4 for the SMS side.</div>
+    </div>
+    <div class="legend">
+      <span>Personalization hooks:</span>
+      <span class="legend-pill">from consultation</span>
+    </div>
+  </div>
+
+  <!-- ============ EMAIL 1 ============ -->
+  <div class="email-card">
+    <div class="ec-meta">
+      <div class="left">
+        <span class="num">EMAIL 1 / 5</span>
+        <span class="when">Day 1 · April 30</span>
+      </div>
+      <span class="purpose">Consultation recap + plant value seed</span>
+    </div>
+    <div class="ec-subject">
+      <div class="ec-subj-row"><span class="lbl">Subject</span><span class="val">Your treatment plan from Tuesday, Sarah</span></div>
+      <div class="ec-subj-row alt"><span class="lbl">A/B var</span><span class="val">Following up on our conversation, Sarah</span></div>
+      <div class="ec-subj-row alt"><span class="lbl">Preview</span><span class="val">A recap of what we discussed and your options</span></div>
+    </div>
+    <div class="ec-body">
+      <p>Hi <span class="hl" data-from="patient.first_name">Sarah</span>,</p>
+      <p>It was wonderful meeting you on <span class="hl" data-from="consultation_date">Tuesday</span>. I really enjoyed getting to understand your goals — especially with <span class="hl" data-from="motivating_event">your daughter's wedding</span> coming up in <span class="hl" data-from="event_date.month">August</span>.</p>
+      <p>As we discussed, your personalized care plan includes <span class="hl" data-from="offerings[0]">Botox for your forehead lines</span> (40 units) and <span class="hl" data-from="offerings[1]">Juvederm for your cheeks</span>. Together, the <span class="hl" data-from="care_plan.package.name">Refresh Package saves you $200</span> compared to individual pricing — and with results visible in as little as 3-5 days, you'd be seeing a difference well before <span class="hl" data-from="event_date">August 15th</span>.</p>
+      <p>I'd love to get you on the schedule so we can start your treatment timeline.</p>
+      <a href="#" class="ec-cta">View Your Care Plan →</a>
+      <div class="ec-signature">
+        Warm regards,<br>
+        <span class="name">Dr. Emily Chen</span>
+        <span class="practice">Glow Aesthetics · (555) 123-4567</span>
+      </div>
+    </div>
+    <div class="ec-meta-bottom">
+      <div class="ec-section">
+        <div class="h">Personalization hooks used</div>
+        <div class="ec-hooks">
+          <span class="ec-hook">first_name</span>
+          <span class="ec-hook">consultation_date</span>
+          <span class="ec-hook">wedding</span>
+          <span class="ec-hook">forehead lines</span>
+          <span class="ec-hook">Refresh Package</span>
+          <span class="ec-hook">Aug 15</span>
+        </div>
+      </div>
+      <div class="ec-section">
+        <div class="h">Content flags</div>
+        <div class="ec-flags">
+          <span class="ec-flag on">✓ Care plan referenced</span>
+          <span class="ec-flag">○ Pricing shown</span>
+          <span class="ec-flag">○ Financing mentioned</span>
+          <span class="ec-flag">○ Before/after referenced</span>
+          <span class="ec-flag">○ Objection addressed</span>
+          <span class="ec-flag">○ Provider credentials</span>
+        </div>
+      </div>
+    </div>
+    <div class="edu-block">
+      <div class="h">Related Resources from Practice Library</div>
+      <div class="edu-list">
+        <a href="#" class="edu-link"><span class="edu-tag art">art</span><span>Understanding Botox: Results Timeline &amp; What to Expect</span></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ EMAIL 2 ============ -->
+  <div class="email-card">
+    <div class="ec-meta">
+      <div class="left">
+        <span class="num">EMAIL 2 / 5</span>
+        <span class="when">Day 3 · May 2</span>
+      </div>
+      <span class="purpose">Cost-per-month reframe — addresses price softly</span>
+    </div>
+    <div class="ec-subject">
+      <div class="ec-subj-row"><span class="lbl">Subject</span><span class="val">Less than your morning coffee, Sarah</span></div>
+      <div class="ec-subj-row alt"><span class="lbl">A/B var</span><span class="val">A different way to think about the Refresh Package</span></div>
+      <div class="ec-subj-row alt"><span class="lbl">Preview</span><span class="val">$100 a month — here's what that looks like in practice</span></div>
+    </div>
+    <div class="ec-body">
+      <p>Hi <span class="hl" data-from="patient.first_name">Sarah</span>,</p>
+      <p>Quick thought after our conversation: I've found that one of the biggest things people get caught up on is the upfront number. Totally fair — <span class="hl" data-from="objections[0]">$1,200</span> all at once feels different than thinking about it spread out.</p>
+      <p>So here's a different way to look at it: the <span class="hl" data-from="care_plan.package.name">Refresh Package</span> works out to <span class="hl" data-from="care_plan.financing.monthly">$100 a month</span> across 12 months at <span class="hl" data-from="care_plan.financing.interest">0% APR</span>. That's a few coffees. A streaming subscription. And it covers both the <span class="hl" data-from="offerings[0]">Botox</span> and <span class="hl" data-from="offerings[1]">Juvederm</span> we talked about.</p>
+      <p>The treatments themselves last <span class="hl" data-from="care_plan.treatments[1].duration">up to 2 years</span> for the filler and 3-4 months for the Botox — so the per-day cost works out to be quite small once you do the math.</p>
+      <p>No pressure, just wanted to put another framing in front of you.</p>
+      <a href="#" class="ec-cta">See Financing Options</a>
+      <div class="ec-signature">
+        Warmly,<br>
+        <span class="name">Dr. Emily Chen</span>
+        <span class="practice">Glow Aesthetics</span>
+      </div>
+    </div>
+    <div class="ec-meta-bottom">
+      <div class="ec-section">
+        <div class="h">Personalization hooks used</div>
+        <div class="ec-hooks">
+          <span class="ec-hook">first_name</span>
+          <span class="ec-hook">price_objection</span>
+          <span class="ec-hook">$1,200</span>
+          <span class="ec-hook">$100/mo</span>
+          <span class="ec-hook">0% APR</span>
+          <span class="ec-hook">treatment_durations</span>
+        </div>
+      </div>
+      <div class="ec-section">
+        <div class="h">Content flags</div>
+        <div class="ec-flags">
+          <span class="ec-flag on">✓ Care plan referenced</span>
+          <span class="ec-flag on">✓ Pricing shown</span>
+          <span class="ec-flag on">✓ Financing mentioned</span>
+          <span class="ec-flag">○ Before/after referenced</span>
+          <span class="ec-flag on">✓ Objection addressed</span>
+          <span class="ec-flag">○ Provider credentials</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ EMAIL 3 — THE SHOWSTOPPER ============ -->
+  <div class="email-card">
+    <div class="ec-meta showstopper">
+      <div class="left">
+        <span class="num">EMAIL 3 / 5</span>
+        <span class="when">Day 7 · May 6</span>
+      </div>
+      <span class="purpose">⭐ The showstopper — directly addresses the open price objection with real numbers</span>
+    </div>
+    <div class="ec-subject">
+      <div class="ec-subj-row"><span class="lbl">Subject</span><span class="val">Sarah, I want to be straightforward about the math</span></div>
+      <div class="ec-subj-row alt"><span class="lbl">A/B var</span><span class="val">A few options — including one that starts smaller</span></div>
+      <div class="ec-subj-row alt"><span class="lbl">Preview</span><span class="val">Three paths, monthly numbers, and honestly: zero pressure</span></div>
+    </div>
+    <div class="ec-body">
+      <p>Hi <span class="hl" data-from="patient.first_name">Sarah</span>,</p>
+      <p>I've been thinking about our conversation. <span class="hl" data-from="objections[0].statement">"That's more than I expected"</span> — I heard that, and I want to be straightforward with you about a few things.</p>
+      <p><strong>First, you have options.</strong> The full <span class="hl" data-from="care_plan.package.name">Refresh Package</span> at <span class="hl" data-from="care_plan.package.total_price">$1,200</span> includes both the Botox and the Juvederm — and saves you <span class="hl" data-from="care_plan.package.savings">$200</span> versus à la carte. But if that feels like too much to start, you could just do the <span class="hl" data-from="offerings[0]">Botox alone for $440</span>, see how you feel, and decide on the filler later.</p>
+      <p><strong>Second, the financing is real.</strong> Through CareCredit, the package breaks down to <span class="hl" data-from="care_plan.financing.monthly">$100/month</span> at <span class="hl" data-from="care_plan.financing.interest">0% APR</span> for 12 months. The Botox-only option is <span class="hl" data-from="financing.botox_only">$37/month</span> on the same terms. Approval takes about 5 minutes online.</p>
+      <p><strong>Third — and this is the part I want to be clearest on:</strong> there's no rush. <span class="hl" data-from="motivating_event">Your daughter's wedding</span> is in <span class="hl" data-from="days_until_event">108 days</span>. To see full results by <span class="hl" data-from="event_date">August 15th</span>, the ideal start window is sometime in the next 2-3 weeks. After that, you'd still see results, just less time for any small adjustments.</p>
+      <p>Whichever path you choose — package, Botox-only, or "let me think about it longer" — that's totally your call. I just wanted to lay the math out clearly so you can decide on your own time.</p>
+      <a href="#" class="ec-cta">Apply for Financing (5 min)</a>
+      <div class="ec-signature">
+        With care,<br>
+        <span class="name">Dr. Emily Chen</span>
+        <span class="practice">Glow Aesthetics · (555) 123-4567</span>
+      </div>
+    </div>
+    <div class="ec-meta-bottom">
+      <div class="ec-section">
+        <div class="h">Personalization hooks used</div>
+        <div class="ec-hooks">
+          <span class="ec-hook">first_name</span>
+          <span class="ec-hook">objection.verbatim</span>
+          <span class="ec-hook">package_total</span>
+          <span class="ec-hook">package_savings</span>
+          <span class="ec-hook">botox_alone</span>
+          <span class="ec-hook">financing</span>
+          <span class="ec-hook">wedding</span>
+          <span class="ec-hook">108_days</span>
+        </div>
+      </div>
+      <div class="ec-section">
+        <div class="h">Content flags</div>
+        <div class="ec-flags">
+          <span class="ec-flag on">✓ Care plan referenced</span>
+          <span class="ec-flag on">✓ Pricing shown</span>
+          <span class="ec-flag on">✓ Financing mentioned</span>
+          <span class="ec-flag">○ Before/after referenced</span>
+          <span class="ec-flag on">✓ Objection addressed</span>
+          <span class="ec-flag">○ Provider credentials</span>
+        </div>
+      </div>
+    </div>
+    <div class="edu-block">
+      <div class="h">Related Resources from Practice Library</div>
+      <div class="edu-list">
+        <a href="#" class="edu-link"><span class="edu-tag pdf">pdf</span><span>Refresh Package: Complete Treatment Guide</span></a>
+        <a href="#" class="edu-link"><span class="edu-tag art">art</span><span>CareCredit Financing: How It Works</span></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ EMAIL 4 ============ -->
+  <div class="email-card">
+    <div class="ec-meta">
+      <div class="left">
+        <span class="num">EMAIL 4 / 5</span>
+        <span class="when">Day 14 · May 13</span>
+      </div>
+      <span class="purpose">Results gallery + provider credentials — addresses latent "frozen" fear</span>
+    </div>
+    <div class="ec-subject">
+      <div class="ec-subj-row"><span class="lbl">Subject</span><span class="val">"Refreshed, not done" — what natural results actually look like</span></div>
+      <div class="ec-subj-row alt"><span class="lbl">A/B var</span><span class="val">A few patient stories I think you'd appreciate</span></div>
+      <div class="ec-subj-row alt"><span class="lbl">Preview</span><span class="val">Real results from our practice — no filters, no frozen foreheads</span></div>
+    </div>
+    <div class="ec-body">
+      <p>Hi <span class="hl" data-from="patient.first_name">Sarah</span>,</p>
+      <p>You mentioned during our visit that you <span class="hl" data-from="objections[1].statement">didn't want to look "frozen"</span> — and I think that's exactly the right instinct. The whole goal at <span class="hl" data-from="practice_name">Glow Aesthetics</span> is "refreshed, not done."</p>
+      <p>I wanted to share a few patient galleries that I think you'll appreciate. Every patient in these photos came in with similar goals to yours — natural results, preserve their expression, look like themselves on a great day.</p>
+      <p>A note on my approach: I trained at <span class="hl" data-from="provider.training">Allergan Medical Institute</span> and have been performing aesthetic injections for <span class="hl" data-from="provider.years_practice">11 years</span>. My dosing philosophy errs conservative — I'd rather have you come back for a small adjustment than see a result that looks overdone. With <span class="hl" data-from="offerings[0]">Botox at 40 units in the forehead</span>, that's well within what I consider the "subtle preservation" range for someone wanting to keep natural movement.</p>
+      <p>Take a look — I think these will give you a clearer sense of what to expect.</p>
+      <a href="#" class="ec-cta">View Patient Gallery</a>
+      <div class="ec-signature">
+        Best,<br>
+        <span class="name">Dr. Emily Chen, MD</span>
+        <span class="practice">Board-Certified · Glow Aesthetics</span>
+      </div>
+    </div>
+    <div class="ec-meta-bottom">
+      <div class="ec-section">
+        <div class="h">Personalization hooks used</div>
+        <div class="ec-hooks">
+          <span class="ec-hook">first_name</span>
+          <span class="ec-hook">fear_objection.verbatim</span>
+          <span class="ec-hook">practice_name</span>
+          <span class="ec-hook">provider_credentials</span>
+          <span class="ec-hook">botox_dose</span>
+        </div>
+      </div>
+      <div class="ec-section">
+        <div class="h">Content flags</div>
+        <div class="ec-flags">
+          <span class="ec-flag">○ Care plan referenced</span>
+          <span class="ec-flag">○ Pricing shown</span>
+          <span class="ec-flag">○ Financing mentioned</span>
+          <span class="ec-flag on">✓ Before/after referenced</span>
+          <span class="ec-flag on">✓ Objection addressed</span>
+          <span class="ec-flag on">✓ Provider credentials</span>
+        </div>
+      </div>
+    </div>
+    <div class="edu-block">
+      <div class="h">Related Resources from Practice Library</div>
+      <div class="edu-list">
+        <a href="#" class="edu-link"><span class="edu-tag gal">gal</span><span>Patient Stories: Natural-Looking Results Gallery</span></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ EMAIL 5 ============ -->
+  <div class="email-card">
+    <div class="ec-meta">
+      <div class="left">
+        <span class="num">EMAIL 5 / 5</span>
+        <span class="when">Day 21 · May 20</span>
+      </div>
+      <span class="purpose">Wedding-prep calendar — soft urgency, single CTA to book</span>
+    </div>
+    <div class="ec-subject">
+      <div class="ec-subj-row"><span class="lbl">Subject</span><span class="val">Your wedding-prep calendar, Sarah</span></div>
+      <div class="ec-subj-row alt"><span class="lbl">A/B var</span><span class="val">87 days to the wedding — let's lock in the timing</span></div>
+      <div class="ec-subj-row alt"><span class="lbl">Preview</span><span class="val">Treatment dates that work backward from August 15</span></div>
+    </div>
+    <div class="ec-body">
+      <p>Hi <span class="hl" data-from="patient.first_name">Sarah</span>,</p>
+      <p>The <span class="hl" data-from="motivating_event">wedding</span> is now <span class="hl" data-from="recomputed_days">87 days</span> away. I wanted to send you a working calendar so you can see how the treatments fit together — and pick a starting point that feels right.</p>
+      <p>Here's how the timing works backward from <span class="hl" data-from="event_date">August 15th</span>:</p>
+      <ul style="margin:8px 0 12px 24px;font-family:'Georgia',serif">
+        <li><strong>May 25 – 30</strong> · <span class="hl" data-from="offerings[0]">Botox (forehead, 40 units)</span> — full effect by mid-June, soft maintenance window opens</li>
+        <li><strong>June 10 – 15</strong> · <span class="hl" data-from="offerings[1]">Juvederm Voluma (cheeks)</span> — settles to natural-looking volume by early July</li>
+        <li><strong>July 25</strong> · Optional Botox touch-up (only if needed) — gives 3 weeks of fresh results before the wedding</li>
+        <li><strong>August 1 – 5</strong> · <span class="hl" data-from="offerings[2]">HydraFacial</span> for that wedding-day glow — no downtime</li>
+        <li><strong>August 15</strong> · Wedding day ✨</li>
+      </ul>
+      <p>If you'd like to start with the Botox (the lowest-commitment first step), I have <span class="hl" data-from="provider.openings">openings on May 27 and May 30</span>. I'd love to hold one for you.</p>
+      <p>And if you want to do the full <span class="hl" data-from="care_plan.package.name">Refresh Package</span> with the financing we talked about, just say the word.</p>
+      <a href="#" class="ec-cta">Book May 27 →</a>
+      <div class="ec-signature">
+        See you soon,<br>
+        <span class="name">Dr. Emily Chen</span>
+        <span class="practice">Glow Aesthetics · (555) 123-4567</span>
+      </div>
+    </div>
+    <div class="ec-meta-bottom">
+      <div class="ec-section">
+        <div class="h">Personalization hooks used</div>
+        <div class="ec-hooks">
+          <span class="ec-hook">first_name</span>
+          <span class="ec-hook">days_remaining</span>
+          <span class="ec-hook">all_treatments</span>
+          <span class="ec-hook">provider_openings</span>
+          <span class="ec-hook">package_anchor</span>
+        </div>
+      </div>
+      <div class="ec-section">
+        <div class="h">Content flags</div>
+        <div class="ec-flags">
+          <span class="ec-flag on">✓ Care plan referenced</span>
+          <span class="ec-flag">○ Pricing shown</span>
+          <span class="ec-flag on">✓ Financing mentioned</span>
+          <span class="ec-flag">○ Before/after referenced</span>
+          <span class="ec-flag">○ Objection addressed</span>
+          <span class="ec-flag">○ Provider credentials</span>
+        </div>
+      </div>
+    </div>
+    <div class="edu-block">
+      <div class="h">Related Resources from Practice Library</div>
+      <div class="edu-list">
+        <a href="#" class="edu-link"><span class="edu-tag chk">chk</span><span>Pre-Treatment Checklist</span></a>
+        <a href="#" class="edu-link"><span class="edu-tag pdf">pdf</span><span>Refresh Package: Complete Treatment Guide</span></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <a href="demo-reach-sms.html" class="cta-strip" style="text-decoration:none">
+    <div class="cta-text">
+      <div class="h">Now see the SMS side</div>
+      <div class="s">3 standard SMS messages plus the OrchardLink RCS conversation that runs alongside the email sequence</div>
+    </div>
+    <span class="cta-btn">View SMS Campaign →</span>
+  </a>
+</div>
+
+<footer>
+  <span>reach prototype · screen 3 of 5 · 5 emails fully written, all hooks from extraction</span>
+  <span><a href="demo-reach-strategy.html" style="color:var(--slate-500);text-decoration:none">← Strategy</a> · <a href="demo-reach-sms.html" style="color:var(--reach-accent);font-weight:700;text-decoration:none">SMS →</a></span>
+</footer>
+
+</body>
+</html>

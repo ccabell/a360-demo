@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A360 Reach — SMS Campaign</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#f5f6f8;--white:#fff;
+  --slate-900:#1a1f2e;--slate-700:#374151;--slate-600:#4b5563;--slate-500:#6b7280;--slate-400:#9ca3af;--slate-300:#d1d5db;--slate-200:#e5e7eb;--slate-100:#f3f4f6;--slate-50:#f9fafb;
+  --teal:#1b4f6b;--teal-light:#2c6f8f;
+  --blue:#2563eb;--blue-bg:#eff6ff;
+  --green:#059669;--green-bg:#ecfdf5;--green-border:#a7f3d0;
+  --amber:#d97706;--amber-bg:#fffbeb;--amber-border:#fcd34d;
+  --rose:#dc2626;--rose-bg:#fef2f2;
+  --purple:#7c3aed;--purple-bg:#f5f3ff;--purple-border:#c4b5fd;
+  --shadow:0 1px 3px rgba(0,0,0,.06);
+  --r:8px;--r-sm:6px;
+  --font:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+  --mono:'JetBrains Mono',monospace;
+  --reach-accent:#7c3aed;
+  --reach-bg:#faf8ff;
+}
+body{background:var(--bg);color:var(--slate-900);font-family:var(--font);-webkit-font-smoothing:antialiased;font-size:13px;line-height:1.5}
+nav{background:var(--teal);padding:0 24px}
+.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;height:48px;gap:24px}
+.logo{font-weight:800;font-size:15px;color:#fff;letter-spacing:-.02em;margin-right:auto}
+.logo span{color:rgba(255,255,255,.5)}
+.nav-links{display:flex;gap:2px}
+.nav-links a{color:rgba(255,255,255,.65);text-decoration:none;font-size:12px;font-weight:500;padding:6px 12px;border-radius:var(--r-sm);transition:all .12s}
+.nav-links a:hover{color:#fff;background:rgba(255,255,255,.1)}
+.nav-links a.active{color:#fff;background:rgba(255,255,255,.15)}
+
+.reach-bar{background:var(--reach-accent);padding:0 24px}
+.reach-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;height:38px;gap:20px;color:#fff}
+.reach-brand{font-weight:800;font-size:13px;letter-spacing:.02em}
+.reach-brand .pill{font-size:9px;background:rgba(255,255,255,.2);padding:2px 8px;border-radius:10px;margin-left:6px;text-transform:uppercase;letter-spacing:.05em;font-weight:700}
+.reach-tagline{font-size:11px;color:rgba(255,255,255,.85);font-weight:500;margin-right:auto}
+.reach-steps{display:flex;gap:0;font-size:11px}
+.reach-steps a{color:rgba(255,255,255,.6);text-decoration:none;padding:6px 12px;font-weight:600;display:flex;align-items:center;gap:6px;transition:color .12s;border-radius:var(--r-sm)}
+.reach-steps a:hover{color:#fff;background:rgba(255,255,255,.1)}
+.reach-steps a.active{color:#fff;background:rgba(255,255,255,.2)}
+.reach-steps a .num{font-family:var(--mono);font-size:9px;background:rgba(255,255,255,.18);padding:1px 6px;border-radius:8px;font-weight:700}
+
+.page{max-width:1100px;margin:0 auto;padding:18px 24px 48px}
+
+.patient-bar{display:flex;background:var(--white);border:1px solid var(--slate-200);border-radius:var(--r);box-shadow:var(--shadow);margin-bottom:14px;overflow:hidden}
+.patient-cell{flex:1;padding:9px 14px;border-right:1px solid var(--slate-100)}
+.patient-cell:last-child{border-right:none}
+.patient-cell .lbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--slate-400);margin-bottom:2px}
+.patient-cell .val{font-size:12px;font-weight:700;color:var(--slate-900)}
+.patient-cell .val.mono{font-family:var(--mono)}
+.patient-cell.highlight{background:var(--reach-bg)}
+
+.ph{margin-bottom:14px}
+.ph h1{font-size:20px;font-weight:800;letter-spacing:-.02em;margin-bottom:2px}
+.ph .sub{font-size:12px;color:var(--slate-500);max-width:760px;line-height:1.55}
+
+/* Split view */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px}
+.split-col{
+  background:var(--white);border:1px solid var(--slate-200);border-radius:var(--r);
+  box-shadow:var(--shadow);padding:18px;display:flex;flex-direction:column;align-items:center;
+}
+.split-col.standard{background:linear-gradient(180deg, var(--green-bg) 0%, var(--white) 30%)}
+.split-col.rcs{background:linear-gradient(180deg, var(--purple-bg) 0%, var(--white) 30%)}
+
+.col-hdr{text-align:center;margin-bottom:14px;width:100%}
+.col-hdr .badge{
+  display:inline-block;font-size:9.5px;font-weight:800;padding:3px 10px;border-radius:10px;
+  text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;
+}
+.col-hdr .badge.standard{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border)}
+.col-hdr .badge.rcs{background:var(--purple-bg);color:var(--purple);border:1px solid var(--purple-border)}
+.col-hdr .h{font-size:15px;font-weight:800;letter-spacing:-.01em}
+.col-hdr .s{font-size:11.5px;color:var(--slate-500);margin-top:2px}
+
+/* Phone mockup */
+.phone{
+  width:300px;height:600px;background:#1f2937;border-radius:36px;
+  padding:8px;box-shadow:0 8px 32px rgba(0,0,0,.18);position:relative;flex-shrink:0;
+}
+.phone::before{
+  content:'';position:absolute;top:7px;left:50%;transform:translateX(-50%);
+  width:90px;height:24px;background:#1f2937;border-radius:0 0 14px 14px;z-index:2;
+}
+.phone-screen{
+  width:100%;height:100%;background:#fff;border-radius:30px;
+  overflow:hidden;display:flex;flex-direction:column;
+}
+.phone-status{
+  background:var(--white);padding:14px 16px 6px;font-size:10px;
+  display:flex;justify-content:space-between;align-items:center;
+  border-bottom:1px solid var(--slate-100);font-family:'SF Pro Display',sans-serif;
+}
+.phone-status .time{font-weight:700;color:var(--slate-900);font-family:var(--mono)}
+.phone-status .icons{font-size:10px;color:var(--slate-700);font-family:var(--mono)}
+
+.phone-header{
+  padding:8px 14px;border-bottom:1px solid var(--slate-100);display:flex;align-items:center;gap:10px;
+  background:var(--slate-50);
+}
+.phone-header.rcs-header{background:linear-gradient(90deg, var(--purple-bg) 0%, #ede9fe 100%)}
+.phone-header .avatar{
+  width:30px;height:30px;border-radius:50%;background:var(--teal);
+  color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;
+}
+.phone-header.rcs-header .avatar{background:var(--reach-accent)}
+.phone-header .name{font-weight:700;font-size:12.5px;line-height:1.1}
+.phone-header .sub{font-size:9.5px;color:var(--slate-500)}
+.phone-header.rcs-header .sub{color:var(--purple)}
+.phone-header .verified{font-size:10px;color:var(--green)}
+
+.phone-body{
+  flex:1;overflow-y:auto;padding:10px 12px;background:var(--white);
+  display:flex;flex-direction:column;gap:8px;
+}
+.phone-body::-webkit-scrollbar{width:4px}
+.phone-body::-webkit-scrollbar-thumb{background:var(--slate-200);border-radius:2px}
+
+.bubble-time{
+  text-align:center;font-size:9px;color:var(--slate-400);
+  font-family:var(--mono);font-weight:600;margin:6px 0 2px;
+}
+
+.bubble{
+  max-width:240px;padding:8px 12px;border-radius:18px;
+  font-size:11.5px;line-height:1.4;color:var(--slate-900);
+  word-break:break-word;
+}
+.bubble.from-them{
+  background:var(--slate-100);align-self:flex-start;border-bottom-left-radius:4px;
+}
+.bubble.from-them.rcs{background:linear-gradient(135deg, #ede9fe 0%, #ddd6fe 100%);color:#4c1d95}
+.bubble.from-me{
+  background:var(--blue);color:#fff;align-self:flex-end;border-bottom-right-radius:4px;
+}
+
+.quick-replies{align-self:flex-start;display:flex;flex-direction:column;gap:5px;max-width:240px;margin-top:2px}
+.qr-btn{
+  background:var(--white);border:1.5px solid var(--purple-border);color:var(--purple);
+  font-family:var(--font);font-size:10.5px;font-weight:700;
+  padding:7px 12px;border-radius:14px;cursor:pointer;text-align:left;
+  transition:all .12s;letter-spacing:.01em;
+}
+.qr-btn:hover{background:var(--purple);color:#fff;border-color:var(--purple)}
+.qr-btn.active{background:var(--purple);color:#fff;border-color:var(--purple)}
+.qr-btn .arrow{margin-left:6px;font-size:10px}
+
+.timeline-card{
+  background:#fff;border:1px solid var(--slate-200);border-radius:12px;
+  padding:10px 12px;font-size:10.5px;line-height:1.5;color:var(--slate-700);
+  align-self:flex-start;max-width:260px;
+}
+.timeline-card .h{font-weight:700;font-size:11px;color:var(--slate-900);margin-bottom:5px}
+.timeline-card .row{display:flex;justify-content:space-between;padding:1px 0}
+.timeline-card .date{font-family:var(--mono);font-weight:600;color:var(--purple)}
+.timeline-card .row.bold{font-weight:700;color:var(--slate-900)}
+
+/* SMS message details below phone */
+.sms-meta{margin-top:14px;width:100%;font-size:10.5px}
+.sms-meta-row{padding:6px 12px;background:var(--slate-50);border:1px solid var(--slate-200);border-radius:var(--r-sm);margin-bottom:5px}
+.sms-meta-row .when{font-family:var(--mono);font-size:9px;font-weight:700;color:var(--slate-500);text-transform:uppercase;letter-spacing:.05em}
+.sms-meta-row .desc{font-size:11px;color:var(--slate-700);margin-top:2px;line-height:1.4}
+
+/* Comparison callout */
+.callout{
+  background:linear-gradient(135deg, var(--reach-bg) 0%, #f3e8ff 100%);
+  border:1px solid var(--purple-border);border-radius:var(--r);padding:18px 22px;
+  display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:14px;
+}
+.callout-h{font-size:16px;font-weight:800;color:var(--slate-900);letter-spacing:-.02em;margin-bottom:10px;grid-column:1/-1}
+.callout-col h3{font-size:11.5px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;color:var(--slate-700)}
+.callout-col h3.std{color:var(--green)}
+.callout-col h3.rcs{color:var(--purple)}
+.callout-col p{font-size:12px;color:var(--slate-700);line-height:1.55;margin-bottom:6px}
+.callout-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:14px;padding-top:14px;border-top:1px solid var(--purple-border);grid-column:1/-1}
+.cs{padding:0 14px;border-right:1px solid rgba(124,58,237,.2)}
+.cs:first-child{padding-left:0}
+.cs:last-child{border-right:none}
+.cs .lbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--slate-500)}
+.cs .val{font-size:18px;font-weight:800;font-family:var(--mono);color:var(--reach-accent);margin-top:2px}
+
+.cta-strip{display:flex;align-items:center;gap:14px;padding:14px 18px;background:var(--white);border:1px solid var(--slate-200);border-radius:var(--r);box-shadow:var(--shadow);background:linear-gradient(135deg, var(--reach-bg) 0%, #f3e8ff 100%);border-color:var(--purple-border)}
+.cta-text{flex:1}
+.cta-text .h{font-size:14px;font-weight:800;letter-spacing:-.01em;margin-bottom:1px}
+.cta-text .s{font-size:11.5px;color:var(--slate-600)}
+.cta-btn{font-size:13px;font-weight:800;padding:10px 22px;border-radius:var(--r-sm);background:var(--reach-accent);color:#fff;border:none;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+.cta-btn:hover{filter:brightness(1.1)}
+
+footer{max-width:1100px;margin:0 auto;padding:14px 24px;border-top:1px solid var(--slate-200);display:flex;justify-content:space-between;align-items:center;color:var(--slate-400);font-size:11px;font-family:var(--mono)}
+
+@media (max-width:880px){
+  .split{grid-template-columns:1fr}
+  .callout{grid-template-columns:1fr}
+  .callout-stats{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="logo">AESTHETICS<span>360</span></div>
+    <div class="nav-links">
+      <a href="demo-hero.html">Overview</a>
+      <a href="demo-extraction.html">Extraction</a>
+      <a href="demo-extraction-live.html">Live Extraction</a>
+      <a href="demo-agents.html">Agents</a>
+      <a href="demo-tcp-builder.html">TCP Builder</a>
+      <a href="demo-reach.html" class="active">Reach</a>
+      <a href="demo-testing.html">Testing</a>
+      <a href="demo-flywheel.html">Flywheel</a>
+      <a href="demo-products.html">Product Library</a>
+    </div>
+  </div>
+</nav>
+
+<div class="reach-bar">
+  <div class="reach-inner">
+    <div class="reach-brand">A360 REACH<span class="pill">prototype</span></div>
+    <div class="reach-tagline">SMS Campaign — Standard vs. Conversational (OrchardLink RCS)</div>
+    <div class="reach-steps">
+      <a href="demo-reach.html"><span class="num">1</span>Summary</a>
+      <a href="demo-reach-strategy.html"><span class="num">2</span>Strategy</a>
+      <a href="demo-reach-email.html"><span class="num">3</span>Email</a>
+      <a href="demo-reach-sms.html" class="active"><span class="num">4</span>SMS</a>
+      <a href="demo-reach-deliver.html"><span class="num">5</span>Deliver</a>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+  <div class="patient-bar">
+    <div class="patient-cell"><div class="lbl">Patient</div><div class="val">Sarah Mitchell</div></div>
+    <div class="patient-cell"><div class="lbl">Provider</div><div class="val">Dr. Emily Chen</div></div>
+    <div class="patient-cell"><div class="lbl">Practice</div><div class="val">Glow Aesthetics</div></div>
+    <div class="patient-cell"><div class="lbl">Phone</div><div class="val mono">(555) 123-4567</div></div>
+    <div class="patient-cell highlight"><div class="lbl">Wedding</div><div class="val mono">Aug 15 · 108d</div></div>
+  </div>
+
+  <div class="ph">
+    <h1>SMS Campaign</h1>
+    <div class="sub">Two channels side-by-side. <strong>Standard SMS</strong> (left) is the broadcast model — short, personal, one-way. <strong>Conversational SMS</strong> (right) — powered by OrchardLink RCS — keeps the same warm tone but adds two-way intelligence: the AI knows the entire consultation context and can answer in real time with quick-reply CTAs.</div>
+  </div>
+
+  <!-- SPLIT: Standard vs Conversational -->
+  <div class="split">
+
+    <!-- LEFT: STANDARD SMS -->
+    <div class="split-col standard">
+      <div class="col-hdr">
+        <div class="badge standard">Standard SMS · One-way</div>
+        <div class="h">Broadcast Model</div>
+        <div class="s">3 messages over 21 days · sent on a schedule</div>
+      </div>
+
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="phone-status">
+            <span class="time">9:41</span>
+            <span class="icons">📶 100%</span>
+          </div>
+          <div class="phone-header">
+            <div class="avatar">EC</div>
+            <div>
+              <div class="name">Dr. Chen</div>
+              <div class="sub">Glow Aesthetics · text</div>
+            </div>
+          </div>
+          <div class="phone-body">
+
+            <div class="bubble-time">May 2 · 10:14 AM</div>
+            <div class="bubble from-them">
+              Hi Sarah, it's Dr. Chen from Glow Aesthetics. I wanted to check in after our Tuesday conversation about your treatment plan. Did you get a chance to look at the Refresh Package options I sent over? Happy to answer any questions. – Dr. Chen
+            </div>
+
+            <div class="bubble-time">May 13 · 2:30 PM</div>
+            <div class="bubble from-them">
+              Hi Sarah! Quick reminder — your daughter's wedding is about 14 weeks away. If you'd like to start your Botox + Juvederm plan in time for full results, the ideal window is in the next 2-3 weeks. We have openings this week and next. Shall I hold a spot? – Dr. Chen
+            </div>
+
+            <div class="bubble-time">May 20 · 4:45 PM</div>
+            <div class="bubble from-them">
+              Sarah, I know timing and budget are factors — totally understand. Just wanted you to know we offer 0% financing through CareCredit ($100/mo for your Refresh Package). No rush, but the option is there when you're ready. Reply STOP to opt out.
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="sms-meta">
+        <div class="sms-meta-row">
+          <div class="when">SMS 1 · Day 3 · soft check-in</div>
+          <div class="desc">Anchored to the consultation date and the Refresh Package the patient saw. No CTA pressure — opens the door.</div>
+        </div>
+        <div class="sms-meta-row">
+          <div class="when">SMS 2 · Day 14 · timing nudge</div>
+          <div class="desc">Wedding-anchored urgency. Two specific scheduling windows. Tight, personal, not pushy.</div>
+        </div>
+        <div class="sms-meta-row">
+          <div class="when">SMS 3 · Day 21 · financing reminder</div>
+          <div class="desc">Re-states $100/mo financing the patient already heard about. Clear opt-out per TCPA.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: CONVERSATIONAL RCS -->
+    <div class="split-col rcs">
+      <div class="col-hdr">
+        <div class="badge rcs">Conversational RCS · Two-way</div>
+        <div class="h">Powered by OrchardLink</div>
+        <div class="s">Always-on AI · full consultation context · quick-reply CTAs</div>
+      </div>
+
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="phone-status">
+            <span class="time">9:41</span>
+            <span class="icons">📶 100%</span>
+          </div>
+          <div class="phone-header rcs-header">
+            <div class="avatar">G</div>
+            <div>
+              <div class="name">Glow Aesthetics <span class="verified">✓</span></div>
+              <div class="sub">Verified business · RCS</div>
+            </div>
+          </div>
+          <div class="phone-body">
+
+            <div class="bubble-time">Today · 10:14 AM</div>
+            <div class="bubble from-them rcs">
+              Hi Sarah! 👋 This is Glow Aesthetics following up on your consultation with Dr. Chen on Tuesday.<br><br>
+              I noticed you were interested in the <strong>Refresh Package</strong> for your daughter's wedding prep. How can I help?
+            </div>
+            <div class="quick-replies">
+              <button class="qr-btn">📋 See Package Details</button>
+              <button class="qr-btn active">💬 Ask a Question <span class="arrow">→</span></button>
+              <button class="qr-btn">📅 Schedule</button>
+            </div>
+
+            <div class="bubble-time">10:15 AM</div>
+            <div class="bubble from-me">
+              How long does the Botox actually last? I don't want to have to redo it right before the wedding.
+            </div>
+
+            <div class="bubble from-them rcs">
+              Great question! Botox typically lasts <strong>3-4 months</strong>. If you start treatment in the next 2-3 weeks, you'd be well within the effective window for August 15th.<br><br>
+              Most patients find that results actually look their most natural about <strong>2 weeks after treatment</strong> — so you'd look refreshed, not "done."
+            </div>
+            <div class="quick-replies">
+              <button class="qr-btn active">📅 See the Timeline <span class="arrow">→</span></button>
+              <button class="qr-btn">🔁 Book a Touch-Up Plan</button>
+              <button class="qr-btn">👩‍⚕️ Talk to Dr. Chen</button>
+            </div>
+
+            <div class="bubble from-them rcs">
+              Here's your ideal treatment timeline for <strong>Aug 15</strong>:
+            </div>
+            <div class="timeline-card">
+              <div class="h">Wedding-Prep Calendar</div>
+              <div class="row"><span>Botox · forehead</span><span class="date">May 25-30</span></div>
+              <div class="row"><span>Juvederm · cheeks</span><span class="date">Jun 10-15</span></div>
+              <div class="row"><span>Optional touch-up</span><span class="date">Jul 25</span></div>
+              <div class="row"><span>HydraFacial glow</span><span class="date">Aug 1-5</span></div>
+              <div class="row bold"><span>Wedding day ✨</span><span class="date">Aug 15</span></div>
+            </div>
+
+            <div class="bubble from-them rcs">
+              Your <strong>Refresh Package ($1,200)</strong> covers the Botox + Juvederm. The HydraFacial ($199) is a great add-on closer to the date.<br><br>
+              Ready to get started?
+            </div>
+            <div class="quick-replies">
+              <button class="qr-btn">📅 Schedule First Appointment</button>
+              <button class="qr-btn">💳 See Financing Options</button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="sms-meta">
+        <div class="sms-meta-row" style="background:var(--purple-bg);border-color:var(--purple-border)">
+          <div class="when" style="color:var(--purple)">RCS Capability · Always-on</div>
+          <div class="desc">AI has full consultation context: knows the package, the wedding date, the price objection, the "frozen" fear. Answers patient questions in real time without practice staff. Renders rich content (timeline cards, package details, scheduling links) inline.</div>
+        </div>
+        <div class="sms-meta-row" style="background:var(--purple-bg);border-color:var(--purple-border)">
+          <div class="when" style="color:var(--purple)">Quick-reply CTAs</div>
+          <div class="desc">Patient never has to type a long question — taps a button, gets a personalized answer instantly. Reduces friction by ~5x vs free-text SMS.</div>
+        </div>
+        <div class="sms-meta-row" style="background:var(--purple-bg);border-color:var(--purple-border)">
+          <div class="when" style="color:var(--purple)">Verified-sender + RCS</div>
+          <div class="desc">Google RCS + Apple Business Messages mean the practice appears verified, not "+1 555 spam." Direct path from search → conversation → booking.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- COMPARISON CALLOUT -->
+  <div class="callout">
+    <div class="callout-h">Why Conversational SMS Changes Everything</div>
+    <div class="callout-col">
+      <h3 class="std">Standard SMS · push-only</h3>
+      <p>Practice → Patient. The patient reads the message or doesn't. If they have a question, they have to call the office during business hours, or they don't bother and the lead cools. Three messages over 21 days, then silence.</p>
+    </div>
+    <div class="callout-col">
+      <h3 class="rcs">Conversational RCS · two-way</h3>
+      <p>Practice ↔ Patient. The patient engages on their own time. AI has full consultation context — knows the wedding, the price objection, the package, the fear of looking "frozen." Answers in seconds, books appointments, escalates to staff only when needed.</p>
+    </div>
+
+    <div class="callout-stats">
+      <div class="cs"><div class="lbl">Engagement vs std SMS</div><div class="val">3-5×</div></div>
+      <div class="cs"><div class="lbl">Avg response time</div><div class="val">8s</div></div>
+      <div class="cs"><div class="lbl">Staff hours saved/week</div><div class="val">~6 hr</div></div>
+      <div class="cs"><div class="lbl">Quick-reply tap rate</div><div class="val">61%</div></div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <a href="demo-reach-deliver.html" class="cta-strip" style="text-decoration:none;color:inherit">
+    <div class="cta-text">
+      <div class="h">Last screen — how this gets delivered</div>
+      <div class="s">Two paths: full content generation (Reach writes everything, staff approves) or CRM data push (structured signals into GHL templates)</div>
+    </div>
+    <span class="cta-btn">View Delivery Options →</span>
+  </a>
+</div>
+
+<footer>
+  <span>reach prototype · screen 4 of 5 · standard sms vs conversational rcs comparison</span>
+  <span><a href="demo-reach-email.html" style="color:var(--slate-500);text-decoration:none">← Email</a> · <a href="demo-reach-deliver.html" style="color:var(--reach-accent);font-weight:700;text-decoration:none">Deliver →</a></span>
+</footer>
+
+</body>
+</html>
