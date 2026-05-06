@@ -172,20 +172,20 @@ footer .meta{font-size:11px;color:var(--slate-400);font-family:var(--mono)}
 
         <div class="out-section">
           <div class="out-label">Follow-Up Plan</div>
-          <div class="out-item"><div class="out-dot" style="background:var(--teal)"></div><strong>1 week:</strong>&nbsp;Send education about PDGRN and its benefits</div>
+          <div class="out-item"><div class="out-dot" style="background:var(--teal)"></div><strong>1 week:</strong>&nbsp;Send education about Polynucleotide Therapy (PDRN) and its benefits</div>
           <div class="out-item"><div class="out-dot" style="background:var(--teal)"></div><strong>2 weeks:</strong>&nbsp;Follow up on Botox for crow's feet interest</div>
         </div>
 
         <div class="out-section">
           <div class="out-label">Patient Interests (Unbooked)</div>
-          <div class="out-item"><div class="out-dot" style="background:var(--amber)"></div>PDGRN (Salmon Sperm Topical) — curious, wants to try with microneedling</div>
+          <div class="out-item"><div class="out-dot" style="background:var(--amber)"></div>Polynucleotide Therapy (PDRN) — curious, wants to try with microneedling</div>
           <div class="out-item"><div class="out-dot" style="background:var(--amber)"></div>Botox (crow's feet) — hesitant but interested</div>
           <div class="out-item"><div class="out-dot" style="background:var(--amber)"></div>Dermal Filler — discussed for future visit</div>
         </div>
 
         <div class="out-section">
           <div class="out-label">Sell Plan Script</div>
-          <div class="out-quote">"PDGRN can enhance your microneedling results without the risks of injections. Since you're already committed to improving your skin texture, adding PDGRN topical during your next session could amplify results."</div>
+          <div class="out-quote">"Polynucleotide therapy enhances microneedling results without the risks of injectable delivery. Since you're already committed to improving skin texture, adding a PDRN topical during your next session could amplify those results."</div>
         </div>
       </div>
     </div>
@@ -258,52 +258,182 @@ footer .meta{font-size:11px;color:var(--slate-400);font-family:var(--mono)}
       </div>
     </div>
 
-    <!-- Email Campaign -->
-    <div class="agent-card">
+    <!-- Reach (multi-channel post-consult engagement) -->
+    <div class="agent-card agent-full">
       <div class="ac-header">
-        <div class="ac-title">Email Campaign <button class="a360-info dark" data-agent="email_campaign"></button></div>
-        <div class="ac-badge" style="background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-border)">1 message</div>
+        <div class="ac-title">Reach <span class="ac-badge" style="background:#f5f3ff;color:#7c3aed;border:1px solid #c4b5fd">multi-channel</span> <button class="a360-info dark" data-agent="reach_strategy_agent"></button></div>
+        <div style="font-size:10px;color:var(--slate-400)">Email · SMS · Conversational RCS — picks 1 of 9 campaign archetypes</div>
       </div>
       <div class="ac-body">
-        <div class="ac-desc">Generates personalized patient follow-up email using extraction data — not templates, built from the patient's actual words and concerns.</div>
-        <div class="out-label">Campaign: Revitalize Your Skin and Enhance Your Beauty</div>
-        <div class="email-preview">
-          Hi there! We hope you're enjoying the results from your recent Botox touch-up and microneedling treatment.<br><br>
-          As you mentioned, you're looking to tackle concerns like melasma and texture issues. We wanted to share some information about <strong>PDGRN topical</strong> — the salmon sperm treatment we discussed during your visit. It pairs beautifully with microneedling and can enhance your results without the risks of injectable delivery.<br><br>
-          We also wanted to remind you about the <strong>Botox for crow's feet</strong> option we talked about. Many patients find that treating the lateral canthus area completes their refreshed look, especially for photos.<br><br>
-          Your full Botox retreatment is scheduled for next month. If you'd like to add any of these treatments to that visit, just let us know!
+        <div class="ac-desc">Hyper-personalized post-consultation engagement. The agent reads the extraction signals (intent, primary objection, motivating event, commitment level), picks one of nine campaign archetypes, then generates the full multi-channel sequence. Every personalization phrase traces back to a specific extraction signal. <a href="demo-reach.html" style="color:var(--teal);font-weight:600;text-decoration:none">Open the full Reach walkthrough →</a></div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:6px">
+
+          <!-- EMAIL channel -->
+          <div style="padding:0;border:1px solid var(--blue-border);border-radius:var(--r-sm);overflow:hidden;background:var(--white)">
+            <div style="background:var(--blue-bg);padding:7px 11px;font-size:10px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.05em;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--blue-border)">
+              <span>📧 Email · 5 messages</span>
+              <button class="a360-info dark" data-agent="reach_email_generator"></button>
+            </div>
+            <div style="padding:9px 11px">
+              <div style="font-size:10.5px;color:var(--slate-500);margin-bottom:5px">Subject preview</div>
+              <div style="font-size:11.5px;font-weight:700;color:var(--slate-900);line-height:1.3;margin-bottom:8px">"Sarah, I want to be straightforward about the math"</div>
+              <div style="font-size:10.5px;color:var(--slate-500);margin-bottom:5px">Sequence cadence</div>
+              <div style="display:flex;gap:3px;align-items:center;font-family:var(--mono);font-size:9.5px;color:var(--slate-600);font-weight:600">
+                <span style="background:var(--blue-bg);color:var(--blue);padding:2px 6px;border-radius:3px">Day 1</span>
+                <span>→</span>
+                <span style="background:var(--blue-bg);color:var(--blue);padding:2px 6px;border-radius:3px">Day 3</span>
+                <span>→</span>
+                <span style="background:var(--blue-bg);color:var(--blue);padding:2px 6px;border-radius:3px">Day 7</span>
+                <span>→</span>
+                <span style="background:var(--blue-bg);color:var(--blue);padding:2px 6px;border-radius:3px">14</span>
+                <span>→</span>
+                <span style="background:var(--blue-bg);color:var(--blue);padding:2px 6px;border-radius:3px">21</span>
+              </div>
+              <div style="font-size:10.5px;color:var(--slate-500);margin-top:8px">Hooks pulled from extraction</div>
+              <div style="display:flex;flex-wrap:wrap;gap:3px;margin-top:3px">
+                <span style="font-size:9px;background:#fef9c3;border:1px solid #fde047;padding:1px 5px;border-radius:3px;font-family:var(--mono);color:var(--slate-700);font-weight:600">objection</span>
+                <span style="font-size:9px;background:#fef9c3;border:1px solid #fde047;padding:1px 5px;border-radius:3px;font-family:var(--mono);color:var(--slate-700);font-weight:600">wedding</span>
+                <span style="font-size:9px;background:#fef9c3;border:1px solid #fde047;padding:1px 5px;border-radius:3px;font-family:var(--mono);color:var(--slate-700);font-weight:600">package</span>
+                <span style="font-size:9px;background:#fef9c3;border:1px solid #fde047;padding:1px 5px;border-radius:3px;font-family:var(--mono);color:var(--slate-700);font-weight:600">financing</span>
+                <span style="font-size:9px;background:#fef9c3;border:1px solid #fde047;padding:1px 5px;border-radius:3px;font-family:var(--mono);color:var(--slate-700);font-weight:600">first_name</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- SMS channel -->
+          <div style="padding:0;border:1px solid var(--green-border);border-radius:var(--r-sm);overflow:hidden;background:var(--white)">
+            <div style="background:var(--green-bg);padding:7px 11px;font-size:10px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:.05em;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--green-border)">
+              <span>💬 SMS · 3 messages</span>
+              <button class="a360-info dark" data-agent="reach_sms_generator"></button>
+            </div>
+            <div style="padding:9px 11px">
+              <div style="font-size:10.5px;color:var(--slate-500);margin-bottom:5px">Day-3 nudge preview</div>
+              <div style="background:var(--slate-100);padding:7px 9px;border-radius:14px 14px 14px 4px;font-size:10.5px;line-height:1.45;color:var(--slate-800);font-style:italic;margin-bottom:8px">"Hi Sarah, it's Dr. Chen. Wanted to check in after Tuesday — happy to walk through the package options whenever you're ready. — Dr. Chen"</div>
+              <div style="font-size:10.5px;color:var(--slate-500);margin-bottom:5px">Cadence (interleaved with email)</div>
+              <div style="display:flex;gap:3px;align-items:center;font-family:var(--mono);font-size:9.5px;color:var(--slate-600);font-weight:600">
+                <span style="background:var(--green-bg);color:var(--green);padding:2px 6px;border-radius:3px">Day 3</span>
+                <span>→</span>
+                <span style="background:var(--green-bg);color:var(--green);padding:2px 6px;border-radius:3px">Day 14</span>
+                <span>→</span>
+                <span style="background:var(--green-bg);color:var(--green);padding:2px 6px;border-radius:3px">Day 21</span>
+              </div>
+              <div style="font-size:10.5px;color:var(--slate-500);margin-top:8px;line-height:1.45">Character-conscious · personal voice from the provider · TCPA opt-out compliant</div>
+            </div>
+          </div>
+
+          <!-- RCS channel -->
+          <div style="padding:0;border:1px solid #c4b5fd;border-radius:var(--r-sm);overflow:hidden;background:var(--white)">
+            <div style="background:var(--purple-bg);padding:7px 11px;font-size:10px;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:.05em;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #c4b5fd">
+              <span>🤖 Conversational RCS · always-on</span>
+              <button class="a360-info dark" data-agent="reach_rcs_orchestrator"></button>
+            </div>
+            <div style="padding:9px 11px">
+              <div style="font-size:10.5px;color:var(--slate-500);margin-bottom:5px">Patient-initiated turn</div>
+              <div style="background:#ede9fe;padding:7px 9px;border-radius:14px 14px 14px 4px;font-size:10.5px;line-height:1.45;color:#4c1d95;font-style:italic;margin-bottom:5px">"How long does Botox actually last? I don't want to redo it before the wedding."</div>
+              <div style="background:#f5f3ff;padding:7px 9px;border-radius:14px 14px 14px 4px;font-size:10.5px;line-height:1.45;color:#4c1d95;font-weight:500;margin-bottom:6px">"Botox typically lasts 3–4 months. If you start in the next 2-3 weeks, you'd be well within the effective window for August 15th."</div>
+              <div style="display:flex;flex-direction:column;gap:3px;margin-bottom:8px">
+                <button style="font-size:9.5px;font-weight:700;padding:4px 8px;border-radius:10px;border:1px solid #c4b5fd;background:#fff;color:var(--purple);cursor:pointer;text-align:left">📅 See the timeline →</button>
+                <button style="font-size:9.5px;font-weight:700;padding:4px 8px;border-radius:10px;border:1px solid #c4b5fd;background:#fff;color:var(--purple);cursor:pointer;text-align:left">💳 See financing</button>
+              </div>
+              <div style="font-size:10.5px;color:var(--slate-500);line-height:1.45">Powered by OrchardLink · full consultation context · quick-reply CTAs</div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Strategy + delivery footer -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px;padding-top:12px;border-top:1px solid var(--slate-100)">
+          <div>
+            <div class="out-label">Selected campaign archetype</div>
+            <div style="font-family:var(--mono);font-size:13px;font-weight:800;color:var(--purple);margin-bottom:3px">VALUE_REINFORCEMENT</div>
+            <div style="font-size:11px;color:var(--slate-500);line-height:1.5;font-style:italic">Unresolved price objection + medium-high intent + event-driven urgency. The agent picked it from 9 archetypes; confidence 0.88.</div>
+          </div>
+          <div>
+            <div class="out-label">Delivery</div>
+            <div style="font-size:11.5px;color:var(--slate-700);line-height:1.6">Two paths: <strong>Generate Complete Campaign</strong> (Reach writes everything, staff approves once) or <strong>Push Intelligence to CRM</strong> (12 structured fields → GHL templates fire on the practice's existing automation).</div>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- Architecture Card -->
-    <div class="agent-card">
+    <!-- Architecture Card — model-fleet view -->
+    <div class="agent-card agent-full">
       <div class="ac-header">
-        <div class="ac-title">Agent Architecture</div>
+        <div class="ac-title">Agent Architecture · Model Fleet</div>
+        <div style="font-size:10px;color:var(--slate-400)">4 models · routed by task profile</div>
       </div>
       <div class="ac-body">
-        <div class="out-section">
-          <div class="out-label">Production Agents</div>
-          <div style="font-size:12px;color:var(--slate-600)">
-            <div style="padding:4px 0;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between"><span><strong>2-Pass Extraction</strong> (P1 + P2)</span><span style="font-family:var(--mono);font-size:10px;color:var(--slate-400)">gpt-4o-mini</span></div>
-            <div style="padding:4px 0;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between"><span><strong>Cross-Sell Guidance</strong> v3</span><span style="font-family:var(--mono);font-size:10px;color:var(--slate-400)">gpt-4o-mini</span></div>
-            <div style="padding:4px 0;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between"><span><strong>Opportunities Agent</strong></span><span style="font-family:var(--mono);font-size:10px;color:var(--slate-400)">gpt-4o-mini</span></div>
-            <div style="padding:4px 0;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between"><span><strong>Email Campaign</strong></span><span style="font-family:var(--mono);font-size:10px;color:var(--slate-400)">gpt-4o-mini</span></div>
-            <div style="padding:4px 0;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between"><span><strong>Coaching Evidence Extractor</strong></span><span style="font-family:var(--mono);font-size:10px;color:var(--slate-400)">gpt-4o-mini</span></div>
-            <div style="padding:4px 0;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between"><span><strong>Coaching Generator</strong></span><span style="font-family:var(--mono);font-size:10px;color:var(--slate-400)">gpt-4o-mini</span></div>
-            <div style="padding:4px 0;display:flex;justify-content:space-between"><span><strong>Coaching Language Validator</strong></span><span style="font-family:var(--mono);font-size:10px;color:var(--slate-400)">gpt-4o-mini</span></div>
+        <div style="font-size:12px;color:var(--slate-600);line-height:1.6;margin-bottom:14px">A360 routes each agent to the model that best fits its job profile. Heavy clinical reasoning runs on Sonnet; fast gates and validators run on Haiku to keep latency and cost low; sales/marketing generation runs on GPT-4o where its tone is strongest; coaching uses Gemini 2.5 Flash for retrieval-grounded responses. We deliberately keep the fleet small (4 models) so prompt-eval, cost monitoring, and failover stay tractable.</div>
+
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px">
+          <div style="padding:10px 12px;border:1px solid var(--blue-border);background:var(--blue-bg);border-radius:var(--r-sm)">
+            <div style="font-size:9px;font-weight:800;color:var(--blue);text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px">Workhorse · clinical</div>
+            <div style="font-family:var(--mono);font-size:13px;font-weight:800;color:var(--slate-900);margin-bottom:4px">Claude Sonnet 4.5</div>
+            <div style="font-size:10.5px;color:var(--slate-600);line-height:1.5">Heavy reasoning, structured extraction, clinical narrative generation, treatment planning</div>
+          </div>
+          <div style="padding:10px 12px;border:1px solid var(--green-border);background:var(--green-bg);border-radius:var(--r-sm)">
+            <div style="font-size:9px;font-weight:800;color:var(--green);text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px">Fast · cheap · gates</div>
+            <div style="font-family:var(--mono);font-size:13px;font-weight:800;color:var(--slate-900);margin-bottom:4px">Claude Haiku 4.5</div>
+            <div style="font-size:10.5px;color:var(--slate-600);line-height:1.5">Routing gates, validators, simple classifiers, preprocessing — sub-second responses at low cost</div>
+          </div>
+          <div style="padding:10px 12px;border:1px solid #fcd34d;background:#fffbeb;border-radius:var(--r-sm)">
+            <div style="font-size:9px;font-weight:800;color:var(--amber);text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px">Sales · marketing · copy</div>
+            <div style="font-family:var(--mono);font-size:13px;font-weight:800;color:var(--slate-900);margin-bottom:4px">GPT-4o</div>
+            <div style="font-size:10.5px;color:var(--slate-600);line-height:1.5">Cross-sell guidance, opportunity narratives, Reach email + SMS — tone strength for direct-response copy</div>
+          </div>
+          <div style="padding:10px 12px;border:1px solid #c4b5fd;background:#f5f3ff;border-radius:var(--r-sm)">
+            <div style="font-size:9px;font-weight:800;color:var(--purple);text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px">RAG · coaching · long context</div>
+            <div style="font-family:var(--mono);font-size:13px;font-weight:800;color:var(--slate-900);margin-bottom:4px">Gemini 2.5 Flash</div>
+            <div style="font-size:10.5px;color:var(--slate-600);line-height:1.5">Coaching pipeline, OrchardLink RCS, retrieval-grounded responses across long practice history</div>
           </div>
         </div>
-        <div class="out-section" style="margin-top:10px">
-          <div class="out-label">Platform Agents (AWS Step Functions)</div>
-          <div style="font-size:12px;color:var(--slate-600)">
-            <div style="padding:4px 0;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between;align-items:center"><span>Clinical Notes (SOAP) <button class="a360-info dark" data-agent="soap_notes"></button></span><span style="font-family:var(--mono);font-size:10px;color:var(--slate-400)">Claude Sonnet</span></div>
-            <div style="padding:4px 0;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between;align-items:center"><span>Treatment Care Plan <button class="a360-info dark" data-agent="treatment_care_plan"></button></span><span style="font-family:var(--mono);font-size:10px;color:var(--slate-400)">Claude Sonnet</span></div>
-            <div style="padding:4px 0;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between;align-items:center"><span>Follow-Up Email <button class="a360-info dark" data-agent="follow_up_email"></button></span><span style="font-family:var(--mono);font-size:10px;color:var(--slate-400)">Claude Sonnet</span></div>
-            <div style="padding:4px 0;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between;align-items:center"><span>Consultation Summary <button class="a360-info dark" data-agent="consultation_summary"></button></span><span style="font-family:var(--mono);font-size:10px;color:var(--slate-400)">Claude Sonnet</span></div>
-            <div style="padding:4px 0;display:flex;justify-content:space-between;align-items:center"><span>Medical Relevance Gate <button class="a360-info dark" data-agent="medical_relevance_gate"></button></span><span style="font-family:var(--mono);font-size:10px;color:var(--slate-400)">Claude Haiku</span></div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+          <div class="out-section">
+            <div class="out-label">Capture &amp; Extraction</div>
+            <div style="font-size:12px;color:var(--slate-600)">
+              <div style="padding:4px 0;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between;align-items:center"><span>Medical Relevance Gate <button class="a360-info dark" data-agent="medical_relevance_gate"></button></span><span style="font-family:var(--mono);font-size:10px;color:var(--green);font-weight:700">Haiku 4.5</span></div>
+              <div style="padding:4px 0;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between;align-items:center"><span>Pass 1 — Context &amp; Offerings <button class="a360-info dark" data-agent="p1_extraction"></button></span><span style="font-family:var(--mono);font-size:10px;color:var(--blue);font-weight:700">Sonnet 4.5</span></div>
+              <div style="padding:4px 0;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between;align-items:center"><span>Pass 2 — Outcome &amp; Intelligence <button class="a360-info dark" data-agent="p2_extraction"></button></span><span style="font-family:var(--mono);font-size:10px;color:var(--blue);font-weight:700">Sonnet 4.5</span></div>
+              <div style="padding:4px 0;display:flex;justify-content:space-between;align-items:center"><span>Catalog Validation <button class="a360-info dark" data-agent="catalog_validation"></button></span><span style="font-family:var(--mono);font-size:10px;color:var(--green);font-weight:700">Haiku 4.5</span></div>
+            </div>
+          </div>
+
+          <div class="out-section">
+            <div class="out-label">Clinical Documentation</div>
+            <div style="font-size:12px;color:var(--slate-600)">
+              <div style="padding:4px 0;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between;align-items:center"><span>Clinical Notes (SOAP) <button class="a360-info dark" data-agent="soap_notes"></button></span><span style="font-family:var(--mono);font-size:10px;color:var(--blue);font-weight:700">Sonnet 4.5</span></div>
+              <div style="padding:4px 0;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between;align-items:center"><span>Treatment &amp; Care Plan <button class="a360-info dark" data-agent="treatment_care_plan"></button></span><span style="font-family:var(--mono);font-size:10px;color:var(--blue);font-weight:700">Sonnet 4.5</span></div>
+              <div style="padding:4px 0;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between;align-items:center"><span>Consultation Summary <button class="a360-info dark" data-agent="consultation_summary"></button></span><span style="font-family:var(--mono);font-size:10px;color:var(--blue);font-weight:700">Sonnet 4.5</span></div>
+              <div style="padding:4px 0;display:flex;justify-content:space-between;align-items:center"><span>Clarifying Questions <button class="a360-info dark" data-agent="clarifying_questions"></button></span><span style="font-family:var(--mono);font-size:10px;color:var(--blue);font-weight:700">Sonnet 4.5</span></div>
+            </div>
+          </div>
+
+          <div class="out-section">
+            <div class="out-label">Sales · Cross-sell · Reach</div>
+            <div style="font-size:12px;color:var(--slate-600)">
+              <div style="padding:4px 0;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between;align-items:center"><span>Cross-Sell Guidance v3 <button class="a360-info dark" data-agent="cross_sell_guidance_v3"></button></span><span style="font-family:var(--mono);font-size:10px;color:var(--amber);font-weight:700">GPT-4o</span></div>
+              <div style="padding:4px 0;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between;align-items:center"><span>Opportunities Agent <button class="a360-info dark" data-agent="opportunities_agent"></button></span><span style="font-family:var(--mono);font-size:10px;color:var(--amber);font-weight:700">GPT-4o</span></div>
+              <div style="padding:4px 0;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between;align-items:center"><span>Reach Strategy Agent <button class="a360-info dark" data-agent="reach_strategy_agent"></button></span><span style="font-family:var(--mono);font-size:10px;color:var(--blue);font-weight:700">Sonnet 4.5</span></div>
+              <div style="padding:4px 0;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between;align-items:center"><span>Reach Email Generator <button class="a360-info dark" data-agent="reach_email_generator"></button></span><span style="font-family:var(--mono);font-size:10px;color:var(--amber);font-weight:700">GPT-4o</span></div>
+              <div style="padding:4px 0;display:flex;justify-content:space-between;align-items:center"><span>Reach SMS Generator <button class="a360-info dark" data-agent="reach_sms_generator"></button></span><span style="font-family:var(--mono);font-size:10px;color:var(--amber);font-weight:700">GPT-4o</span></div>
+            </div>
+          </div>
+
+          <div class="out-section">
+            <div class="out-label">Coaching · RAG · Validators</div>
+            <div style="font-size:12px;color:var(--slate-600)">
+              <div style="padding:4px 0;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between;align-items:center"><span>Coaching Pipeline <button class="a360-info dark" data-agent="coaching_pipeline"></button></span><span style="font-family:var(--mono);font-size:10px;color:var(--purple);font-weight:700">Gemini 2.5 Flash</span></div>
+              <div style="padding:4px 0;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between;align-items:center"><span>Coaching Language Validator <button class="a360-info dark" data-agent="coaching_language_validator"></button></span><span style="font-family:var(--mono);font-size:10px;color:var(--green);font-weight:700">Haiku 4.5</span></div>
+              <div style="padding:4px 0;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between;align-items:center"><span>OrchardLink RCS Orchestrator <button class="a360-info dark" data-agent="reach_rcs_orchestrator"></button></span><span style="font-family:var(--mono);font-size:10px;color:var(--purple);font-weight:700">Gemini 2.5 Flash</span></div>
+              <div style="padding:4px 0;border-bottom:1px solid var(--slate-100);display:flex;justify-content:space-between;align-items:center"><span>Reach Compliance Validator <button class="a360-info dark" data-agent="reach_compliance_validator"></button></span><span style="font-family:var(--mono);font-size:10px;color:var(--green);font-weight:700">Haiku 4.5</span></div>
+              <div style="padding:4px 0;display:flex;justify-content:space-between;align-items:center"><span>Education Curator (RAG) <button class="a360-info dark" data-agent="reach_education_curator"></button></span><span style="font-family:var(--mono);font-size:10px;color:var(--purple);font-weight:700">Gemini 2.5 Flash</span></div>
+            </div>
           </div>
         </div>
+
+        <div style="margin-top:14px;padding:10px 14px;background:var(--slate-50);border-left:3px solid var(--slate-400);border-radius:var(--r-sm);font-size:11.5px;color:var(--slate-600);line-height:1.6"><strong style="color:var(--slate-900)">Why 4 models, not 7?</strong> Each additional model in the fleet doubles eval-suite cost and adds a new prompt-tuning surface. We pick the smallest fleet that covers the four distinct task profiles (heavy reasoning · fast gates · sales copy · RAG/coaching). Adding a fifth requires a real new capability the existing four can't deliver — not a marginal quality bump.</div>
       </div>
     </div>
 

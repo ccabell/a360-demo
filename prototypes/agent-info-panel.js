@@ -37,7 +37,7 @@
     p1_extraction: {
       name: 'Pass 1 — Context & Offerings',
       type: 'Extraction',
-      model: 'Claude Haiku 4.5 (Bedrock)',
+      model: 'Claude Sonnet 4.5 (Bedrock)',
       system: 'Prompt Runner',
       status: 'Live',
       description: 'First pass over the raw transcript. Extracts patient context, goals, concerns, and every offering discussed with a disposition (performed, scheduled, declined, hesitant, recommended, discussed). Every field carries a verbatim evidence quote.',
@@ -53,7 +53,7 @@
     p2_extraction: {
       name: 'Pass 2 — Outcome & Intelligence',
       type: 'Extraction',
-      model: 'Claude Haiku 4.5 (Bedrock)',
+      model: 'Claude Sonnet 4.5 (Bedrock)',
       system: 'Prompt Runner',
       status: 'Live',
       description: 'Second pass that consumes Pass 1 output plus the transcript and produces commercial intelligence: outcome, commitment level, hesitations, objections, next steps, signal tags, and a structured checklist with evidence.',
@@ -68,7 +68,7 @@
     cross_sell_guidance_v3: {
       name: 'Cross-Sell Guidance (v3)',
       type: 'Recommendation',
-      model: 'gpt-4o-mini',
+      model: 'GPT-4o',
       system: 'Prompt Runner',
       status: 'Live',
       description: 'Generates prioritized cross-sell and upsell recommendations from the consultation summary. Each recommendation has rationale, intent score, and a suggested next step.',
@@ -83,7 +83,7 @@
     opportunities_agent: {
       name: 'Opportunities Agent',
       type: 'Recommendation',
-      model: 'gpt-4o-mini',
+      model: 'GPT-4o',
       system: 'Prompt Runner',
       status: 'Live',
       description: 'Builds a follow-up plan from interest-but-not-booked opportunities: sell plan, next-visit reference, marketing/education content, and CRM personalization context. Feeds Reach.',
@@ -98,7 +98,7 @@
     email_campaign: {
       name: 'Email Campaign',
       type: 'Generation',
-      model: 'gpt-4o-mini',
+      model: 'GPT-4o',
       system: 'Prompt Runner',
       status: 'Live',
       description: 'Personalized post-visit email composed from the extraction output. Patient-friendly tone, references specific concerns and next steps. Drafted for clinician review before send.',
@@ -110,7 +110,7 @@
     coaching_evidence_extractor: {
       name: 'Coaching Evidence Extractor',
       type: 'Extraction',
-      model: 'gpt-4o-mini',
+      model: 'Gemini 2.5 Flash',
       system: 'Prompt Runner',
       status: 'Live',
       description: 'Pulls coaching-specific evidence from the consultation: LAER (Listen-Acknowledge-Explore-Respond) phases, coaching moments, behaviors, and KPI data points. Produces evidence — does not coach.',
@@ -122,7 +122,7 @@
     coaching_generator: {
       name: 'Coaching Generator',
       type: 'Generation',
-      model: 'gpt-4o-mini',
+      model: 'Gemini 2.5 Flash',
       system: 'Prompt Runner',
       status: 'Live',
       description: 'Produces principle-based coaching feedback from the evidence pass. Professional trainer tone — strengths first, no scripts, no emotional labels. Every recommendation cites transcript evidence.',
@@ -134,7 +134,7 @@
     coaching_language_validator: {
       name: 'Coaching Language Validator',
       type: 'Validation',
-      model: 'gpt-4o-mini',
+      model: 'Claude Haiku 4.5',
       system: 'Prompt Runner',
       status: 'Live',
       description: 'Final-pass quality gate on coaching output. Enforces language policy: no scripts, no emotional labels ("you sounded nervous"), no judgment, evidence-backed claims only. Either passes or returns specific edits.',
@@ -146,7 +146,7 @@
     coaching_pipeline: {
       name: 'Full Coaching Pipeline',
       type: 'Pipeline',
-      model: 'gpt-4o-mini × 3',
+      model: 'Gemini 2.5 Flash + Haiku 4.5 (validator)',
       system: 'Prompt Runner',
       status: 'Live',
       description: 'Single endpoint that runs the three coaching agents in sequence — Evidence → Generator → Validator — and returns the final validated coaching report. Use for one-shot coaching analysis.',
@@ -208,7 +208,7 @@
     follow_up_email: {
       name: 'Follow-Up Email (Platform)',
       type: 'Generation',
-      model: 'Claude Sonnet 4.5',
+      model: 'GPT-4o',
       system: 'genai-platform (Step Functions)',
       status: 'Live',
       description: 'Platform-side follow-up email generator (separate from Prompt Runner email_campaign). Used in the production a360-genai-platform pipeline.',
@@ -259,7 +259,7 @@
     hitl_verification: {
       name: 'HITL Verification',
       type: 'Feedback / Learning',
-      model: 'Human + gpt-4o-mini diff',
+      model: 'Human + Claude Haiku 4.5 (diff)',
       system: 'Mid-Stream + Prompt Runner',
       status: 'Live',
       description: 'Human-in-the-loop verification of extraction output. Reviewers correct dispositions, fix evidence, accept/reject offerings. Diffs are persisted as training signal — every override becomes a labeled example we can replay.',
@@ -285,7 +285,7 @@
     batch_eval_runner: {
       name: 'Batch Eval Runner',
       type: 'Evaluation',
-      model: 'deterministic + LLM judge',
+      model: 'Deterministic + Claude Sonnet 4.5 (judge)',
       system: 'Prompt Runner (CLI)',
       status: 'Live',
       description: 'Runs the full extraction pipeline over N transcripts and emits a batch_report.json + eval_report.json. Measures schema compliance, field population, evidence accuracy, disposition distribution. How we ship a new prompt safely.',
@@ -362,7 +362,7 @@
     tcp_education_agent: {
       name: 'Education Agent (TCP)',
       type: 'RAG',
-      model: 'Claude Sonnet 4.5 (planned)',
+      model: 'Gemini 2.5 Flash (planned)',
       system: 'TCP Builder · Pulse',
       status: 'Designed',
       description: 'Curates patient-education content for each selected treatment: before/after photos, videos, brochures, pre/post-procedure instructions. Pulls from gl_product_content / gl_service_content; falls back to instruction fields on the base product/service when content tables are empty.',
@@ -420,7 +420,7 @@
     reach_strategy_agent: {
       name: 'Campaign Strategy Agent (Reach)',
       type: 'Recommendation',
-      model: 'Claude Sonnet 4.5 (planned) + decision tree',
+      model: 'Claude Sonnet 4.5 + decision tree',
       system: 'Reach · post-consultation pipeline',
       status: 'Designed',
       description: 'Picks one of 9 campaign archetypes from the aggregated signals: BOOKING_FACILITATION, HIGH_INTEREST_NURTURE, EVENT_DRIVEN, VALUE_REINFORCEMENT, REASSURANCE_EDUCATION, STANDARD_FOLLOWUP, GENTLE_ENGAGEMENT, AFTERCARE_REBOOKING, CROSS_SELL_EXPANSION. Each has a distinct sequence length, cadence, tone, and content profile. Patient may stack max 2 campaigns.',
@@ -431,7 +431,7 @@
     reach_email_generator: {
       name: 'Email Generator (Reach)',
       type: 'Generation',
-      model: 'Claude Sonnet 4.5 (planned)',
+      model: 'GPT-4o',
       system: 'Reach · post-consultation pipeline',
       status: 'Designed',
       description: 'Generates each email body in the campaign sequence with subject + 2 A/B variants. Personalization is L4 (evidence-backed emotional intelligence): every personalization phrase pulled from a specific extraction signal. The agent never invents — if a hook is unavailable, the phrase is omitted, not fabricated.',
@@ -442,7 +442,7 @@
     reach_sms_generator: {
       name: 'SMS Generator (Reach)',
       type: 'Generation',
-      model: 'Claude Sonnet 4.5 (planned)',
+      model: 'GPT-4o',
       system: 'Reach · post-consultation pipeline',
       status: 'Designed',
       description: 'Generates standard SMS messages (one-way push). Character-conscious, personal tone from provider, complementary to (not redundant with) the email sent around the same day. Includes opt-out compliance string.',
@@ -464,7 +464,7 @@
     reach_education_curator: {
       name: 'Education Content Curator (Reach)',
       type: 'RAG',
-      model: 'Deterministic ranking + Claude Haiku 4.5',
+      model: 'Deterministic ranking + Gemini 2.5 Flash',
       system: 'Reach · post-consultation pipeline',
       status: 'Designed',
       description: 'Selects which practice-library education resources to attach to each email in the sequence. Ranks content by relevance to the email\'s topic + patient\'s concerns. Email 1 might surface a "what to expect" article, Email 3 a financing PDF, Email 4 a B/A gallery.',

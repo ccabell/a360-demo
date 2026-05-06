@@ -182,19 +182,73 @@ nav{background:var(--teal);padding:0 24px}
   </div>
 
   <div class="grid">
-    <!-- Goals -->
-    <div class="tc">
-      <div class="tc-hdr"><span>Patient Goals <button class="a360-info" data-agent="p1_extraction"></button></span><span class="count">3</span></div>
-      <div class="tc-body">
-        <div class="goal-row"><div class="goal-text">Look refreshed and youthful for vacation</div><div class="goal-ev">"And you wanna look good in your photos."</div></div>
-        <div class="goal-row"><div class="goal-text">Improve skin texture</div><div class="goal-ev">"I'm gonna micro needle my whole face after you. Texture issues."</div></div>
-        <div class="goal-row"><div class="goal-text">Maintain smooth forehead appearance</div><div class="goal-ev">"I came in early because I don't want it to wear off before my trip."</div></div>
+
+    <!-- Visit Context — new -->
+    <div class="tc grid-full">
+      <div class="tc-hdr"><span>Visit Context <button class="a360-info" data-agent="p1_extraction"></button></span><span class="count">visit_context</span></div>
+      <div class="tc-body" style="padding:0">
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0">
+          <div style="padding:10px 14px;border-right:1px solid var(--slate-100)">
+            <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--slate-400);margin-bottom:3px">Visit type</div>
+            <div style="font-size:13px;font-weight:700;color:var(--slate-900)">Treatment visit</div>
+            <div style="font-size:10.5px;color:var(--slate-500);font-style:italic;margin-top:2px">"I came in early because I don't want it to wear off before my trip."</div>
+          </div>
+          <div style="padding:10px 14px;border-right:1px solid var(--slate-100)">
+            <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--slate-400);margin-bottom:3px">Reason for visit</div>
+            <div style="font-size:13px;font-weight:700;color:var(--slate-900)">Pre-vacation Botox top-up</div>
+            <div style="font-size:10.5px;color:var(--slate-500);font-style:italic;margin-top:2px">"You wanna look good in your photos."</div>
+          </div>
+          <div style="padding:10px 14px;border-right:1px solid var(--slate-100)">
+            <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--slate-400);margin-bottom:3px">Motivating event</div>
+            <div style="font-size:13px;font-weight:700;color:var(--slate-900)">Vacation · upcoming trip</div>
+            <div style="font-size:10.5px;color:var(--slate-500);font-style:italic;margin-top:2px">"Before my trip" · timeline pressure</div>
+          </div>
+          <div style="padding:10px 14px">
+            <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--slate-400);margin-bottom:3px">Referred by</div>
+            <div style="font-size:13px;font-weight:700;color:var(--slate-500)">—</div>
+            <div style="font-size:10.5px;color:var(--slate-400);font-style:italic;margin-top:2px">No referral signal in transcript</div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- Concerns -->
+    <!-- Patient Goals (split: primary / secondary / goals / interests) -->
     <div class="tc">
-      <div class="tc-hdr"><span>Concerns &amp; Risks <button class="a360-info" data-agent="p1_extraction"></button></span><span class="count">6</span></div>
+      <div class="tc-hdr"><span>Patient Goals &amp; Concerns <button class="a360-info" data-agent="p1_extraction"></button></span><span class="count">patient_goals</span></div>
+      <div class="tc-body" style="padding:0">
+
+        <div style="padding:10px 14px;border-bottom:1px solid var(--slate-100);background:#fef9c3">
+          <div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:#92400e;margin-bottom:3px">Primary concern</div>
+          <div style="font-size:13.5px;font-weight:700;color:var(--slate-900);line-height:1.35">Forehead lines softening / Botox wearing off</div>
+          <div style="font-size:11px;color:var(--slate-600);font-style:italic;margin-top:3px">"I came in early because I don't want it to wear off before my trip."</div>
+        </div>
+
+        <div style="padding:8px 14px;border-bottom:1px solid var(--slate-100)">
+          <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--slate-400);margin-bottom:5px">Secondary concerns · 3</div>
+          <div class="li" style="padding:3px 0;border-bottom:none"><div class="dot" style="background:var(--slate-400)"></div>Skin texture and clarity</div>
+          <div class="li" style="padding:3px 0;border-bottom:none"><div class="dot" style="background:var(--slate-400)"></div>Melasma and acne breakouts</div>
+          <div class="li" style="padding:3px 0;border-bottom:none"><div class="dot" style="background:var(--slate-400)"></div>Crow's feet / lateral canthus lines</div>
+        </div>
+
+        <div style="padding:8px 14px;border-bottom:1px solid var(--slate-100)">
+          <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--slate-400);margin-bottom:5px">Goals · what success looks like</div>
+          <div class="goal-row" style="padding:4px 0;border-bottom:none"><div class="goal-text" style="font-size:12.5px">Look refreshed and youthful for vacation</div><div class="goal-ev" style="font-size:10.5px">"You wanna look good in your photos."</div></div>
+          <div class="goal-row" style="padding:4px 0;border-bottom:none"><div class="goal-text" style="font-size:12.5px">Improve skin texture</div><div class="goal-ev" style="font-size:10.5px">"I'm gonna micro needle my whole face. Texture issues."</div></div>
+          <div class="goal-row" style="padding:4px 0;border-bottom:none"><div class="goal-text" style="font-size:12.5px">Maintain smooth forehead appearance</div></div>
+        </div>
+
+        <div style="padding:8px 14px">
+          <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--blue);margin-bottom:5px">Stated interests · receptive to learning more</div>
+          <div class="li" style="padding:3px 0;border-bottom:none"><div class="dot" style="background:var(--blue)"></div>Polynucleotide Therapy (PDRN) — wants to try as a topical with microneedling</div>
+          <div class="li" style="padding:3px 0;border-bottom:none"><div class="dot" style="background:var(--blue)"></div>Comprehensive post-summer skin plan (melasma, texture, acne)</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Concerns & Risks (clinical) -->
+    <div class="tc">
+      <div class="tc-hdr"><span>Clinical Concerns &amp; Risks <button class="a360-info" data-agent="p1_extraction"></button></span><span class="count">6</span></div>
       <div class="tc-body">
         <div class="li"><div class="dot" style="background:var(--rose)"></div>Bruising risk with Botox injection before vacation</div>
         <div class="li"><div class="dot" style="background:var(--rose)"></div>Botox resistance from early retreatment</div>
@@ -205,19 +259,44 @@ nav{background:var(--teal);padding:0 24px}
       </div>
     </div>
 
-    <!-- Offerings -->
+    <!-- Products & Services — grouped by disposition (matches Mid-Stream RunDetailPage layout) -->
     <div class="tc grid-full">
-      <div class="tc-hdr"><span>Offerings Discussed <button class="a360-info" data-agent="p1_extraction"></button></span><span class="count">9 products/services</span></div>
-      <div class="tc-body">
-        <div class="off-row"><div class="off-content"><div class="off-name">Botox (forehead/glabella)</div><div class="off-quote">"I'm gonna just take care of the lateral canthus line. Just a little tiny bit here."</div></div><div class="disp disp-performed">Performed</div></div>
-        <div class="off-row"><div class="off-content"><div class="off-name">Botox (brow area)</div><div class="off-quote">"Why don't we do just 2 yeah. Just a little bit here. I won't give you a brow lift injection."</div></div><div class="disp disp-performed">Performed</div></div>
-        <div class="off-row"><div class="off-content"><div class="off-name">Microneedling (full face)</div><div class="off-quote">"I'm gonna micro needle my whole face. Texture issues. Oh, it's a mess."</div></div><div class="disp disp-performed">Performed</div></div>
-        <div class="off-row"><div class="off-content"><div class="off-name">PDGRN (Salmon Sperm Topical)</div><div class="off-quote">"I'm literally microneedling, and I wanna try it. What is it? It's salmon sperm."</div></div><div class="disp disp-discussed">Discussed</div></div>
-        <div class="off-row"><div class="off-content"><div class="off-name">Lip Flip (Botox)</div><div class="off-quote">"How do you feel about lip flips? Do they drive you nuts?"</div></div><div class="disp disp-declined">Declined</div></div>
-        <div class="off-row"><div class="off-content"><div class="off-name">Botox (crow's feet / eyes)</div><div class="off-quote">"I can definitely do a little bit around your eyes if those bother you."</div></div><div class="disp disp-hesitant">Hesitant</div></div>
-        <div class="off-row"><div class="off-content"><div class="off-name">Dermal Filler</div><div class="off-quote">"Just a little around your next week. Yeah. But if it drives you nuts..."</div></div><div class="disp disp-discussed">Discussed</div></div>
-        <div class="off-row"><div class="off-content"><div class="off-name">Bruise Cream</div><div class="off-quote">"I'm gonna dab some bruise cream on there before you go."</div></div><div class="disp disp-purchased">Purchased</div></div>
-        <div class="off-row"><div class="off-content"><div class="off-name">Botox (full retreatment)</div><div class="off-quote">"I'll get you on the books, like, in a month for everything else."</div></div><div class="disp disp-scheduled">Scheduled</div></div>
+      <div class="tc-hdr"><span>Products &amp; Services <button class="a360-info" data-agent="p1_extraction"></button></span><span class="count">9 offerings · 5 dispositions</span></div>
+      <div class="tc-body" style="padding:0">
+
+        <div style="padding:8px 14px 4px;background:var(--green-bg);border-bottom:1px solid var(--green-border);display:flex;justify-content:space-between;align-items:center">
+          <div style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--green)">✓ Performed today · 4</div>
+          <div style="font-family:var(--mono);font-size:11px;font-weight:700;color:var(--green)">realized value</div>
+        </div>
+        <div class="off-row"><div class="off-content"><div class="off-name">Botox · forehead / glabella</div><div class="off-quote">"I'm gonna just take care of the lateral canthus line. Just a little tiny bit here."</div></div><div class="disp disp-performed">Performed</div></div>
+        <div class="off-row"><div class="off-content"><div class="off-name">Botox · brow area</div><div class="off-quote">"Why don't we do just 2 — just a little bit here. I won't give you a brow lift injection."</div></div><div class="disp disp-performed">Performed</div></div>
+        <div class="off-row"><div class="off-content"><div class="off-name">Microneedling · full face</div><div class="off-quote">"I'm gonna micro needle my whole face. Texture issues. Oh, it's a mess."</div></div><div class="disp disp-performed">Performed</div></div>
+        <div class="off-row"><div class="off-content"><div class="off-name">Bruise cream · take-home</div><div class="off-quote">"I'm gonna dab some bruise cream on there before you go."</div></div><div class="disp disp-purchased">Purchased</div></div>
+
+        <div style="padding:8px 14px 4px;background:var(--purple-bg);border-top:1px solid var(--slate-200);border-bottom:1px solid var(--purple-border);display:flex;justify-content:space-between;align-items:center">
+          <div style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--purple)">📅 Scheduled / committed · 1</div>
+          <div style="font-family:var(--mono);font-size:11px;font-weight:700;color:var(--purple)">committed value</div>
+        </div>
+        <div class="off-row"><div class="off-content"><div class="off-name">Botox · full retreatment (forehead, glabella, crow's feet)</div><div class="off-quote">"I'll get you on the books, like, in a month for everything else."</div></div><div class="disp disp-scheduled">Scheduled</div></div>
+
+        <div style="padding:8px 14px 4px;background:var(--blue-bg);border-top:1px solid var(--slate-200);border-bottom:1px solid #bfdbfe;display:flex;justify-content:space-between;align-items:center">
+          <div style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--blue)">⚡ Recommended · 1 receptive · 1 hesitant</div>
+          <div style="font-family:var(--mono);font-size:11px;font-weight:700;color:var(--blue)">potential value</div>
+        </div>
+        <div class="off-row"><div class="off-content"><div class="off-name">Polynucleotide Therapy (PDRN) · topical</div><div class="off-quote">"I'm literally microneedling, and I wanna try it."</div></div><div class="disp disp-receptive">Receptive</div></div>
+        <div class="off-row"><div class="off-content"><div class="off-name">Botox · crow's feet / eyes</div><div class="off-quote">"I can definitely do a little bit around your eyes if those bother you."</div></div><div class="disp disp-hesitant">Hesitant</div></div>
+
+        <div style="padding:8px 14px 4px;background:var(--rose-bg);border-top:1px solid var(--slate-200);border-bottom:1px solid #fca5a5;display:flex;justify-content:space-between;align-items:center">
+          <div style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--rose)">✕ Declined · 1</div>
+          <div style="font-family:var(--mono);font-size:11px;font-weight:700;color:var(--rose)">lost value</div>
+        </div>
+        <div class="off-row"><div class="off-content"><div class="off-name">Lip Flip (Botox)</div><div class="off-quote">"How do you feel about lip flips? Do they drive you nuts?" — declined based on prior result.</div></div><div class="disp disp-declined">Declined</div></div>
+
+        <div style="padding:8px 14px 4px;background:var(--slate-100);border-top:1px solid var(--slate-200);border-bottom:1px solid var(--slate-200);display:flex;justify-content:space-between;align-items:center">
+          <div style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--slate-600)">💬 Discussed · future interest · 1</div>
+          <div style="font-family:var(--mono);font-size:11px;font-weight:700;color:var(--slate-500)">future opportunity</div>
+        </div>
+        <div class="off-row"><div class="off-content"><div class="off-name">Dermal Filler · cheeks</div><div class="off-quote">"Just a little volume next time, but if it drives you nuts we'll skip it."</div></div><div class="disp disp-discussed">Discussed</div></div>
       </div>
     </div>
 
