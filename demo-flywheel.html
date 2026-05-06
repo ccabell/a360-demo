@@ -278,7 +278,7 @@ footer .meta{font-size:11px;color:var(--slate-400);font-family:var(--mono)}
 // ─── Loop 1 data: practice cross-sell comparison ───────────────────────────
 const LUMIERE_RECS = [
   {icon:'+', cls:'in-catalog', kind:'add', name:'Botox', price:'In-catalog · pricing on file', reason:'Patient asked for it by name. In Lumiere catalog. Receptive intent — propose during next visit.'},
-  {icon:'+', cls:'in-catalog', kind:'add', name:'Microneedling with PDGRN topical', price:'$595 / session', reason:'Texture / skin-quality goal aligns with Lumiere flagship treatment. PDGRN amplifies microneedling results without injectable risk.'},
+  {icon:'+', cls:'in-catalog', kind:'add', name:'Microneedling with PDRN polynucleotide topical', price:'$595 / session', reason:'Texture and skin-quality goal aligns with Lumiere flagship treatment. PDRN amplifies microneedling results without injectable risk.'},
   {icon:'+', cls:'in-catalog primary', kind:'add', name:'Halo Hybrid Fractional Laser', price:'$995 / session', reason:'Patient mentioned vacation in 3 months — Halo recovery window fits. Pre-vacation glow is a high-converting framing for this catalog.'},
   {icon:'×', cls:'declined', kind:'skip', name:'Sclerotherapy for spider veins', reason:'Patient explicitly mentioned spider veins. Lumiere does not offer venous services — silently filtered out by the Practice Library COALESCE.'},
 ];
@@ -288,7 +288,7 @@ const MIDWEST_RECS = [
   {icon:'+', cls:'in-catalog', kind:'add', name:'Botox Cosmetic', price:'$12 / unit', reason:'Patient asked for it by name. In Midwest catalog. Pair with first sclerotherapy visit to consolidate trips.'},
   {icon:'+', cls:'in-catalog', kind:'add', name:'Compression hose (thigh-highs)', price:'$75', reason:'Required post-treatment for sclerotherapy — bundle into the first session quote so the patient leaves with everything.'},
   {icon:'+', cls:'in-catalog', kind:'add', name:'Halo — The MVL Glow', price:'$995 / session', reason:'Patient said "I want to look better" + 3-month vacation timeline. Halo is in catalog and the timing fits.'},
-  {icon:'×', cls:'declined', kind:'skip', name:'Microneedling with PDGRN', reason:'Not in Midwest catalog. Filtered out by Practice Library — the model never sees it as an option for this practice.'},
+  {icon:'×', cls:'declined', kind:'skip', name:'Microneedling with PDRN polynucleotide', reason:'Not in Midwest catalog. Filtered out by Practice Library — the model never sees it as an option for this practice.'},
 ];
 
 function renderRecs(elId, recs) {
