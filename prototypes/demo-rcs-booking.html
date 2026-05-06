@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script src="auth.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Reach RCS — Booking</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Roboto:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --accent:#1b4f6b;
+  --accent-soft:#e6eef3;
+  --agent-bg:#f1eef2;
+  --agent-ink:#1f1c22;
+  --user-bg:#1b4f6b;
+  --user-ink:#fff;
+  --chip-border:#1b4f6b;
+  --chip-ink:#1b4f6b;
+  --card-border:#e4e1e6;
+  --ink:#1f1c22;
+  --ink-soft:#49454f;
+  --ink-mute:#79747e;
+  --divider:#e6e0e9;
+  --bg:#f7f5f8;
+  --green:#059669;
+  --green-bg:#ecfdf5;
+}
+body{background:var(--bg);color:var(--ink);font-family:'Inter','Roboto',-apple-system,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:36px 24px}
+
+.caption{position:fixed;top:14px;left:50%;transform:translateX(-50%);text-align:center;z-index:5}
+.caption .h{font-size:13px;font-weight:700;color:var(--ink);letter-spacing:-.01em}
+.caption .s{font-size:11px;color:var(--ink-mute);margin-top:2px}
+.caption a{color:var(--accent);text-decoration:none;font-weight:500}
+
+.phone{
+  width:400px;height:840px;border-radius:44px;padding:10px;
+  background:#0f0d12;
+  box-shadow:0 40px 80px rgba(0,0,0,.25), 0 0 0 1px rgba(0,0,0,.2);
+  position:relative;flex-shrink:0;
+}
+.phone-screen{
+  width:100%;height:100%;border-radius:36px;overflow:hidden;
+  background:#fff;display:flex;flex-direction:column;position:relative;
+}
+.punch-hole{position:absolute;top:10px;left:50%;transform:translateX(-50%);width:14px;height:14px;border-radius:50%;background:#0a0a0a;z-index:100}
+
+.status-bar{height:34px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;font-family:'Roboto',sans-serif;flex-shrink:0}
+.status-bar .time{font-size:13px;font-weight:500;color:var(--ink);letter-spacing:.2px}
+.status-bar .icons{display:flex;align-items:center;gap:5px}
+
+.app-hdr{background:#fff;padding:4px 6px 8px;border-bottom:1px solid var(--divider);display:flex;align-items:center;gap:8px;height:64px;flex-shrink:0}
+.btn-icon{width:40px;height:40px;border:none;background:transparent;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.app-avatar{width:38px;height:38px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.app-meta{flex:1;min-width:0;padding-left:4px}
+.app-name{display:flex;align-items:center;gap:5px}
+.app-name .n{font-size:16px;font-weight:600;color:var(--ink);letter-spacing:-.2px}
+.app-sub{font-size:12px;color:var(--ink-soft);margin-top:1px;display:flex;align-items:center;gap:5px;letter-spacing:-.05px}
+.app-sub .dot{width:6px;height:6px;border-radius:50%;background:#00a855;display:inline-block}
+
+.convo{flex:1;overflow-y:auto;background:#fff;padding:6px 0 10px;display:flex;flex-direction:column;gap:2px}
+.convo::-webkit-scrollbar{width:0}
+.day-stamp{text-align:center;margin:10px 0 6px;font-size:11.5px;color:var(--ink-mute);font-weight:500;letter-spacing:.2px}
+
+.row{display:flex;align-items:flex-end;gap:8px;padding:0 10px;margin-top:2px}
+.row.from-them{justify-content:flex-start}
+.row.from-me{justify-content:flex-end}
+.row .ava{width:28px;flex-shrink:0}
+.row .ava .img{width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;font-size:12px}
+.bubble{max-width:72%;padding:9px 14px;font-size:15.5px;line-height:1.38;letter-spacing:-.1px;word-break:break-word}
+.from-them .bubble{background:var(--agent-bg);color:var(--agent-ink);border-radius:18px 18px 18px 4px}
+.from-them .bubble.no-tail{border-radius:18px}
+.from-me .bubble{background:var(--user-bg);color:var(--user-ink);border-radius:18px 18px 4px 18px}
+.from-me .bubble.no-tail{border-radius:18px}
+
+.delivery{text-align:right;font-size:10.5px;color:var(--ink-mute);padding:1px 14px 0;margin-top:-1px}
+
+.chips{display:flex;gap:8px;padding:6px 10px 2px 46px;flex-wrap:wrap}
+.chip{padding:7px 14px;border-radius:999px;border:1px solid var(--chip-border);background:#fff;color:var(--chip-ink);font-size:13.5px;font-weight:500;font-family:'Inter','Roboto',sans-serif;cursor:pointer;white-space:nowrap;letter-spacing:-.1px}
+.chip.tapped{background:var(--accent);color:#fff}
+
+.actions{display:flex;gap:8px;padding:6px 10px 2px 46px;flex-wrap:wrap}
+.action{padding:7px 14px 7px 12px;border-radius:999px;border:1px solid var(--chip-border);background:#fff;color:var(--chip-ink);font-size:13.5px;font-weight:500;cursor:pointer;display:inline-flex;align-items:center;gap:7px;letter-spacing:-.1px}
+
+.card-wrap{padding:4px 10px 2px 46px}
+.card{width:300px;border-radius:18px;overflow:hidden;background:#fff;border:1px solid var(--card-border);box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card .header-band{padding:11px 14px;background:linear-gradient(135deg,var(--accent) 0%,#143f57 100%);color:#fff}
+.card .header-band .sub{font-size:10.5px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;opacity:.85;margin-bottom:2px}
+.card .header-band .ttl{font-size:15.5px;font-weight:700;letter-spacing:-.2px;line-height:1.25}
+.card .body{padding:12px 14px 8px}
+.card .row-li{display:flex;justify-content:space-between;align-items:flex-start;padding:6px 0;font-size:13.5px;color:var(--ink-soft);border-bottom:1px solid var(--divider);gap:10px}
+.card .row-li:last-child{border-bottom:none}
+.card .row-li .lbl{font-weight:500;color:var(--ink-soft)}
+.card .row-li .val{font-weight:600;color:var(--ink);text-align:right}
+.card .total-row{display:flex;justify-content:space-between;padding:9px 14px;background:var(--accent-soft);border-top:1px solid var(--card-border);font-size:14px;font-weight:700;color:var(--accent)}
+.card .footnote{padding:0 14px 12px;font-size:12px;color:var(--ink-mute);font-style:italic;line-height:1.45}
+
+/* Time-slot card */
+.slot-card{width:300px;border-radius:18px;overflow:hidden;background:#fff;border:1px solid var(--card-border)}
+.slot-card .hdr{padding:12px 14px 8px}
+.slot-card .hdr .sub{font-size:10.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--accent)}
+.slot-card .hdr .ttl{font-size:15.5px;font-weight:700;color:var(--ink);margin-top:2px;letter-spacing:-.2px}
+.slot-card .hdr .desc{font-size:12.5px;color:var(--ink-soft);margin-top:6px;line-height:1.45}
+.slot-card .slots{display:flex;flex-direction:column;border-top:1px solid var(--divider)}
+.slot-card .slot{
+  padding:12px 14px;background:transparent;border:none;cursor:pointer;
+  text-align:left;display:flex;justify-content:space-between;align-items:center;
+  border-top:1px solid var(--divider);font-family:'Inter','Roboto',sans-serif;
+}
+.slot-card .slot:first-child{border-top:none}
+.slot-card .slot .day{font-size:14px;font-weight:700;color:var(--ink);letter-spacing:-.1px}
+.slot-card .slot .time{font-size:13px;color:var(--ink-soft);margin-top:1px;letter-spacing:-.05px}
+.slot-card .slot .pick{font-size:13px;font-weight:600;color:var(--accent)}
+
+/* Confirmation banner card */
+.confirm-card{
+  width:300px;border-radius:18px;overflow:hidden;
+  background:linear-gradient(135deg,var(--green-bg) 0%,#d1fae5 100%);
+  border:1px solid #a7f3d0;
+}
+.confirm-card .check{padding:14px 14px 4px;display:flex;align-items:center;gap:10px}
+.confirm-card .check .ic{width:32px;height:32px;border-radius:50%;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800}
+.confirm-card .check .ttl{font-size:15px;font-weight:700;color:#065f46;letter-spacing:-.1px}
+.confirm-card .body{padding:8px 14px 12px}
+.confirm-card .body .row-li{padding:5px 0;font-size:13px;color:#065f46;border-bottom:1px dashed rgba(6,95,70,.15)}
+.confirm-card .body .row-li:last-child{border-bottom:none}
+.confirm-card .body .row-li .lbl{color:rgba(6,95,70,.7);font-weight:500;font-size:11.5px;text-transform:uppercase;letter-spacing:.05em}
+.confirm-card .body .row-li .val{color:#065f46;font-weight:700;font-size:13px}
+
+.composer{padding:6px 10px 10px;background:#fff;border-top:1px solid var(--divider);flex-shrink:0}
+.composer .inner{display:flex;align-items:center;gap:8px;background:#f3edf7;border-radius:28px;padding:4px 6px 4px 10px}
+.composer .placeholder{flex:1;font-size:15px;color:var(--ink-mute);display:flex;align-items:center;gap:6px;padding:8px 4px;letter-spacing:-.1px}
+
+.legend{position:fixed;left:14px;bottom:14px;font-size:11px;color:var(--ink-mute);font-family:'Inter',sans-serif;background:#fff;padding:6px 12px;border-radius:6px;border:1px solid var(--card-border)}
+.legend a{color:var(--accent);text-decoration:none;font-weight:600;margin-left:8px}
+
+@media (max-width:480px){
+  .phone{width:100%;height:90vh}
+  .caption{position:relative;left:auto;transform:none;margin-bottom:14px}
+}
+</style>
+</head>
+<body>
+
+<div class="caption">
+  <div class="h">Reach · Conversational SMS / RCS</div>
+  <div class="s">Booking flow · powered by OrchardLink &nbsp;·&nbsp; <a href="demo-rcs-education.html">← Education flow</a></div>
+</div>
+
+<div class="phone">
+  <div class="phone-screen">
+    <div class="punch-hole"></div>
+
+    <div class="status-bar">
+      <span class="time">9:41</span>
+      <span class="icons">
+        <svg width="15" height="12" viewBox="0 0 16 12"><path d="M0 10h2v2H0zM4 8h2v4H4zM8 6h2v6H8zM12 3h2v9h-2z" fill="#1F1C22"/></svg>
+        <svg width="15" height="12" viewBox="0 0 16 12"><path d="M8 11.5l3-3.8a4.8 4.8 0 00-6 0l3 3.8zM14.5 5.2A10.3 10.3 0 001.5 5.2L3 6.7a8.1 8.1 0 0110 0l1.5-1.5zM8 1.2c-2.9 0-5.6 1.1-7.6 3L2 5.7a8.1 8.1 0 0112 0l1.6-1.5c-2-1.9-4.7-3-7.6-3z" fill="#1F1C22"/></svg>
+        <svg width="22" height="12" viewBox="0 0 22 12"><rect x="1" y="1" width="18" height="10" rx="2.2" stroke="#1F1C22" stroke-opacity=".5" fill="none"/><rect x="2.5" y="2.5" width="15" height="7" rx="1" fill="#1F1C22"/><rect x="19.5" y="4" width="1.5" height="4" rx=".5" fill="#1F1C22"/></svg>
+      </span>
+    </div>
+
+    <div class="app-hdr">
+      <button class="btn-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1F1C22" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
+      <div class="app-avatar">G</div>
+      <div class="app-meta">
+        <div class="app-name">
+          <span class="n">Glow Aesthetics</span>
+          <svg width="13" height="13" viewBox="0 0 24 24"><path d="M12 1l2.5 2.3 3.4-.3.8 3.3L22 8l-1.3 3.1 1.3 3.1-3.3 1.7-.8 3.3-3.4-.3L12 21l-2.5-2.3-3.4.3-.8-3.3L2 14l1.3-3.1L2 7.8l3.3-1.7.8-3.3 3.4.3L12 1z" fill="#1A73E8"/><path d="M9.5 12.2l1.9 1.9 3.8-4.2" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+        </div>
+        <div class="app-sub"><span class="dot"></span>Business · Verified by Google</div>
+      </div>
+      <button class="btn-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="#1F1C22"><path d="M20 15.5c-1.25 0-2.45-.2-3.57-.57a1 1 0 00-1.02.24l-2.2 2.2a15.07 15.07 0 01-6.58-6.59l2.2-2.21a1 1 0 00.25-1.02A11.36 11.36 0 018.5 4a1 1 0 00-1-1H4a1 1 0 00-1 1 17 17 0 0017 17 1 1 0 001-1v-3.5a1 1 0 00-1-1z"/></svg></button>
+      <button class="btn-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="#1F1C22"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg></button>
+    </div>
+
+    <div class="convo">
+      <div class="day-stamp">Today · 9:41 AM</div>
+
+      <div class="row from-me"><div class="bubble">I'd like to book my Botox follow-up</div></div>
+      <div class="delivery">Delivered · Read</div>
+
+      <div class="row from-them"><div class="ava"><div class="img">G</div></div><div class="bubble">Of course, Sarah. I pulled up your file — your last visit was on April 29 with Dr. Chen. You're due for forehead and glabella maintenance.</div></div>
+      <div class="row from-them"><div class="ava"></div><div class="bubble">Want the same plan as last time, or shall I check options?</div></div>
+
+      <div class="chips">
+        <button class="chip tapped">Same as last time</button>
+        <button class="chip">Add filler this visit</button>
+        <button class="chip">Talk to Dr. Chen first</button>
+      </div>
+
+      <div class="row from-me"><div class="bubble">Same as last time</div></div>
+      <div class="delivery">Delivered · Read</div>
+
+      <div class="row from-them"><div class="ava"><div class="img">G</div></div><div class="bubble">Got it. Here's a quick summary of your visit:</div></div>
+
+      <!-- Visit summary card -->
+      <div class="card-wrap">
+        <div class="card">
+          <div class="header-band">
+            <div class="sub">Treatment plan</div>
+            <div class="ttl">Botox Maintenance · Forehead &amp; Glabella</div>
+          </div>
+          <div class="body">
+            <div class="row-li"><span class="lbl">Botox · forehead</span><span class="val">20 units</span></div>
+            <div class="row-li"><span class="lbl">Botox · glabella</span><span class="val">15 units</span></div>
+            <div class="row-li"><span class="lbl">Provider</span><span class="val">Dr. Emily Chen</span></div>
+            <div class="row-li"><span class="lbl">Duration</span><span class="val">~30 min</span></div>
+          </div>
+          <div class="total-row"><span>Total</span><span>$420 · 0% finance available</span></div>
+          <div class="footnote">Same dosage and provider as April 29 visit. We'll confirm everything in-clinic before treatment.</div>
+        </div>
+      </div>
+
+      <div class="row from-them"><div class="ava"><div class="img">G</div></div><div class="bubble">Pick a time this week — Dr. Chen has a few openings. All times Central, daughter's-wedding-friendly.</div></div>
+
+      <!-- Time-slot card -->
+      <div class="card-wrap">
+        <div class="slot-card">
+          <div class="hdr">
+            <div class="sub">Pick a slot</div>
+            <div class="ttl">Three openings this week</div>
+            <div class="desc">Each slot includes 30 min of treatment + 15 min of pre/post-care. Reschedule any time.</div>
+          </div>
+          <div class="slots">
+            <button class="slot">
+              <div><div class="day">Tue, May 12</div><div class="time">2:00 PM CT · Dr. Chen</div></div>
+              <span class="pick">Pick →</span>
+            </button>
+            <button class="slot">
+              <div><div class="day">Wed, May 13</div><div class="time">10:30 AM CT · Dr. Chen</div></div>
+              <span class="pick">Pick →</span>
+            </button>
+            <button class="slot">
+              <div><div class="day">Thu, May 14</div><div class="time">4:00 PM CT · Dr. Chen</div></div>
+              <span class="pick">Pick →</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="row from-me"><div class="bubble">Wed at 10:30 works</div></div>
+      <div class="delivery">Delivered · Read</div>
+
+      <div class="row from-them"><div class="ava"><div class="img">G</div></div><div class="bubble">Booked ✓ — calendar invite is on its way to your email. A few quick reminders:</div></div>
+
+      <!-- Confirmation card -->
+      <div class="card-wrap">
+        <div class="confirm-card">
+          <div class="check">
+            <div class="ic">✓</div>
+            <div class="ttl">Wed, May 13 · 10:30 AM CT</div>
+          </div>
+          <div class="body">
+            <div class="row-li"><div class="lbl">Provider</div><div class="val">Dr. Emily Chen</div></div>
+            <div class="row-li"><div class="lbl">Treatment</div><div class="val">Botox · 35 units</div></div>
+            <div class="row-li"><div class="lbl">Location</div><div class="val">Glow Aesthetics · Suite 204</div></div>
+            <div class="row-li"><div class="lbl">Pre-care</div><div class="val">No NSAIDs · 24h alcohol-free</div></div>
+            <div class="row-li"><div class="lbl">Investment</div><div class="val">$420</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row from-them"><div class="ava"><div class="img">G</div></div><div class="bubble">A few helpful next steps:</div></div>
+
+      <div class="actions">
+        <button class="action">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1b4f6b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+          Add to calendar
+        </button>
+        <button class="action">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1b4f6b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Get directions
+        </button>
+        <button class="action">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#1b4f6b"><path d="M20 15.5c-1.25 0-2.45-.2-3.57-.57a1 1 0 00-1.02.24l-2.2 2.2a15.07 15.07 0 01-6.58-6.59l2.2-2.21a1 1 0 00.25-1.02A11.36 11.36 0 018.5 4a1 1 0 00-1-1H4a1 1 0 00-1 1 17 17 0 0017 17 1 1 0 001-1v-3.5a1 1 0 00-1-1z"/></svg>
+          Call the front desk
+        </button>
+      </div>
+
+      <div class="row from-them" style="margin-top:8px"><div class="ava"><div class="img">G</div></div><div class="bubble">See you Wednesday, Sarah. We'll text the morning of with parking details. 💛</div></div>
+    </div>
+
+    <div class="composer">
+      <div class="inner">
+        <button class="btn-icon" style="width:36px;height:36px"><svg width="22" height="22" viewBox="0 0 24 24" fill="#49454F"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></button>
+        <button class="btn-icon" style="width:36px;height:36px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#49454F" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></svg></button>
+        <div class="placeholder">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="#79747E"><path d="M18 8h-1V6a5 5 0 00-10 0v2H6a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V10a2 2 0 00-2-2zM9 6a3 3 0 016 0v2H9V6z"/></svg>
+          <span>RCS message</span>
+        </div>
+        <button class="btn-icon" style="width:36px;height:36px"><svg width="22" height="22" viewBox="0 0 24 24" fill="#49454F"><path d="M4 4h3l2-2h6l2 2h3a2 2 0 012 2v12a2 2 0 01-2 2H4a2 2 0 01-2-2V6a2 2 0 012-2zm8 3a5 5 0 100 10 5 5 0 000-10z"/></svg></button>
+        <button class="btn-icon" style="width:36px;height:36px"><svg width="22" height="22" viewBox="0 0 24 24" fill="#49454F"><path d="M12 2a3 3 0 00-3 3v6a3 3 0 006 0V5a3 3 0 00-3-3zm7 9a1 1 0 00-2 0 5 5 0 01-10 0 1 1 0 00-2 0 7 7 0 006 6.92V21h-3a1 1 0 000 2h8a1 1 0 000-2h-3v-3.08A7 7 0 0019 11z"/></svg></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="legend">
+  Glow Aesthetics → Sarah Mitchell · RCS conversation
+  <a href="demo-rcs-education.html">← Education</a>
+  <a href="demo-reach-sms.html">Back to Reach SMS →</a>
+</div>
+
+<script src="agent-info-panel.js"></script>
+</body>
+</html>
