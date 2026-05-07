@@ -167,7 +167,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Inter','Roboto',-apple-s
 
 <div class="caption">
   <div class="h">Reach · Conversational SMS / RCS</div>
-  <div class="s">Patient education flow · interactive · powered by OrchardLink &nbsp;·&nbsp; <a href="demo-rcs-booking.html">→ Booking flow</a></div>
+  <div class="s">Outbound follow-up · CoolSculpting promo · powered by OrchardLink &nbsp;·&nbsp; <a href="demo-rcs-booking.html">→ Booking flow</a></div>
 </div>
 
 <div class="phone">
@@ -224,52 +224,52 @@ body{background:var(--bg);color:var(--ink);font-family:'Inter','Roboto',-apple-s
 // t: ms to wait BEFORE rendering this step
 const SCRIPT = [
   { kind: 'day',    t: 100,  text: 'Today · 9:41 AM' },
-  { kind: 'user',   t: 400,  text: "Hi! I'm thinking about microneedling — what's it actually like?" },
-  { kind: 'typing', t: 900 },
-  { kind: 'agent',  t: 1500, text: "Hi Sarah! Happy to walk you through it. 🌿" },
+  // Practice initiates — outbound follow-up
   { kind: 'typing', t: 600 },
-  { kind: 'agent',  t: 1700, text: "It's about a 60-minute visit. We use a small device with very fine sterile needles that move across the skin. The point isn't really the needles — it's that they nudge your collagen to rebuild, which is what gives skin that smoother look." },
+  { kind: 'agent',  t: 1300, text: "Hi Sarah! 👋 It's Glow Aesthetics, just checking in." },
+  { kind: 'typing', t: 600 },
+  { kind: 'agent',  t: 1700, text: "When you came in on April 29, you mentioned you'd been thinking about CoolSculpting for the lower abdomen and flanks but wanted to wait until after summer. Wanted to circle back." },
   { kind: 'typing', t: 500 },
-  { kind: 'agent',  t: 1500, text: "Most people describe it as a buzzy or tingly feeling, not painful. We numb the area first so it stays comfortable." },
+  { kind: 'agent',  t: 1500, text: "Two things you'd want to know: our spring promo just opened — <strong>25% off any 3-cycle series booked before May 31</strong>. And Dr. Chen has new openings in the next two weeks." },
   { kind: 'typing', t: 400 },
-  { kind: 'agent',  t: 1100, text: "What are you mainly hoping it'll help with?" },
+  { kind: 'agent',  t: 1100, text: "Want a quick refresher on how it works, or skip to scheduling?" },
   { kind: 'chips',  t: 600,
-    items: ['Texture', 'Acne scars', 'Fine lines', 'Pricing'],
-    autoTap: 1
+    items: ['Tell me how it works', 'Show me the math', 'Not right now'],
+    autoTap: 0
   },
-  { kind: 'user',   t: 1700, text: 'Acne scars', delivery: true },
+  { kind: 'user',   t: 1700, text: 'Tell me how it works', delivery: true },
   { kind: 'typing', t: 800 },
-  { kind: 'agent',  t: 1500, text: "Good one. For scarring we usually plan a series of 3 sessions, about 6 weeks apart. That gap matters — your skin needs the time to actually rebuild between treatments." },
+  { kind: 'agent',  t: 1500, text: "Easy. CoolSculpting cools targeted fat cells until they're damaged — your body then clears them out naturally over the next 8–12 weeks. No needles, no anesthesia, no recovery time." },
   { kind: 'typing', t: 500 },
-  { kind: 'agent',  t: 1500, text: "After each session we apply a healing serum so you bounce back faster. Real visible changes show up around week 4." },
+  { kind: 'agent',  t: 1300, text: "Most people read or take a call during the appointment. You walk out and go right back to your day." },
   { kind: 'typing', t: 300 },
   { kind: 'card',   t: 800,
     card: {
-      sub: 'Recommended for acne scars',
-      title: 'Microneedling Series',
-      desc: '3 sessions · 60 min each. 1–2 days of pinkness, then back to normal. Most patients notice softer scars and brighter skin by month 2.',
-      icon: '✦',
-      buttons: ['See real before & afters', 'Watch a 60-second video', 'What to expect on the day']
+      sub: 'How CoolSculpting works',
+      title: 'Cryolipolysis · 35-minute cycle per area',
+      desc: 'A soft applicator cools the area for 35 minutes, then a brief massage afterward. Mild numbness for a day or two is normal. Real visible change shows up around weeks 4–6, with full results by month 3.',
+      icon: '❄',
+      buttons: ['See real before & afters', 'Watch a 60-second explainer', 'Read the FDA-approved areas']
     }
   },
   { kind: 'typing', t: 1500 },
-  { kind: 'agent',  t: 1500, text: "If you wanted to be wrapped up before your sister's wedding in August, starting in the next 2-3 weeks gives you a comfortable buffer." },
+  { kind: 'agent',  t: 1500, text: "For your areas — lower abdomen and flanks — most patients book a 3-cycle series. With the promo, that comes to $1,800 instead of $2,400." },
   { kind: 'typing', t: 400 },
-  { kind: 'agent',  t: 1100, text: "A few things people often pair with it:" },
+  { kind: 'agent',  t: 1100, text: "Other things people often pair with it:" },
   { kind: 'carousel', t: 600,
     cards: [
-      { sub: 'FACIAL',   title: 'HydraFacial Glow',     desc: 'A 30-minute glow boost. Great to add 1–2 weeks before the wedding.', icon: '◐', tint: 'pink' },
-      { sub: 'LASER',    title: 'BBL Photo-rejuvenation', desc: 'Targets sun spots and redness between microneedling sessions.', icon: '◓', tint: 'amber' },
-      { sub: 'KIT',      title: 'Post-Care Kit',        desc: 'Medical SPF, gentle cleanser, recovery balm. Free with the package.', icon: '◒', tint: 'green' }
+      { sub: 'BODY',     title: 'CoolTone Add-On',         desc: 'Tones underlying muscle. Often added 4 weeks after the first CoolSculpting cycle.', icon: '◐', tint: 'pink' },
+      { sub: 'SKIN',     title: 'Morpheus8 Body',          desc: 'Tightens loose skin alongside fat reduction. Great for the lower abdomen.', icon: '◓', tint: 'amber' },
+      { sub: 'WELLNESS', title: 'Nutrition Coaching',      desc: 'Three-session series with our wellness team to lock in results. 50% off with the promo.', icon: '◒', tint: 'green' }
     ]
   },
   { kind: 'typing', t: 1500 },
-  { kind: 'agent',  t: 1500, text: "Want to come in for a quick chat, or would you rather just see pricing first?" },
+  { kind: 'agent',  t: 1500, text: "If the timing works, I'd recommend booking a free consult — Dr. Chen will map out exactly which areas and how many cycles for you." },
   { kind: 'actions', t: 600,
     items: [
-      { label: 'Book a free 15-min consult', icon: 'cal' },
-      { label: 'See pricing',                icon: 'doc' },
-      { label: 'Text Dr. Chen directly',     icon: 'phone' }
+      { label: 'Book the free consult',  icon: 'cal' },
+      { label: 'Send the brochure',      icon: 'doc' },
+      { label: 'Text Dr. Chen directly', icon: 'phone' }
     ]
   },
 ];
@@ -298,6 +298,21 @@ function appendHTML(html){
 }
 
 function escHTML(s){ return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+// Render agent message: escape HTML, then convert **bold** and allow <strong> passthrough as a special case
+function renderMsg(s){
+  // Allow only <strong>...</strong> tags through. Everything else is escaped.
+  // Strategy: tokenize on <strong>...</strong>, escape the rest.
+  const parts = [];
+  const re = /<strong>(.*?)<\/strong>/gs;
+  let last = 0, m;
+  while ((m = re.exec(s)) !== null) {
+    parts.push(escHTML(s.slice(last, m.index)));
+    parts.push('<strong>' + escHTML(m[1]) + '</strong>');
+    last = re.lastIndex;
+  }
+  parts.push(escHTML(s.slice(last)));
+  return parts.join('');
+}
 
 function renderStep(step){
   switch(step.kind){
@@ -311,7 +326,7 @@ function renderStep(step){
       break;
     case 'agent':
       clearTyping();
-      appendHTML(`<div class="row from-them"><div class="ava"><div class="img">G</div></div><div class="bubble">${escHTML(step.text)}</div></div>`);
+      appendHTML(`<div class="row from-them"><div class="ava"><div class="img">G</div></div><div class="bubble">${renderMsg(step.text)}</div></div>`);
       break;
     case 'typing':
       clearTyping();
