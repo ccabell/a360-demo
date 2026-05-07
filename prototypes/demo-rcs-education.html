@@ -167,7 +167,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Inter','Roboto',-apple-s
 
 <div class="caption">
   <div class="h">Reach · Conversational SMS / RCS</div>
-  <div class="s">Outbound follow-up · CoolSculpting promo · powered by OrchardLink &nbsp;·&nbsp; <a href="demo-rcs-booking.html">→ Booking flow</a></div>
+  <div class="s">Outbound follow-up &nbsp;·&nbsp; <a href="demo-rcs-booking.html">→ Booking flow</a></div>
 </div>
 
 <div class="phone">
@@ -224,52 +224,47 @@ body{background:var(--bg);color:var(--ink);font-family:'Inter','Roboto',-apple-s
 // t: ms to wait BEFORE rendering this step
 const SCRIPT = [
   { kind: 'day',    t: 100,  text: 'Today · 9:41 AM' },
-  // Practice initiates — outbound follow-up
+  // Practice initiates — light, accurate anchor only
   { kind: 'typing', t: 600 },
-  { kind: 'agent',  t: 1300, text: "Hi Sarah! 👋 It's Glow Aesthetics, just checking in." },
+  { kind: 'agent',  t: 1300, text: "Hi Sarah! 👋 It's Glow Aesthetics." },
   { kind: 'typing', t: 600 },
-  { kind: 'agent',  t: 1700, text: "When you came in on April 29, you mentioned you'd been thinking about CoolSculpting for the lower abdomen and flanks but wanted to wait until after summer. Wanted to circle back." },
+  { kind: 'agent',  t: 1700, text: "Following up on your visit on April 29 — you'd asked about CoolSculpting. Wanted to share two things in case helpful." },
   { kind: 'typing', t: 500 },
-  { kind: 'agent',  t: 1500, text: "Two things you'd want to know: our spring promo just opened — <strong>25% off any 3-cycle series booked before May 31</strong>. And Dr. Chen has new openings in the next two weeks." },
-  { kind: 'typing', t: 400 },
-  { kind: 'agent',  t: 1100, text: "Want a quick refresher on how it works, or skip to scheduling?" },
-  { kind: 'chips',  t: 600,
-    items: ['Tell me how it works', 'Show me the math', 'Not right now'],
+  { kind: 'agent',  t: 1500, text: "1) A quick refresher on how it works.\n2) A link to schedule a free consult — our spring promo (<strong>25% off any 3-cycle series</strong>) ends May 31." },
+  { kind: 'chips',  t: 700,
+    items: ['Tell me how it works', 'Schedule a free consult', 'Not right now'],
     autoTap: 0
   },
   { kind: 'user',   t: 1700, text: 'Tell me how it works', delivery: true },
   { kind: 'typing', t: 800 },
-  { kind: 'agent',  t: 1500, text: "Easy. CoolSculpting cools targeted fat cells until they're damaged — your body then clears them out naturally over the next 8–12 weeks. No needles, no anesthesia, no recovery time." },
-  { kind: 'typing', t: 500 },
-  { kind: 'agent',  t: 1300, text: "Most people read or take a call during the appointment. You walk out and go right back to your day." },
+  { kind: 'agent',  t: 1500, text: "Quick version: CoolSculpting cools targeted fat cells until they're damaged. Your body then clears them out naturally over the next 8–12 weeks. No needles, no anesthesia, no recovery time." },
   { kind: 'typing', t: 300 },
   { kind: 'card',   t: 800,
     card: {
-      sub: 'How CoolSculpting works',
-      title: 'Cryolipolysis · 35-minute cycle per area',
-      desc: 'A soft applicator cools the area for 35 minutes, then a brief massage afterward. Mild numbness for a day or two is normal. Real visible change shows up around weeks 4–6, with full results by month 3.',
+      sub: 'How it works',
+      title: 'CoolSculpting · cryolipolysis',
+      desc: '35-minute cycle per area. A soft applicator cools the area, then a brief massage. Mild numbness for a day or two is normal. Visible change around weeks 4–6; full results by month 3.',
+      image: 'assets/cryolipolysis.jpg',
       icon: '❄',
-      buttons: ['See real before & afters', 'Watch a 60-second explainer', 'Read the FDA-approved areas']
+      buttons: ['Schedule a free consult']
     }
   },
-  { kind: 'typing', t: 1500 },
-  { kind: 'agent',  t: 1500, text: "For your areas — lower abdomen and flanks — most patients book a 3-cycle series. With the promo, that comes to $1,800 instead of $2,400." },
-  { kind: 'typing', t: 400 },
-  { kind: 'agent',  t: 1100, text: "Other things people often pair with it:" },
+  { kind: 'typing', t: 1200 },
+  { kind: 'agent',  t: 1300, text: "Patients often pair it with one of these — your consult would be the place to decide." },
   { kind: 'carousel', t: 600,
     cards: [
-      { sub: 'BODY',     title: 'CoolTone Add-On',         desc: 'Tones underlying muscle. Often added 4 weeks after the first CoolSculpting cycle.', icon: '◐', tint: 'pink' },
-      { sub: 'SKIN',     title: 'Morpheus8 Body',          desc: 'Tightens loose skin alongside fat reduction. Great for the lower abdomen.', icon: '◓', tint: 'amber' },
-      { sub: 'WELLNESS', title: 'Nutrition Coaching',      desc: 'Three-session series with our wellness team to lock in results. 50% off with the promo.', icon: '◒', tint: 'green' }
+      { sub: 'BODY · MUSCLE TONE', title: 'CoolTone Add-On',       desc: 'Tones underlying muscle. Often added 4 weeks after the first CoolSculpting cycle.', image: 'assets/cooltone.jpg',     icon: '◐', tint: 'pink' },
+      { sub: 'SKIN · TIGHTENING',   title: 'Morpheus8 Body',        desc: 'Tightens loose skin alongside fat reduction. Same provider, same visit if you want it.', image: 'assets/morpheus8.jpg',    icon: '◓', tint: 'amber' },
+      { sub: 'WELLNESS',            title: 'Nutrition Coaching',    desc: 'Three-session series with our wellness team to lock in results. 50% off with the promo.', icon: '◒', tint: 'green' }
     ]
   },
   { kind: 'typing', t: 1500 },
-  { kind: 'agent',  t: 1500, text: "If the timing works, I'd recommend booking a free consult — Dr. Chen will map out exactly which areas and how many cycles for you." },
+  { kind: 'agent',  t: 1300, text: "If the timing works, the next step would be a free 20-minute consult to map out areas and number of cycles." },
   { kind: 'actions', t: 600,
     items: [
-      { label: 'Book the free consult',  icon: 'cal' },
-      { label: 'Send the brochure',      icon: 'doc' },
-      { label: 'Text Dr. Chen directly', icon: 'phone' }
+      { label: 'Schedule a free consult', icon: 'cal' },
+      { label: 'Send me the pricing',     icon: 'doc' },
+      { label: 'Get directions',          icon: 'pin' }
     ]
   },
 ];
@@ -375,6 +370,8 @@ function renderStep(step){
           ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1b4f6b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>'
           : a.icon === 'phone'
           ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="#1b4f6b"><path d="M20 15.5c-1.25 0-2.45-.2-3.57-.57a1 1 0 00-1.02.24l-2.2 2.2a15.07 15.07 0 01-6.58-6.59l2.2-2.21a1 1 0 00.25-1.02A11.36 11.36 0 018.5 4a1 1 0 00-1-1H4a1 1 0 00-1 1 17 17 0 0017 17 1 1 0 001-1v-3.5a1 1 0 00-1-1z"/></svg>'
+          : a.icon === 'pin'
+          ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1b4f6b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>'
           : '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1b4f6b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/></svg>';
         return `<button class="action">${ic}${escHTML(a.label)}</button>`;
       }).join('');
@@ -387,9 +384,11 @@ function renderStep(step){
       const btnHtml = (c.buttons||[]).map(b => `<button>${escHTML(b)}</button>`).join('');
       const wrap = document.createElement('div');
       wrap.className = 'card-wrap';
+      const imgStyle = c.image ? `style="background-image:url('${c.image}');background-size:cover;background-position:center"` : '';
+      const imgInner = c.image ? '' : escHTML(c.icon||'✦');
       wrap.innerHTML = `
         <div class="card">
-          <div class="img">${escHTML(c.icon||'✦')}</div>
+          <div class="img" ${imgStyle}>${imgInner}</div>
           <div class="body">
             <div class="sub">${escHTML(c.sub||'')}</div>
             <div class="ttl">${escHTML(c.title||'')}</div>
@@ -411,9 +410,14 @@ function renderStep(step){
         green: 'background:linear-gradient(135deg,#dcfce7,#bbf7d0);color:#047857'
       };
       wrap.innerHTML = `<div class="carousel">${
-        step.cards.map(c => `
+        step.cards.map(c => {
+          const imgStyle = c.image
+            ? `style="background-image:url('${c.image}');background-size:cover;background-position:center"`
+            : `style="${tints[c.tint]||''}"`;
+          const imgInner = c.image ? '' : escHTML(c.icon||'');
+          return `
           <div class="cara-card">
-            <div class="img" style="${tints[c.tint]||''}">${escHTML(c.icon||'')}</div>
+            <div class="img" ${imgStyle}>${imgInner}</div>
             <div class="body">
               <div class="sub">${escHTML(c.sub||'')}</div>
               <div class="ttl">${escHTML(c.title||'')}</div>
@@ -421,7 +425,7 @@ function renderStep(step){
             </div>
             <div class="btns"><button>Learn more</button></div>
           </div>
-        `).join('')
+        `;}).join('')
       }</div>`;
       convo.appendChild(wrap);
       scrollDown();
