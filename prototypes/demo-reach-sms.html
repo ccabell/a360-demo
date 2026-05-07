@@ -239,12 +239,12 @@ footer{max-width:1100px;margin:0 auto;padding:14px 24px;border-top:1px solid var
     <div class="patient-cell"><div class="lbl">Provider</div><div class="val">Dr. Emily Chen</div></div>
     <div class="patient-cell"><div class="lbl">Practice</div><div class="val">Glow Aesthetics</div></div>
     <div class="patient-cell"><div class="lbl">Phone</div><div class="val mono">(555) 123-4567</div></div>
-    <div class="patient-cell highlight"><div class="lbl">Wedding</div><div class="val mono">Aug 15 · 108d</div></div>
+    <div class="patient-cell highlight"><div class="lbl">Last Botox</div><div class="val mono">~3 mo ago</div></div>
   </div>
 
   <div class="ph">
     <h1>SMS Campaign</h1>
-    <div class="sub">Two channels side-by-side. <strong>Standard SMS</strong> (left) is the broadcast model — short, personal, one-way. <strong>Conversational SMS</strong> (right) — powered by OrchardLink RCS — keeps the same warm tone but adds two-way intelligence: the AI knows the entire consultation context and can answer in real time with quick-reply CTAs.</div>
+    <div class="sub">Two channels side-by-side. <strong>Standard SMS</strong> (left) is the enterprise broadcast model — short, sender-prefixed, single CTA per message, reply-keyword pattern, ~150 char segments. <strong>Conversational SMS</strong> (right) — powered by OrchardLink RCS — keeps the brevity but adds two-way intelligence: the AI carries the full consultation context and answers in real time with quick-reply chips and rich cards.</div>
   </div>
 
   <!-- LIVE INTERACTIVE DEMOS -->
@@ -263,9 +263,9 @@ footer{max-width:1100px;margin:0 auto;padding:14px 24px;border-top:1px solid var
     <!-- LEFT: STANDARD SMS -->
     <div class="split-col standard">
       <div class="col-hdr">
-        <div class="badge standard">Standard SMS · One-way <button class="a360-info dark" data-agent="reach_sms_generator"></button></div>
-        <div class="h">Broadcast Model</div>
-        <div class="s">3 messages over 21 days · sent on a schedule</div>
+        <div class="badge standard">Standard SMS · Broadcast <button class="a360-info dark" data-agent="reach_sms_generator"></button></div>
+        <div class="h">Enterprise Drip Campaign</div>
+        <div class="s">3 messages · single CTA each · reply-keyword pattern</div>
       </div>
 
       <div class="phone">
@@ -275,27 +275,27 @@ footer{max-width:1100px;margin:0 auto;padding:14px 24px;border-top:1px solid var
             <span class="icons">📶 100%</span>
           </div>
           <div class="phone-header">
-            <div class="avatar">EC</div>
+            <div class="avatar">GA</div>
             <div>
-              <div class="name">Dr. Chen</div>
-              <div class="sub">Glow Aesthetics · text</div>
+              <div class="name">Glow Aesthetics</div>
+              <div class="sub">Short code · 55512</div>
             </div>
           </div>
           <div class="phone-body">
 
             <div class="bubble-time">May 2 · 10:14 AM</div>
             <div class="bubble from-them">
-              Hi Sarah, it's Dr. Chen from Glow Aesthetics. I wanted to check in after our Tuesday conversation about your treatment plan. Did you get a chance to look at the Refresh Package options I sent over? Happy to answer any questions. – Dr. Chen
+              Glow Aesthetics: Hi Sarah, it's been ~3 months since your last Botox. Most patients see movement returning by now. Reply BOOK to schedule. STOP to opt out.
             </div>
 
-            <div class="bubble-time">May 13 · 2:30 PM</div>
+            <div class="bubble-time">May 13 · 9:00 AM</div>
             <div class="bubble from-them">
-              Hi Sarah! Quick reminder — your daughter's wedding is about 14 weeks away. If you'd like to start your Botox + Juvederm plan in time for full results, the ideal window is in the next 2-3 weeks. We have openings this week and next. Shall I hold a spot? – Dr. Chen
+              Glow Aesthetics: Save $250 on the June Full Face Refresh (Botox + Juvederm) through 6/30. Reply BOOK to schedule. STOP to opt out.
             </div>
 
-            <div class="bubble-time">May 20 · 4:45 PM</div>
+            <div class="bubble-time">May 20 · 9:00 AM</div>
             <div class="bubble from-them">
-              Sarah, I know timing and budget are factors — totally understand. Just wanted you to know we offer 0% financing through CareCredit ($100/mo for your Refresh Package). No rush, but the option is there when you're ready. Reply STOP to opt out.
+              Glow Aesthetics: Last week to save on the June Refresh. 0% financing — from $96/mo. Reply BOOK to schedule. STOP to opt out.
             </div>
 
           </div>
@@ -304,16 +304,16 @@ footer{max-width:1100px;margin:0 auto;padding:14px 24px;border-top:1px solid var
 
       <div class="sms-meta">
         <div class="sms-meta-row">
-          <div class="when">SMS 1 · Day 3 · soft check-in</div>
-          <div class="desc">Anchored to the consultation date and the Refresh Package the patient saw. No CTA pressure — opens the door.</div>
+          <div class="when">SMS 1 · Day 3 · reorder reminder</div>
+          <div class="desc">Triggered by 90-day Botox reorder window. One ask: reply BOOK. Sender-prefixed, single segment (~150 chars), STOP opt-out per TCPA.</div>
         </div>
         <div class="sms-meta-row">
-          <div class="when">SMS 2 · Day 14 · timing nudge</div>
-          <div class="desc">Wedding-anchored urgency. Two specific scheduling windows. Tight, personal, not pushy.</div>
+          <div class="when">SMS 2 · Day 14 · promo announcement</div>
+          <div class="desc">June Full Face Refresh with dollar-amount savings + close date. Single reply keyword. ~130 chars · 1 SMS segment.</div>
         </div>
         <div class="sms-meta-row">
-          <div class="when">SMS 3 · Day 21 · financing reminder</div>
-          <div class="desc">Re-states $100/mo financing the patient already heard about. Clear opt-out per TCPA.</div>
+          <div class="when">SMS 3 · Day 21 · last call + financing</div>
+          <div class="desc">Promo close-out with financing option to remove the price barrier. Same CTA as SMS 1 + 2 — keyword consistency drives reply rates.</div>
         </div>
       </div>
     </div>
@@ -387,7 +387,7 @@ footer{max-width:1100px;margin:0 auto;padding:14px 24px;border-top:1px solid var
       <div class="sms-meta">
         <div class="sms-meta-row" style="background:var(--purple-bg);border-color:var(--purple-border)">
           <div class="when" style="color:var(--purple)">RCS Capability · Always-on</div>
-          <div class="desc">AI has full consultation context: knows the package, the wedding date, the price objection, the "frozen" fear. Answers patient questions in real time without practice staff. Renders rich content (timeline cards, package details, scheduling links) inline.</div>
+          <div class="desc">AI has full consultation context: knows what was discussed, what was declined, where the price hesitation sits, what the patient asked questions on. Answers in real time without practice staff. Renders rich content (timeline cards, package details, scheduling links) inline.</div>
         </div>
         <div class="sms-meta-row" style="background:var(--purple-bg);border-color:var(--purple-border)">
           <div class="when" style="color:var(--purple)">Quick-reply CTAs</div>
@@ -404,14 +404,14 @@ footer{max-width:1100px;margin:0 auto;padding:14px 24px;border-top:1px solid var
 
   <!-- COMPARISON CALLOUT -->
   <div class="callout">
-    <div class="callout-h">Why Conversational SMS Changes Everything</div>
+    <div class="callout-h">Broadcast vs Conversational — what changes</div>
     <div class="callout-col">
       <h3 class="std">Standard SMS · push-only</h3>
-      <p>Practice → Patient. The patient reads the message or doesn't. If they have a question, they have to call the office during business hours, or they don't bother and the lead cools. Three messages over 21 days, then silence.</p>
+      <p>Practice → Patient. One direction. Each message is a discrete ping with one ask — reply BOOK, reply STOP, or click. Cheap to run at scale. But if the patient has a question, the only path is to call the office during business hours. Three messages, then silence.</p>
     </div>
     <div class="callout-col">
       <h3 class="rcs">Conversational RCS · two-way</h3>
-      <p>Practice ↔ Patient. The patient engages on their own time. AI has full consultation context — knows the wedding, the price objection, the package, the fear of looking "frozen." Answers in seconds, books appointments, escalates to staff only when needed.</p>
+      <p>Practice ↔ Patient. Two directions, on the patient's clock. The AI carries every signal from the consult — what was discussed, what was declined, where the price hesitation was, what the patient asked questions on. Answers in seconds. Books appointments. Escalates to staff only when it actually needs to.</p>
     </div>
 
     <div class="callout-stats">
