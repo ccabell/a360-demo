@@ -167,7 +167,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Inter','Roboto',-apple-s
 
 <div class="caption">
   <div class="h">Reach · Conversational SMS / RCS — Education</div>
-  <div class="s">Outbound · pre-wedding HydraFacial follow-up for Sarah Mitchell · powered by OrchardLink &nbsp;·&nbsp; <a href="demo-rcs-booking.html">→ Booking flow</a> &nbsp;·&nbsp; <a href="demo-reach-sms.html">SMS overview</a></div>
+  <div class="s">Outbound · HydraFacial follow-up · Package &amp; Perks · powered by OrchardLink &nbsp;·&nbsp; <a href="demo-rcs-booking.html">→ Booking flow</a> &nbsp;·&nbsp; <a href="demo-reach-sms.html">SMS overview</a></div>
 </div>
 
 <div class="phone">
@@ -224,15 +224,13 @@ body{background:var(--bg);color:var(--ink);font-family:'Inter','Roboto',-apple-s
 // t: ms to wait BEFORE rendering this step
 const SCRIPT = [
   { kind: 'day',    t: 100,  text: 'Today · 9:41 AM' },
-  // Practice initiates — outbound education on HydraFacial closer to wedding
+  // Practice initiates — outbound education on HydraFacial Sarah previously asked about
   { kind: 'typing', t: 600 },
   { kind: 'agent',  t: 1300, text: "Hi Sarah! 👋 It's Glow Aesthetics." },
   { kind: 'typing', t: 700 },
-  { kind: 'agent',  t: 1700, text: "Following up on your April 29 visit — you'd asked about adding a HydraFacial closer to the wedding for that extra glow. Wanted to share details." },
-  { kind: 'typing', t: 500 },
-  { kind: 'agent',  t: 1300, text: "Quick refresher on what HydraFacial does, plus a link to schedule for 1–2 weeks before the wedding (peak glow window)." },
+  { kind: 'agent',  t: 1700, text: "Following up on your April 29 visit — you'd mentioned you were curious about a <strong>HydraFacial</strong>. Wanted to share a quick refresher and a couple of ways to make it easier on the wallet." },
   { kind: 'chips',  t: 700,
-    items: ['Tell me how it works', 'Schedule a HydraFacial', 'Not right now'],
+    items: ['Tell me how it works', 'Show me the savings', 'Not right now'],
     autoTap: 0
   },
   { kind: 'user',   t: 1700, text: 'Tell me how it works', delivery: true },
@@ -251,18 +249,29 @@ const SCRIPT = [
     }
   },
   { kind: 'typing', t: 1500 },
-  { kind: 'agent',  t: 1400, text: "For your timeline — wedding August 15 — the ideal HydraFacial window is <strong>August 1–5</strong>. That gives the skin a few days to settle and lands the peak glow right on the day." },
-  { kind: 'typing', t: 500 },
-  { kind: 'agent',  t: 1100, text: "Investment is $199 as a single session. A few add-ons people ask about:" },
-  { kind: 'carousel', t: 600,
-    cards: [
-      { sub: 'GLOW BOOST',  title: 'LED Light Therapy',    desc: 'Add 10 minutes of red + blue LED right after the facial. Calms redness, boosts collagen. +$50.', icon: '✦', tint: 'pink' },
-      { sub: 'LIPS',        title: 'Perk Lip Treatment',   desc: 'Gentle exfoliation + peptide-infused gloss. Plumps and smooths the lip line for 2–3 days. +$45.', icon: '◓', tint: 'amber' },
-      { sub: 'AT HOME',     title: 'Glow Recovery Kit',    desc: 'Cleanser, hydrating serum, SPF 30 — what we use in the room. Helps hold the glow for the wedding week.', icon: '◒', tint: 'green' }
-    ]
+  { kind: 'agent',  t: 1300, text: "Here are some ways to save:" },
+  { kind: 'card',   t: 700,
+    card: {
+      sub: 'Glow Trio Package',
+      title: 'HydraFacial 3-pack · $499',
+      desc: 'Three full HydraFacial sessions, prepaid. Use them on your own schedule — no expiration. Saves $98 vs $597 paid per visit.',
+      icon: '✨',
+      buttons: ['Buy the 3-pack', 'See package details']
+    }
+  },
+  { kind: 'typing', t: 1300 },
+  { kind: 'agent',  t: 1100, text: "Or, if you're planning to come in regularly:" },
+  { kind: 'card',   t: 700,
+    card: {
+      sub: 'Radiance Rewards · annual membership',
+      title: '$99/year · pays for itself in 2 visits',
+      desc: '15% off every treatment, one complimentary HydraFacial per quarter, members-only events, and a $50 birthday treatment credit. Monthly billing option available.',
+      icon: '◈',
+      buttons: ['Join Radiance Rewards', 'See full benefits']
+    }
   },
   { kind: 'typing', t: 1500 },
-  { kind: 'agent',  t: 1300, text: "Want me to lock in an appointment in the August 1–5 window?" },
+  { kind: 'agent',  t: 1300, text: "Want me to lock in your next HydraFacial?" },
   { kind: 'actions', t: 600,
     items: [
       { label: 'Schedule a HydraFacial', icon: 'cal' },
