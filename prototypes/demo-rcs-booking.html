@@ -150,8 +150,8 @@ body{background:var(--bg);color:var(--ink);font-family:'Inter','Roboto',-apple-s
 <body>
 
 <div class="caption">
-  <div class="h">Reach · Conversational SMS / RCS</div>
-  <div class="s">Outbound booking &nbsp;·&nbsp; <a href="demo-rcs-education.html">← Education flow</a></div>
+  <div class="h">Reach · Conversational SMS / RCS — Booking</div>
+  <div class="s">Outbound · 3-month Botox reminder + June Full Face Refresh upsell · powered by OrchardLink &nbsp;·&nbsp; <a href="demo-rcs-education.html">← Education flow</a> &nbsp;·&nbsp; <a href="demo-reach-sms.html">SMS overview</a></div>
 </div>
 
 <div class="phone">
@@ -205,72 +205,88 @@ body{background:var(--bg);color:var(--ink);font-family:'Inter','Roboto',-apple-s
 <script>
 const SCRIPT = [
   { kind: 'day',    t: 100,  text: 'Today · 9:41 AM' },
-  // Practice initiates — light, accurate anchor
+  // Practice initiates — outbound, anchored to last Botox + June Full Face Refresh promo
   { kind: 'typing', t: 600 },
-  { kind: 'agent',  t: 1300, text: "Hi Sarah! 👋 Quick note from Glow Aesthetics." },
+  { kind: 'agent',  t: 1300, text: "Hi Sarah! 👋 It's Glow Aesthetics." },
+  { kind: 'typing', t: 700 },
+  { kind: 'agent',  t: 1700, text: "It's been about 3 months since your last Botox treatment, so this is typically when patients start noticing movement returning." },
   { kind: 'typing', t: 600 },
-  { kind: 'agent',  t: 1700, text: "Two things for you:\n\n1) Your 3-month Botox refresh is due any time.\n2) On April 29 you'd asked about CoolSculpting — our spring promo ends May 31." },
+  { kind: 'agent',  t: 1500, text: "We have a few openings next week, and we're also offering special pricing on our <strong>June Full Face Refresh</strong>." },
   { kind: 'typing', t: 500 },
-  { kind: 'agent',  t: 1300, text: "Want to combine both into one visit?" },
-  { kind: 'chips',  t: 600,
-    items: ['Yes, combine them', 'Just the Botox', 'Not right now'],
-    autoTap: 0
+  { kind: 'agent',  t: 1300, text: "The Full Face Refresh combines Botox + Juvederm to smooth lines while restoring natural volume and balance." },
+  { kind: 'chips',  t: 700,
+    items: ['1️⃣ Book Botox', '2️⃣ Learn about Full Face Refresh', '3️⃣ See June Special'],
+    autoTap: 1
   },
-  { kind: 'user',   t: 1700, text: 'Yes, combine them', delivery: true },
-  { kind: 'typing', t: 800 },
-  { kind: 'agent',  t: 1300, text: "Done. Here's the plan:" },
+  { kind: 'user',   t: 1700, text: '2️⃣ Learn about Full Face Refresh', delivery: true },
+  { kind: 'typing', t: 900 },
+  { kind: 'agent',  t: 1400, text: "Great pick. Here's the quick version:" },
   { kind: 'plan-card', t: 700,
     plan: {
-      sub: 'Combined visit',
-      title: 'Botox refresh + CoolSculpting consult',
+      sub: 'Full Face Refresh · combined visit',
+      title: 'Botox + Juvederm Voluma',
       rows: [
-        { lbl: 'Botox · forehead',     val: '20 units (same as last)' },
-        { lbl: 'Botox · between brows', val: '15 units' },
-        { lbl: 'CoolSculpting consult', val: '20 min · free' },
-        { lbl: 'Provider',              val: 'Dr. Emily Chen' },
-        { lbl: 'Total time',            val: '~50 min' }
-      ],
-      total: { lbl: 'Today', val: '$420 Botox · CoolSculpting quoted at consult' }
+        { lbl: 'Botox',             val: 'Forehead + between brows' },
+        { lbl: 'Juvederm Voluma',   val: 'Cheeks · 1 syringe' },
+        { lbl: 'Provider',          val: 'Dr. Emily Chen' },
+        { lbl: 'Visit length',      val: '~45 min · single appointment' },
+        { lbl: 'Results timeline',  val: 'Botox: 1–2 wks · Filler: immediate, settles in 2 wks' }
+      ]
     }
   },
-  { kind: 'typing', t: 1500 },
-  { kind: 'agent',  t: 1300, text: "Here are Dr. Chen's openings this week. All times Central." },
+  { kind: 'typing', t: 1300 },
+  { kind: 'agent',  t: 1200, text: "And here's how the June Special compares to à la carte pricing:" },
+  { kind: 'plan-card', t: 700,
+    plan: {
+      sub: 'June Special · save $250',
+      title: 'Full Face Refresh package',
+      rows: [
+        { lbl: 'Botox',                  val: '$480' },
+        { lbl: 'Juvederm Voluma',        val: '$920' },
+        { lbl: 'À la carte total',       val: '$1,400' },
+        { lbl: 'June Special',           val: '−$250' }
+      ],
+      total: { lbl: 'Package price', val: '$1,150 · save $250' }
+    }
+  },
+  { kind: 'typing', t: 1300 },
+  { kind: 'agent',  t: 1200, text: "Want me to hold a slot? Here's what's open with Dr. Chen next week. All times Central." },
   { kind: 'slots',  t: 600,
     slots: [
-      { day: 'Tue, May 12', time: '2:00 PM CT · Dr. Chen' },
-      { day: 'Wed, May 13', time: '10:30 AM CT · Dr. Chen' },
-      { day: 'Thu, May 14', time: '4:00 PM CT · Dr. Chen' }
+      { day: 'Tue, Jun 9',  time: '2:00 PM CT · Dr. Chen' },
+      { day: 'Wed, Jun 10', time: '10:30 AM CT · Dr. Chen' },
+      { day: 'Thu, Jun 11', time: '4:00 PM CT · Dr. Chen' }
     ],
     autoTap: 1
   },
-  { kind: 'user',   t: 1700, text: 'Wednesday at 10:30 works', delivery: true },
+  { kind: 'user',   t: 1700, text: 'Wed, Jun 10 at 10:30 works', delivery: true },
   { kind: 'typing', t: 800 },
   { kind: 'agent',  t: 1300, text: "Booked ✓ — calendar invite is on its way." },
   { kind: 'typing', t: 400 },
   { kind: 'confirm-card', t: 800,
     confirm: {
-      ttl: 'Wed, May 13 · 10:30 AM CT',
+      ttl: 'Wed, Jun 10 · 10:30 AM CT',
       rows: [
         { lbl: 'Provider',   val: 'Dr. Emily Chen' },
-        { lbl: 'Visit',      val: 'Botox refresh + CoolSculpting consult' },
+        { lbl: 'Visit',      val: 'Full Face Refresh (Botox + Voluma)' },
         { lbl: 'Location',   val: 'Glow Aesthetics · Suite 204' },
         { lbl: 'Address',    val: '4400 Burnet Rd, Austin' },
-        { lbl: 'Investment today', val: '$420 (Botox)' }
+        { lbl: 'Package',    val: '$1,150 (save $250 vs à la carte)' }
       ]
     }
   },
   { kind: 'typing', t: 1500 },
-  { kind: 'agent',  t: 1300, text: "A few reminders for the day before:" },
+  { kind: 'agent',  t: 1200, text: "A few reminders for the day before:" },
   { kind: 'typing', t: 400 },
-  { kind: 'agent',  t: 800, text: "🌿 Skip alcohol the night before — it raises bruising risk for the Botox." },
+  { kind: 'agent',  t: 800, text: "🌿 Skip alcohol the night before — it raises bruising risk for both Botox and filler." },
   { kind: 'agent',  t: 700, text: "💊 Avoid ibuprofen, aspirin, and fish oil for 24 hours. Tylenol is fine." },
-  { kind: 'agent',  t: 700, text: "👖 Wear loose clothing on top — easier for the CoolSculpting fit-check." },
-  { kind: 'typing', t: 400 },
-  { kind: 'agent',  t: 1300, text: "If you'd like a CoolSculpting brochure to read beforehand, I'll text it over now." },
+  { kind: 'agent',  t: 700, text: "💧 Show up well-hydrated — it helps the filler settle evenly." },
+  { kind: 'typing', t: 500 },
+  { kind: 'agent',  t: 1200, text: "Anything else I can do from here?" },
   { kind: 'actions', t: 600,
     items: [
-      { label: 'Send the brochure', icon: 'doc' },
       { label: 'Add to calendar',   icon: 'cal' },
+      { label: 'Get directions',    icon: 'pin' },
       { label: 'Call front desk',   icon: 'phone' }
     ]
   },

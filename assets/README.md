@@ -1,23 +1,46 @@
 # Image assets — Reach RCS demo pages
 
-The two RCS pages reference image files in this folder. Drop your real
-images here at the exact paths below and they'll show up automatically
-in the rich cards / carousels. The HTML stays unchanged.
+This folder is reserved for image files referenced from the RCS rich
+cards and carousels in `demo-rcs-booking.html` and `demo-rcs-education.html`.
 
-| Filename | Where it appears | Notes |
-|---|---|---|
-| `cryolipolysis.jpg` | `demo-rcs-education.html` · main rich card | The "How CoolSculpting works" / cryolipolysis card. Square or 16:10 works best. |
-| `cooltone.jpg` | `demo-rcs-education.html` · carousel card 1 | The CoolTone "Sculpting the Slopes" ad image you sent. 4:3 thumbnail target. |
-| `morpheus8.jpg` | `demo-rcs-education.html` · carousel card 2 | The Morpheus8 device photo you sent. 4:3 thumbnail target. |
-| `coolsculpting-areas.jpg` | (reserved — not currently rendered, available if a body-areas card is added) | The body diagram showing treatment zones. |
+## Current state
+
+The current scripts use emoji/icon fallbacks only — no images are
+loaded from this folder yet. Cards render the gradient + icon
+placeholder defined in CSS (e.g. 💧 for the HydraFacial education
+card, header bands for the booking plan cards).
+
+## Adding images later
+
+If you want to swap any card to use a real image:
+
+1. Drop the file in this folder (matching path in `prototypes/assets/`
+   for the Vercel mirror).
+2. Extend the card renderer to honour an `image:` field on the step,
+   e.g. `<div class="img" style="background-image:url('${escHTML(c.image)}')"></div>`
+   when present, falling back to the icon when not.
+3. Add `image: 'assets/<filename>.jpg'` to the relevant SCRIPT step.
 
 ## Format notes
 
 - JPG or PNG, both work
-- The card image area has `aspect-ratio: 16/10` (main card) or `4/3` (carousel cards) — the CSS uses `background-size: cover`, so any aspect ratio works visually but ratio-matched looks tightest
-- Keep file size under ~150 KB each so RCS-style preview feels snappy
-- All images stay in this `assets/` folder; the same paths are mirrored at `prototypes/assets/` for the Vercel deploy
+- Main rich card image area is `aspect-ratio: 16/10`; carousel cards are `4/3`
+- The CSS uses `background-size: cover`, so any aspect ratio works visually
+- Keep file size under ~150 KB each so the preview feels snappy
+- All images stay in this `assets/` folder; mirror to `prototypes/assets/` for the Vercel deploy
+
+## Suggested filenames for the current flows
+
+| Card | Suggested filename |
+|---|---|
+| Booking · Full Face Refresh combo card | `full-face-refresh.jpg` |
+| Education · HydraFacial main card | `hydrafacial.jpg` |
+| Education · LED Light carousel card | `led-light-therapy.jpg` |
+| Education · Perk Lip carousel card | `perk-lip.jpg` |
+| Education · Glow Recovery Kit carousel card | `glow-recovery-kit.jpg` |
 
 ## Fallback behavior
 
-If a file is missing, the card falls back to the gradient + icon placeholder — the page still renders cleanly. So you can drop images in incrementally without breaking anything.
+If an image file is missing (or the `image:` field isn't set), the card
+falls back to the gradient + icon placeholder — the page still renders
+cleanly. So you can drop images in incrementally without breaking anything.

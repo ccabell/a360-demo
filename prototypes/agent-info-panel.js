@@ -14,13 +14,13 @@
   // ─── Agent type taxonomy ───────────────────────────────────────────────────
   const TYPE_COLORS = {
     'Extraction':           { bg: '#eff6ff', fg: '#1d4ed8', bd: '#bfdbfe' },
-    'Generation':           { bg: '#f5f3ff', fg: '#6d28d9', bd: '#c4b5fd' },
+    'Generation':           { bg: '#e6eef3', fg: '#143f57', bd: '#cfe1eb' },
     'Recommendation':       { bg: '#ecfeff', fg: '#0e7490', bd: '#a5f3fc' },
     'Evaluation':           { bg: '#fffbeb', fg: '#b45309', bd: '#fcd34d' },
     'Validation':           { bg: '#fef2f2', fg: '#b91c1c', bd: '#fca5a5' },
     'Gate':                 { bg: '#f3f4f6', fg: '#374151', bd: '#d1d5db' },
     'Pipeline':             { bg: '#ecfdf5', fg: '#047857', bd: '#a7f3d0' },
-    'RAG':                  { bg: '#fdf4ff', fg: '#a21caf', bd: '#f0abfc' },
+    'RAG':                  { bg: '#f0f7fb', fg: '#1b4f6b', bd: '#9ec5d8' },
     'Feedback / Learning':  { bg: '#fff7ed', fg: '#c2410c', bd: '#fed7aa' },
   };
 

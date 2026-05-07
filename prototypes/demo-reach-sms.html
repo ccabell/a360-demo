@@ -16,13 +16,13 @@
   --green:#059669;--green-bg:#ecfdf5;--green-border:#a7f3d0;
   --amber:#d97706;--amber-bg:#fffbeb;--amber-border:#fcd34d;
   --rose:#dc2626;--rose-bg:#fef2f2;
-  --purple:#7c3aed;--purple-bg:#f5f3ff;--purple-border:#c4b5fd;
+  --purple:#1b4f6b;--purple-bg:#e6eef3;--purple-border:#cfe1eb;
   --shadow:0 1px 3px rgba(0,0,0,.06);
   --r:8px;--r-sm:6px;
   --font:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
   --mono:'JetBrains Mono',monospace;
-  --reach-accent:#7c3aed;
-  --reach-bg:#faf8ff;
+  --reach-accent:#1b4f6b;
+  --reach-bg:#f0f7fb;
 }
 body{background:var(--bg);color:var(--slate-900);font-family:var(--font);-webkit-font-smoothing:antialiased;font-size:13px;line-height:1.5}
 nav{background:var(--teal);padding:0 24px}
@@ -103,7 +103,7 @@ nav{background:var(--teal);padding:0 24px}
   padding:8px 14px;border-bottom:1px solid var(--slate-100);display:flex;align-items:center;gap:10px;
   background:var(--slate-50);
 }
-.phone-header.rcs-header{background:linear-gradient(90deg, var(--purple-bg) 0%, #ede9fe 100%)}
+.phone-header.rcs-header{background:linear-gradient(90deg, var(--purple-bg) 0%, #dceaf2 100%)}
 .phone-header .avatar{
   width:30px;height:30px;border-radius:50%;background:var(--teal);
   color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;
@@ -134,7 +134,7 @@ nav{background:var(--teal);padding:0 24px}
 .bubble.from-them{
   background:var(--slate-100);align-self:flex-start;border-bottom-left-radius:4px;
 }
-.bubble.from-them.rcs{background:linear-gradient(135deg, #ede9fe 0%, #ddd6fe 100%);color:#4c1d95}
+.bubble.from-them.rcs{background:linear-gradient(135deg, #dceaf2 0%, #bdd4e0 100%);color:#0f2c3d}
 .bubble.from-me{
   background:var(--blue);color:#fff;align-self:flex-end;border-bottom-right-radius:4px;
 }
@@ -178,7 +178,7 @@ nav{background:var(--teal);padding:0 24px}
 .callout-col h3.rcs{color:var(--purple)}
 .callout-col p{font-size:12px;color:var(--slate-700);line-height:1.55;margin-bottom:6px}
 .callout-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:14px;padding-top:14px;border-top:1px solid var(--purple-border);grid-column:1/-1}
-.cs{padding:0 14px;border-right:1px solid rgba(124,58,237,.2)}
+.cs{padding:0 14px;border-right:1px solid rgba(27,79,107,.2)}
 .cs:first-child{padding-left:0}
 .cs:last-child{border-right:none}
 .cs .lbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--slate-500)}
@@ -245,6 +245,16 @@ footer{max-width:1100px;margin:0 auto;padding:14px 24px;border-top:1px solid var
   <div class="ph">
     <h1>SMS Campaign</h1>
     <div class="sub">Two channels side-by-side. <strong>Standard SMS</strong> (left) is the broadcast model — short, personal, one-way. <strong>Conversational SMS</strong> (right) — powered by OrchardLink RCS — keeps the same warm tone but adds two-way intelligence: the AI knows the entire consultation context and can answer in real time with quick-reply CTAs.</div>
+  </div>
+
+  <!-- LIVE INTERACTIVE DEMOS -->
+  <div style="display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap;background:var(--reach-bg);border:1px solid var(--purple-border);border-radius:var(--r);padding:12px 14px;align-items:center">
+    <div style="flex:1;min-width:240px">
+      <div style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--reach-accent);margin-bottom:2px">Live RCS Demos</div>
+      <div style="font-size:12px;color:var(--slate-700);line-height:1.5">Interactive Android-style mockups built on real RCS primitives — typing indicators, quick-reply chips, rich cards, slot pickers, and suggested actions.</div>
+    </div>
+    <a href="demo-rcs-booking.html" style="background:var(--reach-accent);color:#fff;text-decoration:none;font-size:12px;font-weight:700;padding:8px 14px;border-radius:var(--r-sm);display:inline-flex;align-items:center;gap:6px">📅 Booking flow <span style="opacity:.7">→</span></a>
+    <a href="demo-rcs-education.html" style="background:#fff;color:var(--reach-accent);text-decoration:none;font-size:12px;font-weight:700;padding:8px 14px;border-radius:var(--r-sm);border:1px solid var(--reach-accent);display:inline-flex;align-items:center;gap:6px">💧 Education flow <span style="opacity:.7">→</span></a>
   </div>
 
   <!-- SPLIT: Standard vs Conversational -->
@@ -331,51 +341,43 @@ footer{max-width:1100px;margin:0 auto;padding:14px 24px;border-top:1px solid var
           </div>
           <div class="phone-body">
 
-            <div class="bubble-time">Today · 10:14 AM</div>
+            <div class="bubble-time">Today · 9:41 AM</div>
             <div class="bubble from-them rcs">
-              Hi Sarah! 👋 This is Glow Aesthetics following up on your consultation with Dr. Chen on Tuesday.<br><br>
-              I noticed you were interested in the <strong>Refresh Package</strong> for your daughter's wedding prep. How can I help?
-            </div>
-            <div class="quick-replies">
-              <button class="qr-btn">📋 See Package Details</button>
-              <button class="qr-btn active">💬 Ask a Question <span class="arrow">→</span></button>
-              <button class="qr-btn">📅 Schedule</button>
+              Hi Sarah! 👋 It's Glow Aesthetics.<br><br>
+              It's been about 3 months since your last Botox, so this is typically when patients start noticing movement returning.
             </div>
 
-            <div class="bubble-time">10:15 AM</div>
+            <div class="bubble from-them rcs">
+              We have openings next week, and we're running our <strong>June Full Face Refresh</strong> special — Botox + Juvederm together to smooth lines and restore natural volume.
+            </div>
+            <div class="quick-replies">
+              <button class="qr-btn">1️⃣ Book Botox</button>
+              <button class="qr-btn active">2️⃣ Learn about Full Face Refresh <span class="arrow">→</span></button>
+              <button class="qr-btn">3️⃣ See June Special</button>
+            </div>
+
+            <div class="bubble-time">9:42 AM</div>
             <div class="bubble from-me">
-              How long does the Botox actually last? I don't want to have to redo it right before the wedding.
+              2️⃣ Learn about Full Face Refresh
             </div>
 
             <div class="bubble from-them rcs">
-              Great question! Botox typically lasts <strong>3-4 months</strong>. If you start treatment in the next 2-3 weeks, you'd be well within the effective window for August 15th.<br><br>
-              Most patients find that results actually look their most natural about <strong>2 weeks after treatment</strong> — so you'd look refreshed, not "done."
-            </div>
-            <div class="quick-replies">
-              <button class="qr-btn active">📅 See the Timeline <span class="arrow">→</span></button>
-              <button class="qr-btn">🔁 Book a Touch-Up Plan</button>
-              <button class="qr-btn">👩‍⚕️ Talk to Dr. Chen</button>
-            </div>
-
-            <div class="bubble from-them rcs">
-              Here's your ideal treatment timeline for <strong>Aug 15</strong>:
+              Great pick. Here's the quick version:
             </div>
             <div class="timeline-card">
-              <div class="h">Wedding-Prep Calendar</div>
-              <div class="row"><span>Botox · forehead</span><span class="date">May 25-30</span></div>
-              <div class="row"><span>Juvederm · cheeks</span><span class="date">Jun 10-15</span></div>
-              <div class="row"><span>Optional touch-up</span><span class="date">Jul 25</span></div>
-              <div class="row"><span>HydraFacial glow</span><span class="date">Aug 1-5</span></div>
-              <div class="row bold"><span>Wedding day ✨</span><span class="date">Aug 15</span></div>
+              <div class="h">June Special · save $250</div>
+              <div class="row"><span>Botox · forehead + brows</span><span class="date">$480</span></div>
+              <div class="row"><span>Juvederm Voluma · cheeks</span><span class="date">$920</span></div>
+              <div class="row"><span>À la carte total</span><span class="date">$1,400</span></div>
+              <div class="row bold"><span>Package price</span><span class="date">$1,150</span></div>
             </div>
 
             <div class="bubble from-them rcs">
-              Your <strong>Refresh Package ($1,200)</strong> covers the Botox + Juvederm. The HydraFacial ($199) is a great add-on closer to the date.<br><br>
-              Ready to get started?
+              Want me to hold a slot with Dr. Chen next week?
             </div>
             <div class="quick-replies">
-              <button class="qr-btn">📅 Schedule First Appointment</button>
-              <button class="qr-btn">💳 See Financing Options</button>
+              <button class="qr-btn active">📅 See open times <span class="arrow">→</span></button>
+              <button class="qr-btn">💳 Financing options</button>
             </div>
 
           </div>
