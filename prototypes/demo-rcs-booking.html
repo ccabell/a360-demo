@@ -151,7 +151,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Inter','Roboto',-apple-s
 
 <div class="caption">
   <div class="h">Reach · Conversational SMS / RCS</div>
-  <div class="s">Outbound booking · combined visit + CoolSculpting consult · powered by OrchardLink &nbsp;·&nbsp; <a href="demo-rcs-education.html">← Education flow</a></div>
+  <div class="s">Outbound booking &nbsp;·&nbsp; <a href="demo-rcs-education.html">← Education flow</a></div>
 </div>
 
 <div class="phone">
@@ -205,20 +205,20 @@ body{background:var(--bg);color:var(--ink);font-family:'Inter','Roboto',-apple-s
 <script>
 const SCRIPT = [
   { kind: 'day',    t: 100,  text: 'Today · 9:41 AM' },
-  // Practice initiates — outbound, anchored to prior visit + CoolSculpting interest
+  // Practice initiates — light, accurate anchor
   { kind: 'typing', t: 600 },
-  { kind: 'agent',  t: 1300, text: "Hi Sarah! Quick heads-up from Glow Aesthetics." },
+  { kind: 'agent',  t: 1300, text: "Hi Sarah! 👋 Quick note from Glow Aesthetics." },
   { kind: 'typing', t: 600 },
-  { kind: 'agent',  t: 1700, text: "Two things lined up: your 3-month Botox refresh is due, and the <strong>CoolSculpting spring promo</strong> you'd asked about ends May 31." },
+  { kind: 'agent',  t: 1700, text: "Two things for you:\n\n1) Your 3-month Botox refresh is due any time.\n2) On April 29 you'd asked about CoolSculpting — our spring promo ends May 31." },
   { kind: 'typing', t: 500 },
-  { kind: 'agent',  t: 1300, text: "Want me to combine both into one visit? Saves you a trip and gets the consult done while the promo's still on." },
+  { kind: 'agent',  t: 1300, text: "Want to combine both into one visit?" },
   { kind: 'chips',  t: 600,
-    items: ['Yes, combine them', 'Just the Botox', 'Tell me more first'],
+    items: ['Yes, combine them', 'Just the Botox', 'Not right now'],
     autoTap: 0
   },
   { kind: 'user',   t: 1700, text: 'Yes, combine them', delivery: true },
   { kind: 'typing', t: 800 },
-  { kind: 'agent',  t: 1300, text: "Done. Here's what I'll plan:" },
+  { kind: 'agent',  t: 1300, text: "Done. Here's the plan:" },
   { kind: 'plan-card', t: 700,
     plan: {
       sub: 'Combined visit',
