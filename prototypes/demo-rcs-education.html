@@ -10,7 +10,7 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --accent:#1b4f6b;            /* Glow Aesthetics teal */
+  --accent:#1b4f6b;
   --accent-soft:#e6eef3;
   --agent-bg:#f1eef2;
   --agent-ink:#1f1c22;
@@ -24,17 +24,14 @@
   --ink-mute:#79747e;
   --divider:#e6e0e9;
   --bg:#f7f5f8;
-  --check:#1a73e8;
 }
-body{background:var(--bg);color:var(--ink);font-family:'Inter','Roboto',-apple-system,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:36px 24px}
+body{background:var(--bg);color:var(--ink);font-family:'Inter','Roboto',-apple-system,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:36px 24px;flex-direction:column}
 
-/* Caption above phone */
-.caption{position:fixed;top:14px;left:50%;transform:translateX(-50%);text-align:center;z-index:5}
+.caption{text-align:center;margin-bottom:18px;max-width:400px}
 .caption .h{font-size:13px;font-weight:700;color:var(--ink);letter-spacing:-.01em}
 .caption .s{font-size:11px;color:var(--ink-mute);margin-top:2px}
 .caption a{color:var(--accent);text-decoration:none;font-weight:500}
 
-/* Phone frame (Android) */
 .phone{
   width:400px;height:840px;border-radius:44px;padding:10px;
   background:#0f0d12;
@@ -45,141 +42,124 @@ body{background:var(--bg);color:var(--ink);font-family:'Inter','Roboto',-apple-s
   width:100%;height:100%;border-radius:36px;overflow:hidden;
   background:#fff;display:flex;flex-direction:column;position:relative;
 }
-.punch-hole{
-  position:absolute;top:10px;left:50%;transform:translateX(-50%);
-  width:14px;height:14px;border-radius:50%;background:#0a0a0a;z-index:100;
-}
+.punch-hole{position:absolute;top:10px;left:50%;transform:translateX(-50%);width:14px;height:14px;border-radius:50%;background:#0a0a0a;z-index:100}
 
-/* Status bar (top) */
-.status-bar{
-  height:34px;display:flex;align-items:center;justify-content:space-between;
-  padding:0 22px;font-family:'Roboto',sans-serif;position:relative;flex-shrink:0;
-}
+.status-bar{height:34px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;font-family:'Roboto',sans-serif;flex-shrink:0}
 .status-bar .time{font-size:13px;font-weight:500;color:var(--ink);letter-spacing:.2px}
 .status-bar .icons{display:flex;align-items:center;gap:5px}
 
-/* App header */
-.app-hdr{
-  background:#fff;padding:4px 6px 8px;border-bottom:1px solid var(--divider);
-  display:flex;align-items:center;gap:8px;height:64px;flex-shrink:0;
-}
-.btn-icon{
-  width:40px;height:40px;border:none;background:transparent;border-radius:50%;
-  cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;
-}
-.app-avatar{
-  width:38px;height:38px;border-radius:50%;background:var(--accent);
-  color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;
-  font-size:16px;flex-shrink:0;
-}
+.app-hdr{background:#fff;padding:4px 6px 8px;border-bottom:1px solid var(--divider);display:flex;align-items:center;gap:8px;height:64px;flex-shrink:0}
+.btn-icon{width:40px;height:40px;border:none;background:transparent;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.app-avatar{width:38px;height:38px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
 .app-meta{flex:1;min-width:0;padding-left:4px}
 .app-name{display:flex;align-items:center;gap:5px}
 .app-name .n{font-size:16px;font-weight:600;color:var(--ink);letter-spacing:-.2px}
 .app-sub{font-size:12px;color:var(--ink-soft);margin-top:1px;display:flex;align-items:center;gap:5px;letter-spacing:-.05px}
 .app-sub .dot{width:6px;height:6px;border-radius:50%;background:#00a855;display:inline-block}
 
-/* Conversation area */
-.convo{
-  flex:1;overflow-y:auto;background:#fff;padding:6px 0 10px;
-  display:flex;flex-direction:column;gap:2px;
-}
+.convo{flex:1;overflow-y:auto;background:#fff;padding:6px 0 10px;display:flex;flex-direction:column;gap:2px;scroll-behavior:smooth}
 .convo::-webkit-scrollbar{width:0}
 
-.day-stamp{text-align:center;margin:10px 0 6px;font-size:11.5px;color:var(--ink-mute);font-weight:500;letter-spacing:.2px}
+.day-stamp{text-align:center;margin:10px 0 6px;font-size:11.5px;color:var(--ink-mute);font-weight:500;letter-spacing:.2px;animation:fade .3s ease}
 
-/* Bubble */
-.row{display:flex;align-items:flex-end;gap:8px;padding:0 10px;margin-top:2px}
+.row{display:flex;align-items:flex-end;gap:8px;padding:0 10px;margin-top:2px;animation:slideIn .25s ease}
+@keyframes slideIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
 .row.from-them{justify-content:flex-start}
 .row.from-me{justify-content:flex-end}
 .row .ava{width:28px;flex-shrink:0}
-.row .ava .img{width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;font-size:12px;font-family:'Inter',sans-serif}
-.bubble{
-  max-width:72%;padding:9px 14px;
-  font-size:15.5px;line-height:1.38;letter-spacing:-.1px;
-  word-break:break-word;
-}
+.row .ava .img{width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;font-size:12px}
+.bubble{max-width:72%;padding:9px 14px;font-size:15.5px;line-height:1.42;letter-spacing:-.1px;word-break:break-word}
 .from-them .bubble{background:var(--agent-bg);color:var(--agent-ink);border-radius:18px 18px 18px 4px}
-.from-them .bubble.no-tail{border-radius:18px}
+.from-them .bubble.no-tail{border-radius:18px 18px 18px 18px}
 .from-me .bubble{background:var(--user-bg);color:var(--user-ink);border-radius:18px 18px 4px 18px}
 .from-me .bubble.no-tail{border-radius:18px}
 
-.delivery{text-align:right;font-size:10.5px;color:var(--ink-mute);padding:1px 14px 0;margin-top:-1px}
+.delivery{text-align:right;font-size:10.5px;color:var(--ink-mute);padding:1px 14px 0;margin-top:-1px;animation:fade .3s ease}
 
-/* Chip rows */
-.chips{display:flex;gap:8px;padding:6px 10px 2px 46px;flex-wrap:wrap}
+/* Typing dots */
+.typing-row{display:flex;align-items:flex-end;gap:8px;padding:0 10px;margin-top:2px;animation:fade .25s ease}
+.typing-row .ava{width:28px;flex-shrink:0}
+.typing-row .ava .img{width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;font-size:12px}
+.typing-bubble{background:var(--agent-bg);border-radius:18px 18px 18px 4px;padding:14px 16px;display:flex;gap:5px;align-items:center}
+.t-dot{width:7px;height:7px;border-radius:50%;background:var(--ink-mute);animation:typing 1.2s infinite}
+.t-dot:nth-child(2){animation-delay:.18s}
+.t-dot:nth-child(3){animation-delay:.36s}
+@keyframes typing{0%,80%,100%{opacity:.3;transform:translateY(0)}40%{opacity:1;transform:translateY(-3px)}}
+
+/* Chips */
+.chips{display:flex;gap:8px;padding:6px 10px 2px 46px;flex-wrap:wrap;animation:fade .3s ease}
 .chip{
   padding:7px 14px;border-radius:999px;border:1px solid var(--chip-border);
   background:#fff;color:var(--chip-ink);font-size:13.5px;font-weight:500;
   font-family:'Inter','Roboto',sans-serif;cursor:pointer;white-space:nowrap;letter-spacing:-.1px;
+  transition:all .15s ease;
 }
-.chip.tapped{background:var(--accent);color:#fff}
+.chip:hover{background:var(--accent-soft)}
+.chip.tapped{background:var(--accent);color:#fff;transform:scale(.96)}
 
-/* Action chip with icon */
-.actions{display:flex;gap:8px;padding:6px 10px 2px 46px;flex-wrap:wrap}
-.action{
-  padding:7px 14px 7px 12px;border-radius:999px;border:1px solid var(--chip-border);
-  background:#fff;color:var(--chip-ink);font-size:13.5px;font-weight:500;
-  cursor:pointer;display:inline-flex;align-items:center;gap:7px;letter-spacing:-.1px;
-}
+/* Action chips */
+.actions{display:flex;gap:8px;padding:6px 10px 2px 46px;flex-wrap:wrap;animation:fade .3s ease}
+.action{padding:7px 14px 7px 12px;border-radius:999px;border:1px solid var(--chip-border);background:#fff;color:var(--chip-ink);font-size:13.5px;font-weight:500;cursor:pointer;display:inline-flex;align-items:center;gap:7px;letter-spacing:-.1px;transition:all .15s ease}
+.action:hover{background:var(--accent-soft)}
 
 /* Rich card */
-.card-wrap{padding:4px 10px 2px 46px}
-.card{
-  width:276px;border-radius:18px;overflow:hidden;
-  background:#fff;border:1px solid var(--card-border);
-  box-shadow:0 1px 2px rgba(0,0,0,.04);
-}
-.card.wide{width:300px}
-.card .img{width:100%;aspect-ratio:16/10;background:var(--accent-soft) center/cover no-repeat}
+.card-wrap{padding:4px 10px 2px 46px;animation:fade .3s ease}
+.card{width:300px;border-radius:18px;overflow:hidden;background:#fff;border:1px solid var(--card-border);box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card .img{width:100%;aspect-ratio:16/10;background:var(--accent-soft) center/cover no-repeat;display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:42px;font-weight:300}
 .card .body{padding:12px 14px 10px}
 .card .sub{font-size:11px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;color:var(--accent);margin-bottom:4px}
 .card .ttl{font-size:16.5px;font-weight:600;color:var(--ink);line-height:1.25;letter-spacing:-.2px}
-.card .desc{font-size:13.5px;color:var(--ink-soft);margin-top:6px;line-height:1.42}
+.card .desc{font-size:13.5px;color:var(--ink-soft);margin-top:6px;line-height:1.45}
 .card-buttons{border-top:1px solid var(--divider);display:flex;flex-direction:column}
-.card-buttons button{
-  padding:12px 14px;background:transparent;border:none;color:var(--accent);
-  font-size:14px;font-weight:600;font-family:'Inter','Roboto',sans-serif;
-  text-align:left;cursor:pointer;letter-spacing:-.1px;
-}
+.card-buttons button{padding:12px 14px;background:transparent;border:none;color:var(--accent);font-size:14px;font-weight:600;font-family:'Inter','Roboto',sans-serif;text-align:left;cursor:pointer;letter-spacing:-.1px;transition:background .12s}
 .card-buttons button + button{border-top:1px solid var(--divider)}
+.card-buttons button:hover{background:var(--accent-soft)}
 
 /* Carousel */
-.carousel-wrap{padding:4px 0 2px}
+.carousel-wrap{padding:4px 0 2px;animation:fade .3s ease}
 .carousel{display:flex;gap:10px;padding:0 10px 0 46px;overflow-x:auto;scroll-snap-type:x mandatory}
 .carousel::-webkit-scrollbar{display:none}
-.cara-card{
-  scroll-snap-align:start;flex-shrink:0;width:232px;border-radius:18px;overflow:hidden;
-  background:#fff;border:1px solid var(--card-border);display:flex;flex-direction:column;
-}
-.cara-card .img{width:100%;aspect-ratio:4/3;background:var(--accent-soft) center/cover no-repeat}
+.cara-card{scroll-snap-align:start;flex-shrink:0;width:228px;border-radius:18px;overflow:hidden;background:#fff;border:1px solid var(--card-border);display:flex;flex-direction:column}
+.cara-card .img{width:100%;aspect-ratio:4/3;background:var(--accent-soft) center/cover no-repeat;display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:32px}
 .cara-card .body{padding:10px 12px 8px;flex:1;display:flex;flex-direction:column}
 .cara-card .sub{font-size:10.5px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--accent)}
 .cara-card .ttl{font-size:14.5px;font-weight:600;color:var(--ink);line-height:1.25;margin-top:3px;letter-spacing:-.1px}
 .cara-card .desc{font-size:12.5px;color:var(--ink-soft);margin-top:4px;line-height:1.4;flex:1}
 .cara-card .btns{border-top:1px solid var(--divider);display:flex;flex-direction:column}
 .cara-card .btns button{padding:10px 12px;background:transparent;border:none;color:var(--accent);font-size:13px;font-weight:600;font-family:'Inter','Roboto',sans-serif;text-align:left;cursor:pointer;letter-spacing:-.1px}
-.cara-card .btns button + button{border-top:1px solid var(--divider)}
 
 /* Composer */
-.composer{
-  padding:6px 10px 10px;background:#fff;border-top:1px solid var(--divider);flex-shrink:0;
-}
-.composer .inner{
-  display:flex;align-items:center;gap:8px;background:#f3edf7;
-  border-radius:28px;padding:4px 6px 4px 10px;
-}
+.composer{padding:6px 10px 10px;background:#fff;border-top:1px solid var(--divider);flex-shrink:0}
+.composer .inner{display:flex;align-items:center;gap:8px;background:#f3edf7;border-radius:28px;padding:4px 6px 4px 10px}
 .composer .placeholder{flex:1;font-size:15px;color:var(--ink-mute);display:flex;align-items:center;gap:6px;padding:8px 4px;letter-spacing:-.1px}
 
-/* Verified Google checkmark */
-.verified{flex-shrink:0}
+/* Replay button */
+.replay-btn{
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%);
+  padding:11px 22px;background:var(--accent);color:#fff;border:none;border-radius:999px;
+  font-family:'Inter',sans-serif;font-size:13px;font-weight:600;cursor:pointer;
+  display:none;align-items:center;gap:6px;
+  box-shadow:0 8px 24px rgba(27,79,107,.35);z-index:10;
+}
+.replay-btn.visible{display:inline-flex;animation:fade .3s ease}
+.replay-btn:hover{filter:brightness(1.1)}
 
-/* Replay caption */
-.legend{position:fixed;left:14px;bottom:14px;font-size:11px;color:var(--ink-mute);font-family:'Inter',sans-serif;background:#fff;padding:6px 12px;border-radius:6px;border:1px solid var(--card-border)}
-.legend a{color:var(--accent);text-decoration:none;font-weight:600;margin-left:8px}
+/* Progress rail */
+.progress{height:2px;background:#f3edf7;flex-shrink:0;position:relative}
+.progress .fill{position:absolute;left:0;top:0;bottom:0;width:0;background:var(--accent);transition:width .3s ease}
+
+/* Skip button */
+.skip-hint{
+  position:fixed;top:14px;right:14px;font-size:11px;color:var(--ink-mute);
+  font-family:'Inter',sans-serif;background:#fff;padding:6px 12px;border-radius:6px;
+  border:1px solid var(--card-border);z-index:5;
+}
+.skip-hint kbd{font-family:'JetBrains Mono',monospace;font-size:10px;background:var(--bg);padding:1px 5px;border-radius:3px;border:1px solid var(--card-border)}
 
 @media (max-width:480px){
-  .phone{width:100%;height:90vh}
-  .caption{position:relative;left:auto;transform:none;margin-bottom:14px}
+  .phone{width:100%;max-width:100vw;height:90vh}
+  .skip-hint{display:none}
 }
 </style>
 </head>
@@ -187,14 +167,13 @@ body{background:var(--bg);color:var(--ink);font-family:'Inter','Roboto',-apple-s
 
 <div class="caption">
   <div class="h">Reach · Conversational SMS / RCS</div>
-  <div class="s">Patient Education flow · powered by OrchardLink &nbsp;·&nbsp; <a href="demo-rcs-booking.html">→ Booking flow</a></div>
+  <div class="s">Patient education flow · interactive · powered by OrchardLink &nbsp;·&nbsp; <a href="demo-rcs-booking.html">→ Booking flow</a></div>
 </div>
 
 <div class="phone">
   <div class="phone-screen">
     <div class="punch-hole"></div>
 
-    <!-- Status bar -->
     <div class="status-bar">
       <span class="time">9:41</span>
       <span class="icons">
@@ -204,14 +183,13 @@ body{background:var(--bg);color:var(--ink);font-family:'Inter','Roboto',-apple-s
       </span>
     </div>
 
-    <!-- App header -->
     <div class="app-hdr">
       <button class="btn-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1F1C22" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
       <div class="app-avatar">G</div>
       <div class="app-meta">
         <div class="app-name">
           <span class="n">Glow Aesthetics</span>
-          <svg class="verified" width="13" height="13" viewBox="0 0 24 24"><path d="M12 1l2.5 2.3 3.4-.3.8 3.3L22 8l-1.3 3.1 1.3 3.1-3.3 1.7-.8 3.3-3.4-.3L12 21l-2.5-2.3-3.4.3-.8-3.3L2 14l1.3-3.1L2 7.8l3.3-1.7.8-3.3 3.4.3L12 1z" fill="#1A73E8"/><path d="M9.5 12.2l1.9 1.9 3.8-4.2" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+          <svg width="13" height="13" viewBox="0 0 24 24"><path d="M12 1l2.5 2.3 3.4-.3.8 3.3L22 8l-1.3 3.1 1.3 3.1-3.3 1.7-.8 3.3-3.4-.3L12 21l-2.5-2.3-3.4.3-.8-3.3L2 14l1.3-3.1L2 7.8l3.3-1.7.8-3.3 3.4.3L12 1z" fill="#1A73E8"/><path d="M9.5 12.2l1.9 1.9 3.8-4.2" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
         </div>
         <div class="app-sub"><span class="dot"></span>Business · Verified by Google</div>
       </div>
@@ -219,103 +197,9 @@ body{background:var(--bg);color:var(--ink);font-family:'Inter','Roboto',-apple-s
       <button class="btn-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="#1F1C22"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg></button>
     </div>
 
-    <!-- Conversation -->
-    <div class="convo">
-      <div class="day-stamp">Today · 9:41 AM</div>
+    <div class="convo" id="convo"></div>
+    <div class="progress"><div class="fill" id="progress"></div></div>
 
-      <!-- Patient initiates -->
-      <div class="row from-me"><div class="bubble">Hi! I've been thinking about microneedling. Can you tell me how it works?</div></div>
-      <div class="delivery">Delivered · Read</div>
-
-      <!-- Practice agent welcomes -->
-      <div class="row from-them"><div class="ava"><div class="img">G</div></div><div class="bubble">Hi Sarah 👋 Of course — happy to walk you through it. Microneedling at Glow uses a precision pen with 12 sterile micro-needles that create controlled micro-channels in the skin, triggering your body's natural collagen response.</div></div>
-      <div class="row from-them"><div class="ava"></div><div class="bubble">Most patients see results across <strong>texture, fine lines, acne scars, and pore size</strong>. To send the right info — what's the main thing you'd like to address?</div></div>
-
-      <div class="chips">
-        <button class="chip">Skin texture</button>
-        <button class="chip tapped">Acne scars</button>
-        <button class="chip">Fine lines</button>
-        <button class="chip">Pricing &amp; packages</button>
-      </div>
-
-      <div class="row from-me"><div class="bubble">Acne scars</div></div>
-      <div class="delivery">Delivered · Read</div>
-
-      <div class="row from-them"><div class="ava"><div class="img">G</div></div><div class="bubble">Great choice. For acne scarring we typically recommend a series of <strong>3 sessions, 6 weeks apart</strong>. We pair it with a topical PDRN polynucleotide serum to amplify the regenerative response.</div></div>
-
-      <!-- Rich card: treatment details -->
-      <div class="card-wrap">
-        <div class="card wide">
-          <div class="img" style="background:linear-gradient(135deg,#cfe1eb,#e6eef3);display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:36px">✦</div>
-          <div class="body">
-            <div class="sub">Recommended for acne scars</div>
-            <div class="ttl">Microneedling + PDRN Topical</div>
-            <div class="desc">3-session series · 60 min per visit · minimal downtime (24–48h pinkness). Results visible by week 4, full collagen remodel at month 3.</div>
-          </div>
-          <div class="card-buttons">
-            <button>See real before &amp; afters</button>
-            <button>Watch a 60-second explainer</button>
-            <button>What to expect during treatment</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="row from-them"><div class="ava"><div class="img">G</div></div><div class="bubble">If you're prepping for the wedding in August, starting now puts you right in the sweet spot — final session lands ~5 weeks out, full glow by the day.</div></div>
-
-      <!-- Carousel of related treatments -->
-      <div class="row from-them"><div class="ava"><div class="img">G</div></div><div class="bubble no-tail">A few patients ask about complementary treatments. Here are the three we most often pair:</div></div>
-
-      <div class="carousel-wrap">
-        <div class="carousel">
-          <div class="cara-card">
-            <div class="img" style="background:linear-gradient(135deg,#fce7f3,#fbd5e8);display:flex;align-items:center;justify-content:center;color:#be185d;font-size:28px">◐</div>
-            <div class="body">
-              <div class="sub">FACIAL</div>
-              <div class="ttl">HydraFacial Glow</div>
-              <div class="desc">Add 2 weeks before the wedding for instant hydration and luminosity.</div>
-            </div>
-            <div class="btns"><button>Learn more</button></div>
-          </div>
-          <div class="cara-card">
-            <div class="img" style="background:linear-gradient(135deg,#fef3c7,#fde68a);display:flex;align-items:center;justify-content:center;color:#92400e;font-size:28px">◓</div>
-            <div class="body">
-              <div class="sub">LASER</div>
-              <div class="ttl">BBL Photo-rejuvenation</div>
-              <div class="desc">Targets sun damage, redness, and pigment between microneedling sessions.</div>
-            </div>
-            <div class="btns"><button>Learn more</button></div>
-          </div>
-          <div class="cara-card">
-            <div class="img" style="background:linear-gradient(135deg,#dcfce7,#bbf7d0);display:flex;align-items:center;justify-content:center;color:#047857;font-size:28px">◒</div>
-            <div class="body">
-              <div class="sub">SKINCARE</div>
-              <div class="ttl">Post-Treatment Kit</div>
-              <div class="desc">Medical-grade SPF, gentle cleanser, and recovery balm — included with the package.</div>
-            </div>
-            <div class="btns"><button>What's inside</button></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="row from-them"><div class="ava"><div class="img">G</div></div><div class="bubble">Want to grab a consultation slot, or would you like me to send the full treatment guide first?</div></div>
-
-      <div class="actions">
-        <button class="action">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1b4f6b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-          Book consultation
-        </button>
-        <button class="action">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1b4f6b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>
-          Send the guide (PDF)
-        </button>
-        <button class="action">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="#1b4f6b"><path d="M20 15.5c-1.25 0-2.45-.2-3.57-.57a1 1 0 00-1.02.24l-2.2 2.2a15.07 15.07 0 01-6.58-6.59l2.2-2.21a1 1 0 00.25-1.02A11.36 11.36 0 018.5 4a1 1 0 00-1-1H4a1 1 0 00-1 1 17 17 0 0017 17 1 1 0 001-1v-3.5a1 1 0 00-1-1z"/></svg>
-          Talk to Dr. Chen
-        </button>
-      </div>
-    </div>
-
-    <!-- Composer -->
     <div class="composer">
       <div class="inner">
         <button class="btn-icon" style="width:36px;height:36px"><svg width="22" height="22" viewBox="0 0 24 24" fill="#49454F"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></button>
@@ -331,12 +215,244 @@ body{background:var(--bg);color:var(--ink);font-family:'Inter','Roboto',-apple-s
   </div>
 </div>
 
-<div class="legend">
-  Glow Aesthetics → Sarah Mitchell · RCS conversation
-  <a href="demo-reach-sms.html">← Back to Reach SMS</a>
-  <a href="demo-rcs-booking.html">Booking flow →</a>
-</div>
+<button class="replay-btn" id="replay">↻ Replay conversation</button>
+<div class="skip-hint">Tap any chip to advance · or press <kbd>→</kbd> to skip ahead</div>
 
-<script src="agent-info-panel.js"></script>
+<script>
+// ─── Conversation script ──────────────────────────────────────────────────
+// kind: day / user / agent / typing / chips / card / carousel / actions
+// t: ms to wait BEFORE rendering this step
+const SCRIPT = [
+  { kind: 'day',    t: 100,  text: 'Today · 9:41 AM' },
+  { kind: 'user',   t: 400,  text: "Hi! I'm thinking about microneedling — what's it actually like?" },
+  { kind: 'typing', t: 900 },
+  { kind: 'agent',  t: 1500, text: "Hi Sarah! Happy to walk you through it. 🌿" },
+  { kind: 'typing', t: 600 },
+  { kind: 'agent',  t: 1700, text: "It's about a 60-minute visit. We use a small device with very fine sterile needles that move across the skin. The point isn't really the needles — it's that they nudge your collagen to rebuild, which is what gives skin that smoother look." },
+  { kind: 'typing', t: 500 },
+  { kind: 'agent',  t: 1500, text: "Most people describe it as a buzzy or tingly feeling, not painful. We numb the area first so it stays comfortable." },
+  { kind: 'typing', t: 400 },
+  { kind: 'agent',  t: 1100, text: "What are you mainly hoping it'll help with?" },
+  { kind: 'chips',  t: 600,
+    items: ['Texture', 'Acne scars', 'Fine lines', 'Pricing'],
+    autoTap: 1
+  },
+  { kind: 'user',   t: 1700, text: 'Acne scars', delivery: true },
+  { kind: 'typing', t: 800 },
+  { kind: 'agent',  t: 1500, text: "Good one. For scarring we usually plan a series of 3 sessions, about 6 weeks apart. That gap matters — your skin needs the time to actually rebuild between treatments." },
+  { kind: 'typing', t: 500 },
+  { kind: 'agent',  t: 1500, text: "After each session we apply a healing serum so you bounce back faster. Real visible changes show up around week 4." },
+  { kind: 'typing', t: 300 },
+  { kind: 'card',   t: 800,
+    card: {
+      sub: 'Recommended for acne scars',
+      title: 'Microneedling Series',
+      desc: '3 sessions · 60 min each. 1–2 days of pinkness, then back to normal. Most patients notice softer scars and brighter skin by month 2.',
+      icon: '✦',
+      buttons: ['See real before & afters', 'Watch a 60-second video', 'What to expect on the day']
+    }
+  },
+  { kind: 'typing', t: 1500 },
+  { kind: 'agent',  t: 1500, text: "If you wanted to be wrapped up before your sister's wedding in August, starting in the next 2-3 weeks gives you a comfortable buffer." },
+  { kind: 'typing', t: 400 },
+  { kind: 'agent',  t: 1100, text: "A few things people often pair with it:" },
+  { kind: 'carousel', t: 600,
+    cards: [
+      { sub: 'FACIAL',   title: 'HydraFacial Glow',     desc: 'A 30-minute glow boost. Great to add 1–2 weeks before the wedding.', icon: '◐', tint: 'pink' },
+      { sub: 'LASER',    title: 'BBL Photo-rejuvenation', desc: 'Targets sun spots and redness between microneedling sessions.', icon: '◓', tint: 'amber' },
+      { sub: 'KIT',      title: 'Post-Care Kit',        desc: 'Medical SPF, gentle cleanser, recovery balm. Free with the package.', icon: '◒', tint: 'green' }
+    ]
+  },
+  { kind: 'typing', t: 1500 },
+  { kind: 'agent',  t: 1500, text: "Want to come in for a quick chat, or would you rather just see pricing first?" },
+  { kind: 'actions', t: 600,
+    items: [
+      { label: 'Book a free 15-min consult', icon: 'cal' },
+      { label: 'See pricing',                icon: 'doc' },
+      { label: 'Text Dr. Chen directly',     icon: 'phone' }
+    ]
+  },
+];
+
+// ─── Player ────────────────────────────────────────────────────────────────
+const convo = document.getElementById('convo');
+const progress = document.getElementById('progress');
+const replayBtn = document.getElementById('replay');
+let cursor = 0;
+let timer = null;
+let typingEl = null;
+
+function clearTyping(){
+  if (typingEl) { typingEl.remove(); typingEl = null; }
+}
+
+function scrollDown(){
+  requestAnimationFrame(() => { convo.scrollTop = convo.scrollHeight; });
+}
+
+function appendHTML(html){
+  const tmp = document.createElement('div');
+  tmp.innerHTML = html.trim();
+  while (tmp.firstChild) convo.appendChild(tmp.firstChild);
+  scrollDown();
+}
+
+function escHTML(s){ return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+function renderStep(step){
+  switch(step.kind){
+    case 'day':
+      appendHTML(`<div class="day-stamp">${escHTML(step.text)}</div>`);
+      break;
+    case 'user':
+      clearTyping();
+      appendHTML(`<div class="row from-me"><div class="bubble">${escHTML(step.text)}</div></div>`);
+      if (step.delivery) appendHTML(`<div class="delivery">Delivered · Read</div>`);
+      break;
+    case 'agent':
+      clearTyping();
+      appendHTML(`<div class="row from-them"><div class="ava"><div class="img">G</div></div><div class="bubble">${escHTML(step.text)}</div></div>`);
+      break;
+    case 'typing':
+      clearTyping();
+      const el = document.createElement('div');
+      el.className = 'typing-row';
+      el.innerHTML = `<div class="ava"><div class="img">G</div></div><div class="typing-bubble"><span class="t-dot"></span><span class="t-dot"></span><span class="t-dot"></span></div>`;
+      convo.appendChild(el);
+      typingEl = el;
+      scrollDown();
+      break;
+    case 'chips': {
+      const wrap = document.createElement('div');
+      wrap.className = 'chips';
+      wrap.innerHTML = step.items.map((c, i) =>
+        `<button class="chip" data-i="${i}">${escHTML(c)}</button>`
+      ).join('');
+      convo.appendChild(wrap);
+      // user can tap any chip to advance early
+      wrap.querySelectorAll('.chip').forEach(btn => {
+        btn.addEventListener('click', () => {
+          if (cursor !== SCRIPT.indexOf(step) + 1) return; // already advanced
+          btn.classList.add('tapped');
+          // jump to next step immediately
+          if (timer) { clearTimeout(timer); timer = null; }
+          // advance the user-echo step's text to this chip's label
+          const next = SCRIPT[cursor];
+          if (next && next.kind === 'user') next.text = step.items[parseInt(btn.dataset.i)];
+          play();
+        });
+      });
+      // schedule auto-tap visual just before next step renders
+      const nextStep = SCRIPT[cursor + 1];
+      const nextDelay = nextStep ? (nextStep.t || 600) : 1500;
+      setTimeout(() => {
+        const target = wrap.querySelector(`[data-i="${step.autoTap}"]`);
+        if (target && !target.classList.contains('tapped')) target.classList.add('tapped');
+      }, Math.max(0, nextDelay - 250));
+      scrollDown();
+      break;
+    }
+    case 'actions': {
+      const wrap = document.createElement('div');
+      wrap.className = 'actions';
+      wrap.innerHTML = step.items.map(a => {
+        const ic = a.icon === 'cal'
+          ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1b4f6b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>'
+          : a.icon === 'phone'
+          ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="#1b4f6b"><path d="M20 15.5c-1.25 0-2.45-.2-3.57-.57a1 1 0 00-1.02.24l-2.2 2.2a15.07 15.07 0 01-6.58-6.59l2.2-2.21a1 1 0 00.25-1.02A11.36 11.36 0 018.5 4a1 1 0 00-1-1H4a1 1 0 00-1 1 17 17 0 0017 17 1 1 0 001-1v-3.5a1 1 0 00-1-1z"/></svg>'
+          : '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1b4f6b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/></svg>';
+        return `<button class="action">${ic}${escHTML(a.label)}</button>`;
+      }).join('');
+      convo.appendChild(wrap);
+      scrollDown();
+      break;
+    }
+    case 'card': {
+      const c = step.card;
+      const btnHtml = (c.buttons||[]).map(b => `<button>${escHTML(b)}</button>`).join('');
+      const wrap = document.createElement('div');
+      wrap.className = 'card-wrap';
+      wrap.innerHTML = `
+        <div class="card">
+          <div class="img">${escHTML(c.icon||'✦')}</div>
+          <div class="body">
+            <div class="sub">${escHTML(c.sub||'')}</div>
+            <div class="ttl">${escHTML(c.title||'')}</div>
+            ${c.desc ? `<div class="desc">${escHTML(c.desc)}</div>` : ''}
+          </div>
+          ${btnHtml ? `<div class="card-buttons">${btnHtml}</div>` : ''}
+        </div>
+      `;
+      convo.appendChild(wrap);
+      scrollDown();
+      break;
+    }
+    case 'carousel': {
+      const wrap = document.createElement('div');
+      wrap.className = 'carousel-wrap';
+      const tints = {
+        pink:  'background:linear-gradient(135deg,#fce7f3,#fbd5e8);color:#be185d',
+        amber: 'background:linear-gradient(135deg,#fef3c7,#fde68a);color:#92400e',
+        green: 'background:linear-gradient(135deg,#dcfce7,#bbf7d0);color:#047857'
+      };
+      wrap.innerHTML = `<div class="carousel">${
+        step.cards.map(c => `
+          <div class="cara-card">
+            <div class="img" style="${tints[c.tint]||''}">${escHTML(c.icon||'')}</div>
+            <div class="body">
+              <div class="sub">${escHTML(c.sub||'')}</div>
+              <div class="ttl">${escHTML(c.title||'')}</div>
+              ${c.desc ? `<div class="desc">${escHTML(c.desc)}</div>` : ''}
+            </div>
+            <div class="btns"><button>Learn more</button></div>
+          </div>
+        `).join('')
+      }</div>`;
+      convo.appendChild(wrap);
+      scrollDown();
+      break;
+    }
+  }
+}
+
+function updateProgress(){
+  progress.style.width = `${(cursor / SCRIPT.length) * 100}%`;
+}
+
+function play(){
+  updateProgress();
+  if (cursor >= SCRIPT.length) {
+    clearTyping();
+    replayBtn.classList.add('visible');
+    return;
+  }
+  const step = SCRIPT[cursor];
+  timer = setTimeout(() => {
+    renderStep(step);
+    cursor++;
+    play();
+  }, step.t || 600);
+}
+
+function reset(){
+  if (timer) clearTimeout(timer);
+  clearTyping();
+  convo.innerHTML = '';
+  cursor = 0;
+  replayBtn.classList.remove('visible');
+  play();
+}
+
+replayBtn.addEventListener('click', reset);
+
+// Keyboard skip
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === ' ') {
+    if (timer) { clearTimeout(timer); timer = null; play(); }
+  }
+});
+
+play();
+</script>
 </body>
 </html>
