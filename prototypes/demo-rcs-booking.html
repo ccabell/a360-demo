@@ -151,7 +151,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Inter','Roboto',-apple-s
 
 <div class="caption">
   <div class="h">Reach · Conversational SMS / RCS</div>
-  <div class="s">Booking flow · interactive · powered by OrchardLink &nbsp;·&nbsp; <a href="demo-rcs-education.html">← Education flow</a></div>
+  <div class="s">Outbound booking · combined visit + CoolSculpting consult · powered by OrchardLink &nbsp;·&nbsp; <a href="demo-rcs-education.html">← Education flow</a></div>
 </div>
 
 <div class="phone">
@@ -205,35 +205,36 @@ body{background:var(--bg);color:var(--ink);font-family:'Inter','Roboto',-apple-s
 <script>
 const SCRIPT = [
   { kind: 'day',    t: 100,  text: 'Today · 9:41 AM' },
-  { kind: 'user',   t: 400,  text: "Hi! I'd like to book my Botox follow-up." },
-  { kind: 'typing', t: 900 },
-  { kind: 'agent',  t: 1300, text: "Hi Sarah! Pulling up your file…" },
-  { kind: 'typing', t: 1500 },
-  { kind: 'agent',  t: 1700, text: "Got it. Dr. Chen saw you on April 29 — 35 units total, forehead and between the brows. You're right at the 3-month mark, so good timing for a refresh." },
+  // Practice initiates — outbound, anchored to prior visit + CoolSculpting interest
+  { kind: 'typing', t: 600 },
+  { kind: 'agent',  t: 1300, text: "Hi Sarah! Quick heads-up from Glow Aesthetics." },
+  { kind: 'typing', t: 600 },
+  { kind: 'agent',  t: 1700, text: "Two things lined up: your 3-month Botox refresh is due, and the <strong>CoolSculpting spring promo</strong> you'd asked about ends May 31." },
   { kind: 'typing', t: 500 },
-  { kind: 'agent',  t: 1300, text: "Want the same plan, or chat about something else first?" },
+  { kind: 'agent',  t: 1300, text: "Want me to combine both into one visit? Saves you a trip and gets the consult done while the promo's still on." },
   { kind: 'chips',  t: 600,
-    items: ['Same as last time', 'Add filler this visit', 'Talk to Dr. Chen first'],
+    items: ['Yes, combine them', 'Just the Botox', 'Tell me more first'],
     autoTap: 0
   },
-  { kind: 'user',   t: 1700, text: 'Same as last time', delivery: true },
+  { kind: 'user',   t: 1700, text: 'Yes, combine them', delivery: true },
   { kind: 'typing', t: 800 },
-  { kind: 'agent',  t: 1300, text: "Easy. Here's what I'll book:" },
+  { kind: 'agent',  t: 1300, text: "Done. Here's what I'll plan:" },
   { kind: 'plan-card', t: 700,
     plan: {
-      sub: 'Treatment plan',
-      title: 'Botox refresh',
+      sub: 'Combined visit',
+      title: 'Botox refresh + CoolSculpting consult',
       rows: [
-        { lbl: 'Forehead',         val: '20 units' },
-        { lbl: 'Between the brows', val: '15 units' },
-        { lbl: 'Provider',          val: 'Dr. Emily Chen' },
-        { lbl: 'Time needed',       val: '~30 min' }
+        { lbl: 'Botox · forehead',     val: '20 units (same as last)' },
+        { lbl: 'Botox · between brows', val: '15 units' },
+        { lbl: 'CoolSculpting consult', val: '20 min · free' },
+        { lbl: 'Provider',              val: 'Dr. Emily Chen' },
+        { lbl: 'Total time',            val: '~50 min' }
       ],
-      total: { lbl: 'Total today', val: '$420 · 0% financing available' }
+      total: { lbl: 'Today', val: '$420 Botox · CoolSculpting quoted at consult' }
     }
   },
   { kind: 'typing', t: 1500 },
-  { kind: 'agent',  t: 1300, text: "Here are Dr. Chen's openings this week. All times are Central." },
+  { kind: 'agent',  t: 1300, text: "Here are Dr. Chen's openings this week. All times Central." },
   { kind: 'slots',  t: 600,
     slots: [
       { day: 'Tue, May 12', time: '2:00 PM CT · Dr. Chen' },
@@ -244,33 +245,33 @@ const SCRIPT = [
   },
   { kind: 'user',   t: 1700, text: 'Wednesday at 10:30 works', delivery: true },
   { kind: 'typing', t: 800 },
-  { kind: 'agent',  t: 1300, text: "Booked ✓ — sending you a calendar invite now." },
+  { kind: 'agent',  t: 1300, text: "Booked ✓ — calendar invite is on its way." },
   { kind: 'typing', t: 400 },
   { kind: 'confirm-card', t: 800,
     confirm: {
       ttl: 'Wed, May 13 · 10:30 AM CT',
       rows: [
-        { lbl: 'Provider',  val: 'Dr. Emily Chen' },
-        { lbl: 'Treatment', val: 'Botox · 35 units' },
-        { lbl: 'Location',  val: 'Glow Aesthetics · Suite 204' },
-        { lbl: 'Address',   val: '4400 Burnet Rd, Austin' },
-        { lbl: 'Investment', val: '$420' }
+        { lbl: 'Provider',   val: 'Dr. Emily Chen' },
+        { lbl: 'Visit',      val: 'Botox refresh + CoolSculpting consult' },
+        { lbl: 'Location',   val: 'Glow Aesthetics · Suite 204' },
+        { lbl: 'Address',    val: '4400 Burnet Rd, Austin' },
+        { lbl: 'Investment today', val: '$420 (Botox)' }
       ]
     }
   },
   { kind: 'typing', t: 1500 },
-  { kind: 'agent',  t: 1300, text: "A few quick reminders for the day before:" },
+  { kind: 'agent',  t: 1300, text: "A few reminders for the day before:" },
   { kind: 'typing', t: 400 },
-  { kind: 'agent',  t: 800, text: "🌿 Skip alcohol the night before — it raises bruising risk." },
-  { kind: 'agent',  t: 700, text: "💊 Avoid ibuprofen, aspirin, and fish oil for 24 hours. Tylenol is fine if you need something." },
-  { kind: 'agent',  t: 700, text: "🧴 Come with a clean face if you can — it saves us 5 minutes." },
+  { kind: 'agent',  t: 800, text: "🌿 Skip alcohol the night before — it raises bruising risk for the Botox." },
+  { kind: 'agent',  t: 700, text: "💊 Avoid ibuprofen, aspirin, and fish oil for 24 hours. Tylenol is fine." },
+  { kind: 'agent',  t: 700, text: "👖 Wear loose clothing on top — easier for the CoolSculpting fit-check." },
   { kind: 'typing', t: 400 },
-  { kind: 'agent',  t: 1300, text: "If anything changes, just text back. See you Wednesday!" },
+  { kind: 'agent',  t: 1300, text: "If you'd like a CoolSculpting brochure to read beforehand, I'll text it over now." },
   { kind: 'actions', t: 600,
     items: [
-      { label: 'Add to calendar', icon: 'cal' },
-      { label: 'Get directions',  icon: 'pin' },
-      { label: 'Call front desk', icon: 'phone' }
+      { label: 'Send the brochure', icon: 'doc' },
+      { label: 'Add to calendar',   icon: 'cal' },
+      { label: 'Call front desk',   icon: 'phone' }
     ]
   },
 ];
@@ -286,6 +287,18 @@ let typingEl = null;
 function clearTyping(){ if (typingEl) { typingEl.remove(); typingEl = null; } }
 function scrollDown(){ requestAnimationFrame(() => { convo.scrollTop = convo.scrollHeight; }); }
 function escHTML(s){ return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function renderMsg(s){
+  // Allow only <strong>...</strong> through. Everything else escaped.
+  const parts = []; const re = /<strong>(.*?)<\/strong>/gs;
+  let last = 0, m;
+  while ((m = re.exec(s)) !== null) {
+    parts.push(escHTML(s.slice(last, m.index)));
+    parts.push('<strong>' + escHTML(m[1]) + '</strong>');
+    last = re.lastIndex;
+  }
+  parts.push(escHTML(s.slice(last)));
+  return parts.join('');
+}
 function appendHTML(html){
   const tmp = document.createElement('div'); tmp.innerHTML = html.trim();
   while (tmp.firstChild) convo.appendChild(tmp.firstChild);
@@ -304,7 +317,7 @@ function renderStep(step){
       break;
     case 'agent':
       clearTyping();
-      appendHTML(`<div class="row from-them"><div class="ava"><div class="img">G</div></div><div class="bubble">${escHTML(step.text)}</div></div>`);
+      appendHTML(`<div class="row from-them"><div class="ava"><div class="img">G</div></div><div class="bubble">${renderMsg(step.text)}</div></div>`);
       break;
     case 'typing': {
       clearTyping();
@@ -424,6 +437,8 @@ function renderStep(step){
           ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1b4f6b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>'
           : a.icon === 'phone'
           ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="#1b4f6b"><path d="M20 15.5c-1.25 0-2.45-.2-3.57-.57a1 1 0 00-1.02.24l-2.2 2.2a15.07 15.07 0 01-6.58-6.59l2.2-2.21a1 1 0 00.25-1.02A11.36 11.36 0 018.5 4a1 1 0 00-1-1H4a1 1 0 00-1 1 17 17 0 0017 17 1 1 0 001-1v-3.5a1 1 0 00-1-1z"/></svg>'
+          : a.icon === 'doc'
+          ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1b4f6b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/></svg>'
           : '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1b4f6b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>';
         return `<button class="action">${ic}${escHTML(a.label)}</button>`;
       }).join('');
