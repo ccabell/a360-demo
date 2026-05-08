@@ -1,5 +1,26 @@
 # CLAUDE.md — A360 Demo Prototype
 
+## Cross-Project Hub — READ FIRST
+
+This project is one of 10+ parallel A360 workstreams. Before starting work, read the hub:
+
+| File | Why |
+|------|-----|
+| `C:\Projects\A360_Hub\STATE.md` | What's in flight, blocked, done across ALL projects |
+| `C:\Projects\A360_Hub\README_FOR_AGENTS.md` | Hard rules, common mistakes |
+| `C:\Projects\A360_Hub\plans\a360-demo.md` | This project's hub plan |
+| `C:\Projects\A360_Hub\PLATFORM.md` | Product capabilities, live URLs, agent inventory |
+
+### Key cross-project facts (as of May 2026)
+
+- **Pulse is RETIRED.** This repo (a360-demo) is the buyer prototype. Pulse is dead. Mid-Stream is internal admin.
+- **Mid-Stream URL changed:** `midstream-kegfdzzz.manus.space` (NOT `mid-stream.vercel.app` — that's retired).
+- **Reach Campaign Agent v1 shipped** (May 7) — new demo-able capability for Reach pages.
+- **Agent registry is `a360_agents`** (42 rows), not the 62-agent count from older docs.
+- **Supabase keys: use `GL_SUPABASE_*`** (`sb_secret_` format).
+
+---
+
 This project is a shareable demo app that shows Boulevard/PE buyers what A360 does.
 
 ## Project Context
@@ -18,8 +39,7 @@ We are currently in the HTML prototype phase with a live extraction page connect
 | Live Extraction | https://ccabell.github.io/a360-demo/demo-extraction-live.html |
 | Prompt Runner API | https://prompt-runner-production.up.railway.app |
 | Health Check | https://prompt-runner-production.up.railway.app/health |
-| Mid-Stream Admin UI | https://mid-stream.vercel.app |
-| Manus Intelligence Dashboard | https://a360dash-demo.manus.space/dashboard |
+| Mid-Stream Admin UI | https://midstream-kegfdzzz.manus.space |
 | GL Viewer | https://gl-viewer.vercel.app (password: A360) |
 | GitHub Repo | https://github.com/ccabell/a360-demo |
 
@@ -54,9 +74,11 @@ We are currently in the HTML prototype phase with a live extraction page connect
 - `reference/design-system/UI_Quality_Diagnostic_Report.md` — What makes flagship UI premium
 - `reference/boulevard/Boulevard_Deep_Reference.pdf` — Boulevard company profile, AI gaps, integration plan
 - `reference/platform/A360_Complete_Analysis_Report_2026-04-27.md` — Full extraction schema, revenue leaks, KPIs
-- `reference/platform/A360_Platform_Master_Feature_Inventory.md` — 62 agents, 192 fields, architecture
+- `reference/platform/A360_Platform_Master_Feature_Inventory.md` — agent inventory, 192 fields, architecture (note: `a360_agents` registry has 42 rows as of May 2026)
 
-## Current Pages (5 static + 1 live)
+## Current Pages
+
+**Note:** This list may be incomplete — check the repo for the actual file list. As of May 2026, 11+ pages exist including Reach prototype pages shipped in PR #4.
 
 | Page | File | Status |
 |------|------|--------|
@@ -66,6 +88,11 @@ We are currently in the HTML prototype phase with a live extraction page connect
 | Agents | `demo-agents.html` | Static, real agent outputs |
 | Intelligence | `demo-intelligence.html` | Static, aggregate data |
 | Products | `demo-products.html` | Static, Morpheus8 from GL |
+| Reach Overview | `demo-reach.html` | Static, Reach intelligence |
+| Reach Strategy | `demo-reach-strategy.html` | Static, campaign strategy |
+| Reach Email | `demo-reach-email.html` | Static, email generation |
+| Reach SMS | `demo-reach-sms.html` | Static, SMS generation |
+| Reach Deliver | `demo-reach-deliver.html` | Static, delivery pipeline |
 
 ## Prompt Runner API (Key Endpoints)
 
